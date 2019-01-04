@@ -1,0 +1,20 @@
+.max-haight{
+    min-height: 100px;
+    display: inline-block;
+    vertical-align:middle;
+    position: relative;
+    width: 100%;
+}
+
+.max-haight h3 {
+  position: absolute;
+  top: 50%;
+  transform: translate(0%, -50%);
+  width: 100%;
+}
+
+p{
+  color: #3c425c;
+  font-size: 12px;
+  font-weight: 600;
+}

@@ -1,0 +1,29 @@
+<div>
+  <div class="row gap-top-sm">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-10">
+
+      <div class="row gap-top-sm" *ngFor="let magazine of magazines">
+        <div class="col-lg-9">
+          <div class = "container card card-block bg-faded">
+              <app-magazine-list [magazine]="magazine"></app-magazine-list>
+          </div>
+        </div>
+        <div class="col-lg-2">
+            <button class="btn btn-default orange-circle-button" *ngIf="magazine.openAccess">Pregledaj<br />casopis...</button>
+            <button class="btn btn-default orange-circle-button" *ngIf="!magazine.openAccess">Pretplati<br />se...</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row gap-top-sm">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-9 card card-block bg-faded blue-bg1" id="outer-div">
+      <div class="container" id="inner-div">
+          <button class="btn btn-light btn-sm" (click)="prev()" [disabled]="pageNum <= 1">&lt;</button>
+          <button class="btn btn-light btn-sm">{{pageNum}}</button>
+          <button class="btn btn-light btn-sm" (click)="next()" [disabled]="isLast">&gt;</button>
+      </div>
+    </div>
+  </div>
+</div>

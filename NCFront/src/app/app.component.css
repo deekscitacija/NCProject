@@ -1,0 +1,18 @@
+.nav-link, .navbar-left, .nav-item, .navbar-text {
+    color: #3c425c;
+    font-size: 20px;
+    text-shadow: 1px 1px 1px #383535;
+}
+
+.navbar-brand {
+    color: #3c425c;
+    font-size: 22px;
+    text-shadow: 1px 1px 1px #383535;
+}
+
+.navbar-background{
+    background: #a89f8d;
+}
+
+
+

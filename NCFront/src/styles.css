@@ -1,0 +1,29 @@
+body {
+    background-color: #ebeee7;
+}
+
+.gap-top-sm {
+    margin-top: 1%;
+}
+
+.gap-top-md {
+    margin-top: 3%;
+}
+
+.gap-top-lg {
+    margin-top: 5%;
+}
+
+.title-text-md{
+    color: #3c425c;
+    font-size: 22px;
+}
+
+.blue-bg1 {
+    background: #909da5;
+}
+
+.olive-bg1{
+    background: #c0bc8d;
+}
+
