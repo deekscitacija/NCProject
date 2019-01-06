@@ -36,7 +36,7 @@ import com.ftn.nc.NCBackend.repository.RevizijaRadaRepository;
 import com.ftn.nc.NCBackend.repository.TipKorisnikaRepository;
 import com.ftn.nc.NCBackend.repository.UrednikRepository;
 
-@Component
+//@Component
 public class StartData {
 	
 	@Autowired

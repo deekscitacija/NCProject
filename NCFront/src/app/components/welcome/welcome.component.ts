@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '../../../../node_modules/@angular/router';
 import { CasopisService } from '../../services/casopis.service'
+import { CompileNgModuleMetadata } from '@angular/compiler';
 
 @Component({
   selector: 'app-welcome',
@@ -29,6 +30,7 @@ export class WelcomeComponent implements OnInit {
       (res: any) => {
         this.magazines = res.content;
         this.isLast = res.last;
+        console.log(this.magazines)
       },
       (error: any) => {
         alert(error)
@@ -53,7 +55,7 @@ export class WelcomeComponent implements OnInit {
 
   setPageNum = function(){
     var queryParams: Params = {'pageNum' : this.pageNum};
-    this.router.navigate([''],{queryParams : queryParams});
+    this.router.navigate(['naucna-centrala.com'],{queryParams : queryParams});
   }
 
 }

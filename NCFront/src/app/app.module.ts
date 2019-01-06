@@ -12,6 +12,8 @@ import { CasopisService } from './services/casopis.service';
 import { MagazineListComponent } from './components/magazine-list/magazine-list.component';
 import { ListToStringPipe } from './pipes/list-to-string.pipe';
 import { YesNoPipe } from './pipes/yes-no.pipe';
+import { ErrorComponent } from './components/error/error.component';
+import { SearchPanelComponent } from './components/search-panel/search-panel.component';
 
 
 @NgModule({
@@ -20,7 +22,9 @@ import { YesNoPipe } from './pipes/yes-no.pipe';
     WelcomeComponent,
     MagazineListComponent,
     ListToStringPipe,
-    YesNoPipe
+    YesNoPipe,
+    ErrorComponent,
+    SearchPanelComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +35,16 @@ import { YesNoPipe } from './pipes/yes-no.pipe';
     RouterModule.forRoot([
       {
         path : '',
+        redirectTo: '/naucna-centrala.com',
+        pathMatch: 'full'
+      },
+      {
+        path : 'naucna-centrala.com',
         component : WelcomeComponent
+      },
+      { 
+        path: '**', 
+        component: ErrorComponent 
       }
     ])
   ],

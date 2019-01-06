@@ -1,5 +1,5 @@
 {
-    "/rest/*" : {
+    "/app/*" : {
         "target" : "http://localhost:8077",
         "secure" : false
     }

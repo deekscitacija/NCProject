@@ -12,7 +12,7 @@ export class CasopisService {
     var params = new HttpParams();
     params = params.append('pageNum', String(pageNum));
 
-    return this.http.get("/rest/getPageMagazine", {params : params});
+    return this.http.get("/app/getPageMagazine", {params : params});
   }
 
 }

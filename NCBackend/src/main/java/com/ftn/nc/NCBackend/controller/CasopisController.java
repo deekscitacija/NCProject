@@ -14,7 +14,7 @@ import com.ftn.nc.NCBackend.model.Casopis;
 import com.ftn.nc.NCBackend.service.CasopisService;
 
 @RestController
-@RequestMapping(value = "/rest/")
+@RequestMapping(value = "/app/")
 public class CasopisController {
 	
 	@Autowired
@@ -26,6 +26,8 @@ public class CasopisController {
 		if(pageNum < 0) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
+		
+		System.out.println(pageNum);
 		
 		return new ResponseEntity<Page<Casopis>>(casopisService.getAll(pageNum, 4), HttpStatus.OK);
 	}
