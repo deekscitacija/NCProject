@@ -1,0 +1,15 @@
+#outer-div {
+    width: 100%;
+    text-align: center;
+}
+  
+#inner-div {
+    display: inline-block;
+    padding-top : 0.5%;
+    padding-bottom : 0.5%;
+}
+
+#search-tools {
+    padding: 0.7%;
+}
+

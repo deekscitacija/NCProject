@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router, ActivatedRoute } from '../../node_modules/@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+
+  constructor(private router : Router, private route : ActivatedRoute) { }
+
+  pretrazi = function(){
+    this.router.navigate(['/naucna-centrala.com/pretraga']);
+  }
+
 }

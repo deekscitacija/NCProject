@@ -1,0 +1,162 @@
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute, Params } from '../../../../node_modules/@angular/router';
+import { ConditionalExpr } from '@angular/compiler';
+
+@Component({
+  selector: 'app-search-panel',
+  templateUrl: './search-panel.component.html',
+  styleUrls: ['./search-panel.component.css']
+})
+export class SearchPanelComponent implements OnInit {
+
+  private pageNum: number = 1;
+  private isLast: boolean = false;
+
+  private openSearchBox: boolean = false;
+  private mode: string = '';
+  private inputParam: string = '';
+
+  private sadrzajTekst: string;
+  private isSadrzajTekst: boolean = false;
+
+  private autorTekst: string;
+  private isAutorTekst: boolean = false;
+
+  private naslovTekst: string;
+  private isNaslovTekst: boolean = false;
+
+  private casopisTekst: string;
+  private isCasopisTekst: boolean = false;
+
+
+  constructor(private router : Router, private route : ActivatedRoute) { }
+
+  ngOnInit() {
+
+    let queryParams = this.getQueryParams();
+    
+    if(queryParams.has('pageNum')){
+      this.pageNum = +queryParams.get("pageNum");
+    }
+
+    if(queryParams.has('textContent')){
+      this.sadrzajTekst = queryParams.get("textContent");
+      this.isSadrzajTekst = true;
+    }
+
+    if(queryParams.has('autor')){
+      this.autorTekst = queryParams.get("autor");
+      this.isAutorTekst = true;
+    }
+
+    if(queryParams.has('magazine')){
+      this.casopisTekst = queryParams.get("magazine");
+      this.isCasopisTekst = true;
+    }
+
+    if(queryParams.has('title')){
+      this.naslovTekst = queryParams.get("title");
+      this.isNaslovTekst = true;
+    }
+
+  }
+
+  next = function(){
+    this.pageNum++;
+    this.setPageNum();
+  }
+
+  prev = function(){
+    if(this.pageNum <= 1)
+      return;
+
+    this.pageNum--;
+    this.setPageNum();
+  }
+
+  getQueryParams: any = function(){
+    let retVal: Params = null;
+    this.route.queryParamMap.subscribe((queryParams)=>{
+      retVal = queryParams;
+    });
+    return retVal;
+  }
+
+  setQueryParams: any = function(){
+    var queryParams: Params = {};
+
+    if(this.pageNum){
+      queryParams['pageNum'] = this.pageNum;
+    }
+
+    if(this.sadrzajTekst){
+      queryParams['textContent'] = this.sadrzajTekst;
+      this.isSadrzajTekst = true;
+    }else{
+      this.isSadrzajTekst = false;
+    }
+
+    if(this.autorTekst){
+      queryParams['autor'] = this.autorTekst;
+      this.isAutorTekst = true;
+    }else{
+      this.isAutorTekst = false;
+    }
+
+    if(this.casopisTekst){
+      queryParams['magazine'] = this.casopisTekst;
+      this.isCasopisTekst = true;
+    }else{
+      this.isCasopisTekst = false;
+    }
+
+    if(this.naslovTekst){
+      queryParams['title'] = this.naslovTekst;
+      this.isNaslovTekst = true;
+    }else{
+      this.isNaslovTekst = false;
+    }
+
+    return queryParams;
+  }
+
+  setPageNum = function(){
+    this.router.navigate(['naucna-centrala.com/pretraga'], {queryParams : this.setQueryParams()});
+  }
+
+  obradiTekst = function(retVal: any){
+
+    console.log(retVal)
+
+    if(retVal.mode === 'tekst'){
+      this.sadrzajTekst = retVal.sadrzaj;
+    }else if(retVal.mode === 'autor'){
+      this.autorTekst = retVal.sadrzaj;
+    }else if(retVal.mode === 'casopis'){
+      this.casopisTekst = retVal.sadrzaj;
+    }else if(retVal.mode === 'naslov'){
+      this.naslovTekst = retVal.sadrzaj;
+    }
+
+    this.openSearchBox = false;
+    this.router.navigate(['naucna-centrala.com/pretraga'], {queryParams : this.setQueryParams()});
+  }
+
+  manageTekst = function(mode: string){
+    if(mode === 'tekst'){
+      this.inputParam = this.sadrzajTekst;
+    }else if(mode === 'autor'){
+      this.inputParam = this.autorTekst;
+    }else if(mode === 'casopis'){
+      this.inputParam = this.casopisTekst;
+    }else if(mode === 'naslov'){
+      this.inputParam = this.naslovTekst;
+    }else{
+      return;
+    }
+
+    this.mode = mode;
+    this.openSearchBox = !this.openSearchBox;
+  }
+
+}

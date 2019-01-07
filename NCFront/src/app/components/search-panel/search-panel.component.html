@@ -1,0 +1,43 @@
+<div>
+  <div class="row gap-top-sm" id="search-box">
+      <div class="col-lg-1"></div>
+      <div class="col-lg-9">
+          <div class="card card-block bg-faded blue-bg1">
+              <div class="container" id="search-tools">
+                  <button class="btn btn-light btn-sm" [ngClass]="{'btn-search-hilighted': isSadrzajTekst}" (click)="manageTekst('tekst')">Sadrzaj</button>
+                  <button class="btn btn-light btn-sm" [ngClass]="{'btn-search-hilighted': isAutorTekst}" (click)="manageTekst('autor')">Autor</button>
+                  <button class="btn btn-light btn-sm" [ngClass]="{'btn-search-hilighted': isNaslovTekst}" (click)="manageTekst('naslov')">Naslov</button>
+                  <button class="btn btn-light btn-sm" [ngClass]="{'btn-search-hilighted': isCasopisTekst}" (click)="manageTekst('casopis')">Casopis</button>
+                  <button class="btn btn-light btn-sm">Kljucni pojmovi</button>
+                  <button class="btn btn-light btn-sm">Naucna oblast</button>
+              </div>
+          </div>
+          <div class="rounded-bottom peach-bg1" *ngIf="openSearchBox">
+            <app-sadrzaj-input [inputParam]="inputParam" [mode]="mode" (commitSearch)="obradiTekst($event)"></app-sadrzaj-input>
+          </div>
+      </div>
+      
+  </div>
+
+  <div class="row gap-top-sm" id="resultBox">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-10">
+
+      <div class="row gap-top-sm">
+        dhfbgvjd hfdhvgdfj udfh hdifuhg 
+      </div>
+    </div>
+  </div>
+
+  <div class="row gap-top-sm">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-9 card card-block bg-faded blue-bg1" id="outer-div">
+      <div class="container" id="inner-div">
+          <button class="btn btn-light btn-sm" (click)="prev()" [disabled]="pageNum <= 1">&lt;</button>
+          <button class="btn btn-light btn-sm">{{pageNum}}</button>
+          <button class="btn btn-light btn-sm" (click)="next()" [disabled]="isLast">&gt;</button>
+      </div>
+    </div>
+  </div>
+
+</div>

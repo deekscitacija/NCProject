@@ -27,3 +27,32 @@ body {
     background: #c0bc8d;
 }
 
+.white-bg1{
+    background: #f3f6f7;
+}
+
+.peach-bg1{
+    background: #ffebb3;
+}
+
+.div-padding-sm {
+    padding : 0.5%;
+}
+
+.btn-circle-sm {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    line-height: 1.428571429;
+    border-radius: 15px;
+}
+
+.btn-search-hilighted {
+    border: .2em solid #d2e494;
+}
+
+.btn-search-on {
+    border: .2em solid #fffd90;
+}

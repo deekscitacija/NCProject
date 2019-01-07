@@ -14,6 +14,7 @@ import { ListToStringPipe } from './pipes/list-to-string.pipe';
 import { YesNoPipe } from './pipes/yes-no.pipe';
 import { ErrorComponent } from './components/error/error.component';
 import { SearchPanelComponent } from './components/search-panel/search-panel.component';
+import { SadrzajInputComponent } from './components/search-panel/sadrzaj-input/sadrzaj-input.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { SearchPanelComponent } from './components/search-panel/search-panel.com
     ListToStringPipe,
     YesNoPipe,
     ErrorComponent,
-    SearchPanelComponent
+    SearchPanelComponent,
+    SadrzajInputComponent
   ],
   imports: [
     BrowserModule,
@@ -41,6 +43,10 @@ import { SearchPanelComponent } from './components/search-panel/search-panel.com
       {
         path : 'naucna-centrala.com',
         component : WelcomeComponent
+      },
+      {
+        path : 'naucna-centrala.com/pretraga',
+        component : SearchPanelComponent
       },
       { 
         path: '**', 
