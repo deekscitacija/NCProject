@@ -17,15 +17,13 @@
             <app-sadrzaj-input [inputParam]="inputParam" [mode]="mode" (commitSearch)="obradiTekst($event)"></app-sadrzaj-input>
           </div>
       </div>
-      
   </div>
 
   <div class="row gap-top-sm" id="resultBox">
     <div class="col-lg-1"></div>
-    <div class="col-lg-10">
-
-      <div class="row gap-top-sm">
-        dhfbgvjd hfdhvgdfj udfh hdifuhg 
+    <div class="col-lg-9" id="magazineBox">
+      <div class="gap-top-sm" *ngFor="let theResult of results">
+        <app-result-view [theResult]="theResult"></app-result-view>
       </div>
     </div>
   </div>

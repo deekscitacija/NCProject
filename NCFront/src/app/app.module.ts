@@ -17,6 +17,7 @@ import { YesNoPipe } from './pipes/yes-no.pipe';
 import { ErrorComponent } from './components/error/error.component';
 import { SearchPanelComponent } from './components/search-panel/search-panel.component';
 import { SadrzajInputComponent } from './components/search-panel/sadrzaj-input/sadrzaj-input.component';
+import { ResultViewComponent } from './components/search-panel/result-view/result-view.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { SadrzajInputComponent } from './components/search-panel/sadrzaj-input/s
     YesNoPipe,
     ErrorComponent,
     SearchPanelComponent,
-    SadrzajInputComponent
+    SadrzajInputComponent,
+    ResultViewComponent
   ],
   imports: [
     BrowserModule,

@@ -11,6 +11,7 @@ export class SearchPanelComponent implements OnInit {
 
   private pageNum: number = 1;
   private isLast: boolean = false;
+  private results: any[] = [];
 
   private openSearchBox: boolean = false;
   private mode: string = '';
@@ -66,12 +67,12 @@ export class SearchPanelComponent implements OnInit {
       this.kljucniTekst = queryParams.get("keywords");
       this.isKljucniTekst = true;
     }
-
+    
   }
 
   next = function(){
     this.pageNum++;
-    this.setPageNum();
+    this.setPath();
   }
 
   prev = function(){
@@ -79,7 +80,7 @@ export class SearchPanelComponent implements OnInit {
       return;
 
     this.pageNum--;
-    this.setPageNum();
+    this.setPath();
   }
 
   getQueryParams: any = function(){
@@ -135,7 +136,7 @@ export class SearchPanelComponent implements OnInit {
     return queryParams;
   }
 
-  setPageNum = function(){
+  setPath = function(){
     this.router.navigate(['naucna-centrala.com/pretraga'], {queryParams : this.setQueryParams()});
   }
 
@@ -154,7 +155,8 @@ export class SearchPanelComponent implements OnInit {
     }
 
     this.openSearchBox = false;
-    this.router.navigate(['naucna-centrala.com/pretraga'], {queryParams : this.setQueryParams()});
+    this.setPath();
+    this.executeSearch();
   }
 
   manageTekst = function(mode: string){
@@ -176,18 +178,21 @@ export class SearchPanelComponent implements OnInit {
     this.openSearchBox = !this.openSearchBox;
   }
 
-  executeSearch(){
-
+  executeSearch = function(){
     this.searchService.executeSearch(this.pageNum, this.autorTekst, this.casopisTekst, 
       this.naslovTekst, this.kljucniTekst, this.sadrzajTekst, null).subscribe(
         (res: any) => {
-          console.log(res);
+          if(res){
+            this.results = res.content;
+            console.log(this.results)
+          }else{
+            this.results = [];
+          }
         },
         (error: any) => {
           alert("Greska!");
         }
       );
-
   }
 
 }

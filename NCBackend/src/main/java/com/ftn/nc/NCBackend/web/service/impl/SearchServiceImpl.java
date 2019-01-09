@@ -29,15 +29,15 @@ public class SearchServiceImpl implements SearchService{
 		BoolQueryBuilder queryParams = QueryBuilders.boolQuery();
 	
 		if(autor != null) {
-			queryParams.should(QueryBuilders.matchQuery("autor", autor).operator(Operator.AND));
+			queryParams.must(QueryBuilders.matchQuery("autor", autor).operator(Operator.AND));
 		}
 		
 		if(casopis != null) {
-			queryParams.should(QueryBuilders.matchQuery("nazivCasopisa", casopis).operator(Operator.AND));
+			queryParams.must(QueryBuilders.matchQuery("nazivCasopisa", casopis).operator(Operator.AND));
 		}		
 		
 		if(naslov != null) {
-			queryParams.should(QueryBuilders.matchQuery("naslov", naslov).operator(Operator.AND));
+			queryParams.must(QueryBuilders.matchQuery("naslov", naslov).operator(Operator.AND));
 		}		
 		
 		return elasticsearchTemplate.queryForPage(searchQueryBuilder.withQuery(queryParams).build(), IndexUnit.class);

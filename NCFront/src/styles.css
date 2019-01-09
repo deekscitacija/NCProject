@@ -39,6 +39,37 @@ body {
     padding : 0.5%;
 }
 
+.orange-circle-button {
+	box-shadow: 2px 4px 0 2px rgba(0,0,0,0.1);
+	border: .5em solid #788993;
+	font-size: 1em;
+	line-height: 1.1em;
+	color: #ffffff;
+	background-color: #788993;
+	margin: auto;
+	border-radius: 50%;
+	height: 7em;
+	width: 7em;
+    position: relative;
+    display:block;
+}
+.orange-circle-button:hover {
+	color:#ffffff;
+    background-color: #788993;
+	text-decoration: none;
+	border-color: #9cb0bb;
+	
+}
+.orange-circle-button:visited {
+	color:#ffffff;
+    background-color: #788993;
+	text-decoration: none;
+	
+}
+.orange-circle-link-greater-than {
+    font-size: 1em;
+}
+
 .btn-circle-sm {
     width: 30px;
     height: 30px;

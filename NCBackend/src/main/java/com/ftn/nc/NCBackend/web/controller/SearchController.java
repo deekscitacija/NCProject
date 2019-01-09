@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ftn.nc.NCBackend.elastic.model.NaucnaOblastInfo;
 import com.ftn.nc.NCBackend.elastic.model.IndexUnit;
-import com.ftn.nc.NCBackend.elastic.repository.NaucnaOblastInfoRepository;
 import com.ftn.nc.NCBackend.web.service.SearchService;
 
 @RestController
@@ -38,12 +36,9 @@ public class SearchController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		System.out.println("PageNum: "+pageNum);
-		System.out.println("Autor: "+autor);
-		System.out.println("Casopis: "+casopis);
-		System.out.println("Naslov: "+naslov);
-		System.out.println("Kljucne: "+kljucne);
-		System.out.println("Tekst: "+tekst);
+		if(autor == null && casopis == null && naslov == null && kljucne == null && tekst == null && naucneOblasti == null) {
+			return new ResponseEntity<>(null, HttpStatus.OK);
+		}
 		
 		
 		return new ResponseEntity<Page<IndexUnit>>(searchService.executeSearch(pageNum, autor, casopis, naslov, kljucne, tekst, null), HttpStatus.OK);

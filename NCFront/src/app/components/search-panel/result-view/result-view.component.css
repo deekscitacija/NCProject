@@ -1,0 +1,24 @@
+.light-border{
+    box-shadow: 2px 4px 0 2px rgba(0,0,0,0.1);
+	border: .5em solid #788993;
+	font-size: 1em;
+	line-height: 1.1em;
+	color: #ffffff;
+	background-color: #788993;
+	margin: auto;
+    position: relative;
+    display:block;
+}
+
+p{
+    font-style: italic;
+}
+
+#whitePanel {
+    background: #ffffff;
+    min-height: 65%;
+}
+
+#magazineBox {
+	min-height: 500px;
+}

@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-lg-6">
+    <h5 class="light-border" align="center">{{theResult.naslov}}</h5>
+    <div id="whitePanel">
+      <label class="right-items">Autor: {{theResult.autor}}</label> 
+      <br/>
+      <p>{{theResult.apstrakt}}</p>
+    </div>
+  </div>
+  <div class="col-lg-4 olive-bg1">
+    <h6>{{theResult.naslov}}</h6>
+  </div>
+  <div class="col-lg-2">
+      <button class="btn btn-default orange-circle-button" *ngIf="theResult.openAccess">Pregledaj<br />rad...</button>
+      <button class="btn btn-default orange-circle-button" *ngIf="!theResult.openAccess">Pretplati<br />se...</button>
+  </div>
+</div>
