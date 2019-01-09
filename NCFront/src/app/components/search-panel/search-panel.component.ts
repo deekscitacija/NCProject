@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '../../../../node_modules/@angular/router';
-import { ConditionalExpr } from '@angular/compiler';
+import { SearchService } from '../../services/search.service';
 
 @Component({
   selector: 'app-search-panel',
@@ -28,8 +28,11 @@ export class SearchPanelComponent implements OnInit {
   private casopisTekst: string;
   private isCasopisTekst: boolean = false;
 
+  private kljucniTekst: string;
+  private isKljucniTekst: boolean = false;
 
-  constructor(private router : Router, private route : ActivatedRoute) { }
+
+  constructor(private router : Router, private route : ActivatedRoute, private searchService: SearchService) { }
 
   ngOnInit() {
 
@@ -57,6 +60,11 @@ export class SearchPanelComponent implements OnInit {
     if(queryParams.has('title')){
       this.naslovTekst = queryParams.get("title");
       this.isNaslovTekst = true;
+    }
+
+    if(queryParams.has('keywords')){
+      this.kljucniTekst = queryParams.get("keywords");
+      this.isKljucniTekst = true;
     }
 
   }
@@ -117,6 +125,13 @@ export class SearchPanelComponent implements OnInit {
       this.isNaslovTekst = false;
     }
 
+    if(this.kljucniTekst){
+      queryParams['keywords'] = this.kljucniTekst;
+      this.isKljucniTekst = true;
+    }else{
+      this.isKljucniTekst = false;
+    }
+
     return queryParams;
   }
 
@@ -126,8 +141,6 @@ export class SearchPanelComponent implements OnInit {
 
   obradiTekst = function(retVal: any){
 
-    console.log(retVal)
-
     if(retVal.mode === 'tekst'){
       this.sadrzajTekst = retVal.sadrzaj;
     }else if(retVal.mode === 'autor'){
@@ -136,6 +149,8 @@ export class SearchPanelComponent implements OnInit {
       this.casopisTekst = retVal.sadrzaj;
     }else if(retVal.mode === 'naslov'){
       this.naslovTekst = retVal.sadrzaj;
+    }else if(retVal.mode === 'kljucni'){
+      this.kljucniTekst = retVal.sadrzaj;
     }
 
     this.openSearchBox = false;
@@ -151,12 +166,28 @@ export class SearchPanelComponent implements OnInit {
       this.inputParam = this.casopisTekst;
     }else if(mode === 'naslov'){
       this.inputParam = this.naslovTekst;
+    }else if(mode === 'kljucni'){
+      this.inputParam = this.kljucniTekst;
     }else{
       return;
     }
 
     this.mode = mode;
     this.openSearchBox = !this.openSearchBox;
+  }
+
+  executeSearch(){
+
+    this.searchService.executeSearch(this.pageNum, this.autorTekst, this.casopisTekst, 
+      this.naslovTekst, this.kljucniTekst, this.sadrzajTekst, null).subscribe(
+        (res: any) => {
+          console.log(res);
+        },
+        (error: any) => {
+          alert("Greska!");
+        }
+      );
+
   }
 
 }

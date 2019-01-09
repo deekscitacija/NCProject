@@ -1,10 +1,11 @@
 <div class="row div-padding-sm">
   <div class="col-lg-2"></div>
   <div class="col-lg-8">
-    <input class="form-control" [(ngModel)]="sadrzaj" name="sadrzaj" id="sadrzaj" placeholder="Deo sadrzaja..." type="text" />
+    <input class="form-control" [(ngModel)]="sadrzaj" name="sadrzaj" id="sadrzaj" placeholder="{{placeholderText}}" type="text" />
   </div>
   <div class="col-lg-2 div-padding-sm">
     <button class="btn btn-success btn-circle-sm" (click)="potvrdi()"><i class="fas fa-check"></i></button>
+    <button class="btn btn-info btn-circle-sm" (click)="ocisti()"><i class="fas fa-broom"></i></button>
     <button class="btn btn-danger btn-circle-sm" (click)="odbij()"><i class="fas fa-times"></i></button>
   </div>
 </div>

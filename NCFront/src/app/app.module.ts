@@ -6,9 +6,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
-import { WelcomeComponent } from './components/welcome/welcome.component';
 
 import { CasopisService } from './services/casopis.service';
+import { SearchService } from './services/search.service';
+
+import { WelcomeComponent } from './components/welcome/welcome.component';
 import { MagazineListComponent } from './components/magazine-list/magazine-list.component';
 import { ListToStringPipe } from './pipes/list-to-string.pipe';
 import { YesNoPipe } from './pipes/yes-no.pipe';
@@ -55,7 +57,8 @@ import { SadrzajInputComponent } from './components/search-panel/sadrzaj-input/s
     ])
   ],
   providers: [
-    CasopisService
+    CasopisService,
+    SearchService
   ],
   bootstrap: [AppComponent]
 })

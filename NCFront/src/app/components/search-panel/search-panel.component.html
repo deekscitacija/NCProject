@@ -8,8 +8,9 @@
                   <button class="btn btn-light btn-sm" [ngClass]="{'btn-search-hilighted': isAutorTekst}" (click)="manageTekst('autor')">Autor</button>
                   <button class="btn btn-light btn-sm" [ngClass]="{'btn-search-hilighted': isNaslovTekst}" (click)="manageTekst('naslov')">Naslov</button>
                   <button class="btn btn-light btn-sm" [ngClass]="{'btn-search-hilighted': isCasopisTekst}" (click)="manageTekst('casopis')">Casopis</button>
-                  <button class="btn btn-light btn-sm">Kljucni pojmovi</button>
+                  <button class="btn btn-light btn-sm" [ngClass]="{'btn-search-hilighted': isKljucniTekst}" (click)="manageTekst('kljucni')">Kljucni pojmovi</button>
                   <button class="btn btn-light btn-sm">Naucna oblast</button>
+                  <button class="btn btn-light btn-circle-sm right-items" (click)="executeSearch()"><i class="fas fa-search"></i></button>
               </div>
           </div>
           <div class="rounded-bottom peach-bg1" *ngIf="openSearchBox">

@@ -50,9 +50,9 @@ body {
 }
 
 .btn-search-hilighted {
-    border: .2em solid #d2e494;
+    border: .2em solid #c2dd67;
 }
 
-.btn-search-on {
-    border: .2em solid #fffd90;
+.right-items{
+    float:right;
 }
