@@ -5,36 +5,34 @@ import java.util.Set;
 
 import javax.annotation.PostConstruct;
 
-import org.mockito.internal.util.collections.HashCodeAndEqualsSafeSet;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-import com.ftn.nc.NCBackend.model.Autor;
-import com.ftn.nc.NCBackend.model.Casopis;
-import com.ftn.nc.NCBackend.model.Cena;
-import com.ftn.nc.NCBackend.model.Korisnik;
-import com.ftn.nc.NCBackend.model.NaucnaOblast;
-import com.ftn.nc.NCBackend.model.Permisija;
-import com.ftn.nc.NCBackend.model.Recenzent;
-import com.ftn.nc.NCBackend.model.RegistrovaniKorisnik;
-import com.ftn.nc.NCBackend.model.TipKorisnika;
-import com.ftn.nc.NCBackend.model.Urednik;
-import com.ftn.nc.NCBackend.repository.AutorRepository;
-import com.ftn.nc.NCBackend.repository.CasopisRepository;
-import com.ftn.nc.NCBackend.repository.CenaReposiotry;
-import com.ftn.nc.NCBackend.repository.DrzavaRepository;
-import com.ftn.nc.NCBackend.repository.GradRepository;
-import com.ftn.nc.NCBackend.repository.IzdanjeRepository;
-import com.ftn.nc.NCBackend.repository.KomentarRepository;
-import com.ftn.nc.NCBackend.repository.KorisnikRepository;
-import com.ftn.nc.NCBackend.repository.NaucnaOblastRepository;
-import com.ftn.nc.NCBackend.repository.NaucniRadRepository;
-import com.ftn.nc.NCBackend.repository.PermisijaRepository;
-import com.ftn.nc.NCBackend.repository.RecenzentRepository;
-import com.ftn.nc.NCBackend.repository.RegistrovaniKorisnikRepository;
-import com.ftn.nc.NCBackend.repository.RevizijaRadaRepository;
-import com.ftn.nc.NCBackend.repository.TipKorisnikaRepository;
-import com.ftn.nc.NCBackend.repository.UrednikRepository;
+import com.ftn.nc.NCBackend.web.model.Autor;
+import com.ftn.nc.NCBackend.web.model.Casopis;
+import com.ftn.nc.NCBackend.web.model.Cena;
+import com.ftn.nc.NCBackend.web.model.Korisnik;
+import com.ftn.nc.NCBackend.web.model.NaucnaOblast;
+import com.ftn.nc.NCBackend.web.model.Permisija;
+import com.ftn.nc.NCBackend.web.model.Recenzent;
+import com.ftn.nc.NCBackend.web.model.RegistrovaniKorisnik;
+import com.ftn.nc.NCBackend.web.model.TipKorisnika;
+import com.ftn.nc.NCBackend.web.model.Urednik;
+import com.ftn.nc.NCBackend.web.repository.AutorRepository;
+import com.ftn.nc.NCBackend.web.repository.CasopisRepository;
+import com.ftn.nc.NCBackend.web.repository.CenaReposiotry;
+import com.ftn.nc.NCBackend.web.repository.DrzavaRepository;
+import com.ftn.nc.NCBackend.web.repository.GradRepository;
+import com.ftn.nc.NCBackend.web.repository.IzdanjeRepository;
+import com.ftn.nc.NCBackend.web.repository.KomentarRepository;
+import com.ftn.nc.NCBackend.web.repository.KorisnikRepository;
+import com.ftn.nc.NCBackend.web.repository.NaucnaOblastRepository;
+import com.ftn.nc.NCBackend.web.repository.NaucniRadRepository;
+import com.ftn.nc.NCBackend.web.repository.PermisijaRepository;
+import com.ftn.nc.NCBackend.web.repository.RecenzentRepository;
+import com.ftn.nc.NCBackend.web.repository.RegistrovaniKorisnikRepository;
+import com.ftn.nc.NCBackend.web.repository.RevizijaRadaRepository;
+import com.ftn.nc.NCBackend.web.repository.TipKorisnikaRepository;
+import com.ftn.nc.NCBackend.web.repository.UrednikRepository;
 
 //@Component
 public class StartData {
