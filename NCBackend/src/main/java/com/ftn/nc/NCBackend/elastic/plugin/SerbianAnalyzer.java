@@ -32,7 +32,8 @@ public class SerbianAnalyzer extends Analyzer {
 		"cu", "ces", "ce", "cemo", "cete",
 		"necu", "neces", "nece", "necemo", "necete",
 		"mogu", "možeš", "može", "možemo", "možete",
-		"mozes", "moze", "mozemo", "mozete"};
+		"mozes", "moze", "mozemo", "mozete",
+		"i", "a", "ili", "ali", "pa", "te", "da", "u", "po", "na" };
         
 	
 	public SerbianAnalyzer(Version version) {

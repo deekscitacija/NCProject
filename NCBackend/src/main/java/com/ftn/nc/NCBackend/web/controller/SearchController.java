@@ -2,16 +2,24 @@ package com.ftn.nc.NCBackend.web.controller;
 
 import java.util.List;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ftn.nc.NCBackend.elastic.dto.QueryDTO;
 import com.ftn.nc.NCBackend.elastic.model.IndexUnit;
 import com.ftn.nc.NCBackend.web.service.SearchService;
 
@@ -22,26 +30,26 @@ public class SearchController {
 	@Autowired
 	private SearchService searchService;
 	
-	@RequestMapping(value = "search", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Page<IndexUnit>> search(
-			@RequestParam(value = "pageNum", required = true) int pageNum,
-			@RequestParam(value = "autor", required = false) String autor,
-			@RequestParam(value = "casopis", required = false) String casopis,
-			@RequestParam(value = "naslov", required = false) String naslov,
-			@RequestParam(value = "kljucne", required = false) String kljucne,
-			@RequestParam(value = "tekst", required = false) String tekst,
-			@RequestParam(value = "naucne", required = false) List<String> naucneOblasti){
+	@RequestMapping(value = "search", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Page<IndexUnit>> search1(@RequestBody @NotNull QueryDTO searchParams, BindingResult result){
 		
-		if(pageNum < 0) {
+		if(result.hasErrors()) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		if(autor == null && casopis == null && naslov == null && kljucne == null && tekst == null && naucneOblasti == null) {
-			return new ResponseEntity<>(null, HttpStatus.OK);
+		if(searchParams.getParams() == null && searchParams.getNaucneOblasti() == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
+		if(searchParams.getParams().isEmpty() && searchParams.getNaucneOblasti().isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 		
-		return new ResponseEntity<Page<IndexUnit>>(searchService.executeSearch(pageNum, autor, casopis, naslov, kljucne, tekst, null), HttpStatus.OK);
+		if(searchParams.getParams().size() < 2) {
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<>(searchService.executeSearch(searchParams), HttpStatus.OK);
 	}
 
 }

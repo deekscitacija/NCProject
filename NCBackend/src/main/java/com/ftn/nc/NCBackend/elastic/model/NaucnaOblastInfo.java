@@ -12,7 +12,7 @@ public class NaucnaOblastInfo {
 	@Field(type = FieldType.text)
 	private String id;
 	
-	@Field(type = FieldType.text)
+	@Field(type = FieldType.text, analyzer = "serbian-analyzer", searchAnalyzer = "serbian-analyzer")
 	private String naziv;
 	
 	@Field(type = FieldType.text)
