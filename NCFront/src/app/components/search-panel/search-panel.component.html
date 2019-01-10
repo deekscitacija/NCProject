@@ -23,12 +23,12 @@
     <div class="col-lg-1"></div>
     <div class="col-lg-9" id="magazineBox">
       <div class="gap-top-sm" *ngFor="let theResult of results">
-        <app-result-view [theResult]="theResult"></app-result-view>
+        <app-result-view [theResult]="theResult" [isSadrzajTekst]="isSadrzajTekst"></app-result-view>
       </div>
     </div>
   </div>
 
-  <div class="row gap-top-sm">
+  <div class="row gap-top-sm" *ngIf="results && results.length > 0">
     <div class="col-lg-1"></div>
     <div class="col-lg-9 card card-block bg-faded blue-bg1" id="outer-div">
       <div class="container" id="inner-div">

@@ -10,15 +10,37 @@
     display:block;
 }
 
+#htmlPanel{
+	font-style: italic;
+	margin-top: 2%;
+	font-size: 0.85em;
+	color: #3c425c;
+	font-weight: 600;
+}
+
 p{
-    font-style: italic;
+	font-style: italic;
+	margin-left: 2%;
+	font-size: 0.85em;
+	color: #3c425c;
+	font-weight: 600;
 }
 
 #whitePanel {
     background: #ffffff;
-    min-height: 65%;
+    min-height: 75%;
 }
 
 #magazineBox {
 	min-height: 500px;
 }
+
+label{
+	width: 100%;
+	margin-top: 1%;
+	margin-left: 1%;
+	font-size: 0.9em;
+	color: #3c425c;
+    font-weight: 700;
+}
+

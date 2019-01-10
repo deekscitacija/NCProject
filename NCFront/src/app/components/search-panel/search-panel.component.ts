@@ -68,11 +68,13 @@ export class SearchPanelComponent implements OnInit {
       this.isKljucniTekst = true;
     }
     
+    this.executeSearch();
   }
 
   next = function(){
     this.pageNum++;
     this.setPath();
+    this.executeSearch();
   }
 
   prev = function(){
@@ -81,6 +83,7 @@ export class SearchPanelComponent implements OnInit {
 
     this.pageNum--;
     this.setPath();
+    this.executeSearch();
   }
 
   getQueryParams: any = function(){
@@ -184,7 +187,6 @@ export class SearchPanelComponent implements OnInit {
         (res: any) => {
           if(res){
             this.results = res.content;
-            console.log(this.results)
           }else{
             this.results = [];
           }

@@ -9,28 +9,33 @@ export class SearchService {
 
   public executeSearch(pageNum: number, autor: string, casopis: string, naslov: string, kljucne: string, tekst: string, naucne: string[]){
 
-    var params = new HttpParams();
-    params = params.append('pageNum', String(pageNum));
-
-    if(autor)
-      params = params.append('autor', autor);
-
-    if(casopis)
-      params = params.append('casopis', casopis);
+    let params: any[] = [];
     
-    if(naslov)
-      params = params.append('naslov', naslov);
+    if(pageNum){
+      params.push({"key" : "pageNum", "value" : String(pageNum), "phraseQuery" : false});
+    }
 
-    if(kljucne)
-      params = params.append('kljucne', kljucne);
+    if(autor){
+      params.push({"key" : "autor", "value" : autor, "phraseQuery" : false});
+    }
     
-    if(tekst)
-      params = params.append('tekst', tekst);
-
-    if(naucne && naucne.length > 0)
-      params = params.append('naucne', this.stringifyArray(naucne));
-
-    return this.http.get("/app/search", {params : params});
+    if(casopis){
+      params.push({"key" : "casopis", "value" : casopis, "phraseQuery" : false});
+    }
+    
+    if(naslov){
+      params.push({"key" : "naslov", "value" : naslov, "phraseQuery" : false});
+    }
+    
+    if(kljucne){
+      params.push({"key" : "kljucne", "value" : kljucne, "phraseQuery" : false});
+    }
+    
+    if(tekst){
+      params.push({"key" : "tekst", "value" : tekst, "phraseQuery" : false});
+    }
+    
+    return this.http.post("/app/search", {"params" : params, "naucneOblasti" : naucne});
   }
 
   private stringifyArray = function(array : any[]){

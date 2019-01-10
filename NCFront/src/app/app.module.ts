@@ -10,14 +10,17 @@ import { AppComponent } from './app.component';
 import { CasopisService } from './services/casopis.service';
 import { SearchService } from './services/search.service';
 
-import { WelcomeComponent } from './components/welcome/welcome.component';
-import { MagazineListComponent } from './components/magazine-list/magazine-list.component';
 import { ListToStringPipe } from './pipes/list-to-string.pipe';
 import { YesNoPipe } from './pipes/yes-no.pipe';
+import { SubstringPipe } from './pipes/substring.pipe';
+
+import { WelcomeComponent } from './components/welcome/welcome.component';
+import { MagazineListComponent } from './components/magazine-list/magazine-list.component';
 import { ErrorComponent } from './components/error/error.component';
 import { SearchPanelComponent } from './components/search-panel/search-panel.component';
 import { SadrzajInputComponent } from './components/search-panel/sadrzaj-input/sadrzaj-input.component';
 import { ResultViewComponent } from './components/search-panel/result-view/result-view.component';
+
 
 
 @NgModule({
@@ -30,7 +33,8 @@ import { ResultViewComponent } from './components/search-panel/result-view/resul
     ErrorComponent,
     SearchPanelComponent,
     SadrzajInputComponent,
-    ResultViewComponent
+    ResultViewComponent,
+    SubstringPipe
   ],
   imports: [
     BrowserModule,
