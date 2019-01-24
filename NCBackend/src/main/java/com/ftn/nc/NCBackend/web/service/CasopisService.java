@@ -8,4 +8,6 @@ public interface CasopisService {
 
 	public Page<Casopis> getAll(int offset, int num);
 	
+	public Casopis getById(Long id);
+	
 }

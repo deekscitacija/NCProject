@@ -95,6 +95,12 @@ public class StartDataElastic {
 				"Ћирилица је изведена из грчког унцијала, проширена словима из старијег глагољичког алфабета, укључујући неке лигатуре. Та додатна слова су додата за старословенске гласове који нису присутни у Грчком. Писмо је названо у част два византијска брата,[9] Ћирила и Методија, који су раније креирали глагољичко писмо. Модерни научници верују да су ћирилицу развили и формализовали рани ученици Ћирила и Методија.",
 				true, null, nol1);
 		
+		IndexUnit iu9 = new IndexUnit("9", "Sveska2", "Mira Maric, Mika Mikic", "olovka bandera prozor vrata", "Probaj da procitas od svega po malo", "Mile Milic", 
+				"Nacionalna Geografija", "Patka. Patka. Proba da vidim moze li ovako. Proba da vidim moze li ovako. Proba da vidim moze li ovako. Patka. Proba da vidim moze li ovako. Proba da vidim moze li ovako. Proba da vidim moze li ovako. Proba da vidim moze li ovako. Proba da vidim moze li ovako. Proba da vidim moze li ovako. Proba da vidim moze li ovako. Proba da vidim moze li ovako. Proba da vidim moze li ovako. Patka. Proba da vidim moze li ovako. Proba da vidim moze li ovako. Proba da vidim moze li ovako. Proba da vidim moze li ovako. Proba da vidim moze li ovako. Proba da vidim moze li ovako. Proba da vidim moze li ovako. Proba da vidim moze li ovako. Proba da vidim moze li ovako. Patka. Proba da vidim moze li ovako. Proba da vidim moze li ovako. Proba da vidim moze li ovako. Proba da vidim moze li ovako. Proba da vidim moze li ovako. Proba da vidim moze li ovako. Patka Patka Patka Patka Patka Patka!", true, null, nol2);
+		
+		IndexUnit iu8 = new IndexUnit("8", "Sveska3", "Mira Maric, Mika Mikic", "olovka bandera prozor vrata", "Probaj da procitas od svega po malo", "Mile Milic", 
+				"Nacionalna Geografija", "Hajde da vidim sta ovde uopste u opis da stavim? Patka.", true, null, nol2);
+		
 		indexUnitRepository.save(iu1);
 		indexUnitRepository.save(iu2);
 		indexUnitRepository.save(iu3);
@@ -102,7 +108,8 @@ public class StartDataElastic {
 		indexUnitRepository.save(iu5);
 		indexUnitRepository.save(iu6);
 		indexUnitRepository.save(iu7);
-		
+		indexUnitRepository.save(iu8);
+		indexUnitRepository.save(iu9);
 	}
 	
 	

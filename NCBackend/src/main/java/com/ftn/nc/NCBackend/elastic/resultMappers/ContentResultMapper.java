@@ -15,15 +15,8 @@ import com.ftn.nc.NCBackend.elastic.model.NaucnaOblastInfo;
 
 public class ContentResultMapper implements SearchResultMapper{
 	
-	private String fieldName = "";
-	
 	public ContentResultMapper() {
 		
-	}
-	
-	public ContentResultMapper(String fieldName) {
-		super();
-		this.fieldName = fieldName;
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -48,7 +41,7 @@ public class ContentResultMapper implements SearchResultMapper{
             indexUnit.setCasopis((String) source.get("casopis"));
             indexUnit.setOpenAccess((boolean) source.get("openAccess"));
             
-            String highValue = searchHit.getHighlightFields().get(this.fieldName).fragments()[0].toString();
+            String highValue = "..."+searchHit.getHighlightFields().get("tekst").fragments()[0].toString()+"...";
             indexUnit.setTekst(highValue);
             
             chunk.add(indexUnit);

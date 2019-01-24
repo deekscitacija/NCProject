@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ftn.nc.NCBackend.elastic.repository.NaucnaOblastInfoRepository;
+import com.ftn.nc.NCBackend.web.dto.CasopisDTO;
 import com.ftn.nc.NCBackend.web.model.Casopis;
+import com.ftn.nc.NCBackend.web.model.Korisnik;
 import com.ftn.nc.NCBackend.web.service.CasopisService;
+import com.ftn.nc.NCBackend.web.service.KorisnikService;
 
 @RestController
 @RequestMapping(value = "/app/")
@@ -21,6 +24,9 @@ public class CasopisController {
 	@Autowired
 	private CasopisService casopisService;
 	
+	@Autowired
+	private KorisnikService korisnikService;
+	
 	@RequestMapping(value = "getPageMagazine", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Page<Casopis>> getPage(@RequestParam(value = "pageNum", required = true) int pageNum){
 		
@@ -28,9 +34,25 @@ public class CasopisController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		System.out.println(pageNum);
-		
 		return new ResponseEntity<Page<Casopis>>(casopisService.getAll(pageNum, 4), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "getMagazine", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<CasopisDTO> getMagazine(@RequestParam(value = "magazineId", required = true) int magazineId){
+		
+		if(magazineId < 0) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		Casopis retVal = casopisService.getById(new Long(magazineId));
+		
+		if(retVal == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		Korisnik korisnik = korisnikService.getById(retVal.getUrednik().getId());
+		
+		return new ResponseEntity<CasopisDTO>(new CasopisDTO(retVal, korisnik), HttpStatus.OK);
 	}
 
 }

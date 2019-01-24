@@ -63,7 +63,7 @@ public class SearchServiceImpl implements SearchService{
 	    ).build();
 		
 		if(tekst != null) {
-			return elasticsearchTemplate.queryForPage(theQuery, IndexUnit.class, new ContentResultMapper("tekst"));
+			return elasticsearchTemplate.queryForPage(theQuery, IndexUnit.class, new ContentResultMapper());
 		}
 		
 		return elasticsearchTemplate.queryForPage(theQuery, IndexUnit.class);
@@ -83,15 +83,14 @@ public class SearchServiceImpl implements SearchService{
 			String key = searchParam.getKey();
 			String value = searchParam.getValue();
 			if((key != null && value != null)) {
-				if((key.equals("autor") || key.equals("casopis") || key.equals("naslov") || key.equals("tekst") || key.equals("kljucne"))){
-					queryParams.must(QueryBuilders.commonTermsQuery(key, value));
-					if(key.equals("tekst")) {
-						textSearch = true;
-					}
+				if(!key.equals("pageNum")){
+					queryParams.must(QueryBuilders.commonTermsQuery(key, value));	
+				}else{
+					pageNum = Integer.parseInt(value);
 				}
 				
-				if(key.equals("pageNum")) {
-					pageNum = Integer.parseInt(value);
+				if(key.equals("tekst")) {
+					textSearch = true;
 				}
 			}
 		}
@@ -106,7 +105,7 @@ public class SearchServiceImpl implements SearchService{
 		.build();
 		
 		if(textSearch) {
-			return elasticsearchTemplate.queryForPage(theQuery, IndexUnit.class, new ContentResultMapper("tekst"));
+			return elasticsearchTemplate.queryForPage(theQuery, IndexUnit.class, new ContentResultMapper());
 		}
 		
 		return elasticsearchTemplate.queryForPage(theQuery, IndexUnit.class);

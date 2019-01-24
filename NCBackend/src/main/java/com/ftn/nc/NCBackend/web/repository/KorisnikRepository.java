@@ -6,4 +6,6 @@ import com.ftn.nc.NCBackend.web.model.Korisnik;
 
 public interface KorisnikRepository extends JpaRepository<Korisnik, Long>{
 
+	public Korisnik findByEmail(String email);
+	
 }
