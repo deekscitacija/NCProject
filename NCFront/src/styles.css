@@ -19,6 +19,12 @@ body {
     font-size: 22px;
 }
 
+.title-text-lg{
+    color: #3c425c;
+    font-size: 28px;
+    font-weight: 700;
+}
+
 .blue-bg1 {
     background: #909da5;
 }

@@ -13,7 +13,7 @@ export class ResultViewComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.theResult);
+    
   }
 
 }

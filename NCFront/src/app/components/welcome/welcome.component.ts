@@ -56,4 +56,9 @@ export class WelcomeComponent implements OnInit {
     this.router.navigate(['naucna-centrala.com'], {queryParams : queryParams});
   }
 
+  pregledaj = function(magazineId: number){
+    
+    this.router.navigate(['naucna-centrala.com/casopis/'+magazineId]);
+  }
+
 }

@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 
 import { CasopisService } from './services/casopis.service';
 import { SearchService } from './services/search.service';
+import { LoginService } from './services/login.service';
 
 import { ListToStringPipe } from './pipes/list-to-string.pipe';
 import { YesNoPipe } from './pipes/yes-no.pipe';
@@ -20,6 +21,7 @@ import { ErrorComponent } from './components/error/error.component';
 import { SearchPanelComponent } from './components/search-panel/search-panel.component';
 import { SadrzajInputComponent } from './components/search-panel/sadrzaj-input/sadrzaj-input.component';
 import { ResultViewComponent } from './components/search-panel/result-view/result-view.component';
+import { MagazinePreviewComponent } from './components/magazine-preview/magazine-preview.component';
 
 
 
@@ -34,7 +36,8 @@ import { ResultViewComponent } from './components/search-panel/result-view/resul
     SearchPanelComponent,
     SadrzajInputComponent,
     ResultViewComponent,
-    SubstringPipe
+    SubstringPipe,
+    MagazinePreviewComponent
   ],
   imports: [
     BrowserModule,
@@ -56,6 +59,10 @@ import { ResultViewComponent } from './components/search-panel/result-view/resul
         path : 'naucna-centrala.com/pretraga',
         component : SearchPanelComponent
       },
+      {
+        path : 'naucna-centrala.com/casopis/:id',
+        component : MagazinePreviewComponent
+      },
       { 
         path: '**', 
         component: ErrorComponent 
@@ -64,7 +71,8 @@ import { ResultViewComponent } from './components/search-panel/result-view/resul
   ],
   providers: [
     CasopisService,
-    SearchService
+    SearchService,
+    LoginService
   ],
   bootstrap: [AppComponent]
 })

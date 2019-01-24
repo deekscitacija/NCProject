@@ -10,7 +10,7 @@
           </div>
         </div>
         <div class="col-lg-2">
-            <button class="btn btn-default orange-circle-button" *ngIf="magazine.openAccess">Pregledaj<br />casopis...</button>
+            <button class="btn btn-default orange-circle-button" (click)="pregledaj(magazine.id)" *ngIf="magazine.openAccess">Pregledaj<br />casopis...</button>
             <button class="btn btn-default orange-circle-button" *ngIf="!magazine.openAccess">Pretplati<br />se...</button>
         </div>
       </div>

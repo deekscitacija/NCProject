@@ -13,18 +13,18 @@
         </li>
         
       </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li class="nav-item">
+      <ul class="nav navbar-nav navbar-right" *ngIf="!isPrijava">
+        <li class="nav-item" *ngIf="!korisnik">
           <button class="btn btn-link nav-link" (click)="login()">Prijava</button>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="!korisnik">
           <button class="btn btn-link nav-link" (click)="register()">Registracija</button>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="korisnik">
             <a class="btn btn-link nav-link">Prijavljeni ste kao: </a>
         </li>
   
-        <li class="nav-item dropdown">
+        <li class="nav-item dropdown" *ngIf="korisnik">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             username
           </a>
@@ -33,6 +33,20 @@
             <div class="dropdown-divider"></div>
             <a class="dropdown-item">Odjavite se</a>
           </div>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right navbar-width" *ngIf="isPrijava">
+        <li class="nav-item">
+          <input type = "text" class="form-control" [(ngModel)]="emailPass.email" placeholder="Email">
+        </li>
+        <li class="nav-item gap-left">
+          <input type = "text" class="form-control" [(ngModel)]="emailPass.password" placeholder="Lozinka">
+        </li>
+        <li class="nav-item gap-left">
+          <button class="btn btn-success btn-circle-sm" (click)="potvrdi()"><i class="fas fa-check"></i></button>
+        </li>
+        <li class="nav-item gap-left">
+            <button class="btn btn-danger btn-circle-sm" (click)="odbij()"><i class="fas fa-times"></i></button>
         </li>
       </ul>
     </div>

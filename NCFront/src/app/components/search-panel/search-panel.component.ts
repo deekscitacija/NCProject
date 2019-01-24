@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SystemJsNgModuleLoader } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '../../../../node_modules/@angular/router';
 import { SearchService } from '../../services/search.service';
 
@@ -18,57 +18,15 @@ export class SearchPanelComponent implements OnInit {
   private inputParam: string = '';
 
   private sadrzajTekst: string;
-  private isSadrzajTekst: boolean = false;
-
   private autorTekst: string;
-  private isAutorTekst: boolean = false;
-
   private naslovTekst: string;
-  private isNaslovTekst: boolean = false;
-
   private casopisTekst: string;
-  private isCasopisTekst: boolean = false;
-
   private kljucniTekst: string;
-  private isKljucniTekst: boolean = false;
-
 
   constructor(private router : Router, private route : ActivatedRoute, private searchService: SearchService) { }
 
   ngOnInit() {
-
-    let queryParams = this.getQueryParams();
-    
-    if(queryParams.has('pageNum')){
-      this.pageNum = +queryParams.get("pageNum");
-    }
-
-    if(queryParams.has('textContent')){
-      this.sadrzajTekst = queryParams.get("textContent");
-      this.isSadrzajTekst = true;
-    }
-
-    if(queryParams.has('autor')){
-      this.autorTekst = queryParams.get("autor");
-      this.isAutorTekst = true;
-    }
-
-    if(queryParams.has('magazine')){
-      this.casopisTekst = queryParams.get("magazine");
-      this.isCasopisTekst = true;
-    }
-
-    if(queryParams.has('title')){
-      this.naslovTekst = queryParams.get("title");
-      this.isNaslovTekst = true;
-    }
-
-    if(queryParams.has('keywords')){
-      this.kljucniTekst = queryParams.get("keywords");
-      this.isKljucniTekst = true;
-    }
-    
-    this.executeSearch();
+    this.getQueryParams();
   }
 
   next = function(){
@@ -86,12 +44,25 @@ export class SearchPanelComponent implements OnInit {
     this.executeSearch();
   }
 
-  getQueryParams: any = function(){
-    let retVal: Params = null;
+  getQueryParams = function(){
+    
     this.route.queryParamMap.subscribe((queryParams)=>{
-      retVal = queryParams;
+
+      (queryParams.has('pageNum')) ? this.pageNum = +queryParams.get("pageNum") : this.pageNum = 1;
+
+      (queryParams.has('textContent')) ? this.sadrzajTekst = queryParams.get("textContent") : this.sadrzajTekst = "";
+  
+      (queryParams.has('autor')) ? this.autorTekst = queryParams.get("autor") : this.autor = "";
+
+      (queryParams.has('magazine')) ? this.casopisTekst = queryParams.get("magazine") : this.casopisTekst = "";
+
+      (queryParams.has('title')) ? this.naslovTekst = queryParams.get("title") : this.naslovTekst = "";
+      
+      (queryParams.has('keywords')) ? this.kljucniTekst = queryParams.get("keywords") : this.kljucniTekst = "";
+
+      this.executeSearch();
+      
     });
-    return retVal;
   }
 
   setQueryParams: any = function(){
@@ -103,37 +74,22 @@ export class SearchPanelComponent implements OnInit {
 
     if(this.sadrzajTekst){
       queryParams['textContent'] = this.sadrzajTekst;
-      this.isSadrzajTekst = true;
-    }else{
-      this.isSadrzajTekst = false;
     }
 
     if(this.autorTekst){
       queryParams['autor'] = this.autorTekst;
-      this.isAutorTekst = true;
-    }else{
-      this.isAutorTekst = false;
     }
 
     if(this.casopisTekst){
       queryParams['magazine'] = this.casopisTekst;
-      this.isCasopisTekst = true;
-    }else{
-      this.isCasopisTekst = false;
     }
 
     if(this.naslovTekst){
       queryParams['title'] = this.naslovTekst;
-      this.isNaslovTekst = true;
-    }else{
-      this.isNaslovTekst = false;
     }
 
     if(this.kljucniTekst){
       queryParams['keywords'] = this.kljucniTekst;
-      this.isKljucniTekst = true;
-    }else{
-      this.isKljucniTekst = false;
     }
 
     return queryParams;
@@ -187,6 +143,8 @@ export class SearchPanelComponent implements OnInit {
         (res: any) => {
           if(res){
             this.results = res.content;
+            console.log(this.results);
+            (this.pageNum*3 < res.totalElements) ? this.isLast = false : this.isLast = true;
           }else{
             this.results = [];
           }

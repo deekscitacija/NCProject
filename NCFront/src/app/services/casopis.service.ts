@@ -15,4 +15,12 @@ export class CasopisService {
     return this.http.get("/app/getPageMagazine", {params : params});
   }
 
+  getMagazine(magazineId: number){
+
+    var params = new HttpParams();
+    params = params.append('magazineId', String(magazineId));
+
+    return this.http.get("/app/getMagazine", {params : params});
+  }
+
 }
