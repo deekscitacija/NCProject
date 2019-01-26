@@ -4,6 +4,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,7 +32,7 @@ public class Korisnik {
 	@Column(nullable = false, length = 120)
 	private String prezime;
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<TipKorisnika> tip;
 	
 	@OneToOne(optional = true)
@@ -148,5 +149,13 @@ public class Korisnik {
 	public void setUrednik(Urednik urednik) {
 		this.urednik = urednik;
 	}
+
+	@Override
+	public String toString() {
+		return "Korisnik [id=" + id + ", email=" + email + ", lozinka=" + lozinka + ", ime=" + ime + ", prezime="
+				+ prezime + "]";
+	}
+	
+	
 
 }

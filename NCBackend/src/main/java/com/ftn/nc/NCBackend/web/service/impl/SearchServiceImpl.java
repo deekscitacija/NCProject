@@ -74,25 +74,35 @@ public class SearchServiceImpl implements SearchService{
 	public Page<IndexUnit> executeSearch(QueryDTO searchParams) {
 		
 		boolean textSearch = false;
-		int pageNum = 1;
+		int pageNum = searchParams.getPageNum();
 		
 		NativeSearchQueryBuilder searchQueryBuilder = new NativeSearchQueryBuilder();
 		BoolQueryBuilder queryParams = QueryBuilders.boolQuery();
 		
-		for(QueryParamDTO searchParam : searchParams.getParams()) {
-			String key = searchParam.getKey();
-			String value = searchParam.getValue();
-			if((key != null && value != null)) {
-				if(!key.equals("pageNum")){
-					queryParams.must(QueryBuilders.commonTermsQuery(key, value));	
-				}else{
-					pageNum = Integer.parseInt(value);
-				}
-				
-				if(key.equals("tekst")) {
-					textSearch = true;
+		if(searchParams.getParams() != null) {
+			if(!searchParams.getParams().isEmpty()) {
+				for(QueryParamDTO searchParam : searchParams.getParams()) {
+					String key = searchParam.getKey();
+					String value = searchParam.getValue();
+					if((key != null && value != null)) {
+						
+						if(key.equals("tekst")) {
+							textSearch = true;
+						}
+						
+						if(key.equals("naucna")) {
+							buildParam(queryParams, "naucneOblasti.naziv", value, searchParam.isOptional(), searchParam.isPhraseQuery());
+						}else {
+							buildParam(queryParams, key, value, searchParam.isOptional(), searchParam.isPhraseQuery());
+						}
+					}
 				}
 			}
+		}
+		
+		if(!textSearch) {
+			SearchQuery theQuery = searchQueryBuilder.withQuery(queryParams).withPageable(new PageRequest(pageNum-1, 3)).build();
+			return elasticsearchTemplate.queryForPage(theQuery, IndexUnit.class);
 		}
 		
 		SearchQuery theQuery = searchQueryBuilder.withQuery(queryParams).withHighlightFields(
@@ -104,13 +114,25 @@ public class SearchServiceImpl implements SearchService{
 	    ).withPageable(new PageRequest(pageNum-1, 3))
 		.build();
 		
-		if(textSearch) {
-			return elasticsearchTemplate.queryForPage(theQuery, IndexUnit.class, new ContentResultMapper());
-		}
-		
-		return elasticsearchTemplate.queryForPage(theQuery, IndexUnit.class);
+		return elasticsearchTemplate.queryForPage(theQuery, IndexUnit.class, new ContentResultMapper());
 	}
 
 	
+	private void buildParam(BoolQueryBuilder queryParams, String key, String value, boolean isOptional, boolean isPhraseQuery) {
+		
+		if(isOptional) {
+			if(isPhraseQuery) {
+				queryParams.should(QueryBuilders.matchPhraseQuery(key, value));
+			}else {
+				queryParams.should(QueryBuilders.commonTermsQuery(key, value));
+			}
+		}else {
+			if(isPhraseQuery){
+				queryParams.must(QueryBuilders.matchPhraseQuery(key, value));
+			}else {
+				queryParams.must(QueryBuilders.commonTermsQuery(key, value));
+			}
+		}
+	}
 
 }

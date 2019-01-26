@@ -6,16 +6,16 @@ public class QueryDTO {
 	
 	private List<QueryParamDTO> params;
 	
-	private List<String> naucneOblasti;
+	private int pageNum;
 
 	public QueryDTO() {
 		super();
 	}
 
-	public QueryDTO(List<QueryParamDTO> params, List<String> naucneOblasti) {
+	public QueryDTO(int pageNum, List<QueryParamDTO> params, List<QueryParamDTO> naucneOblasti) {
 		super();
+		this.pageNum = pageNum;
 		this.params = params;
-		this.naucneOblasti = naucneOblasti;
 	}
 
 	public List<QueryParamDTO> getParams() {
@@ -26,12 +26,12 @@ public class QueryDTO {
 		this.params = params;
 	}
 
-	public List<String> getNaucneOblasti() {
-		return naucneOblasti;
+	public int getPageNum() {
+		return pageNum;
 	}
 
-	public void setNaucneOblasti(List<String> naucneOblasti) {
-		this.naucneOblasti = naucneOblasti;
+	public void setPageNum(int pageNum) {
+		this.pageNum = pageNum;
 	}
-
+	
 }

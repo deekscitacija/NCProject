@@ -5,7 +5,10 @@ import java.util.Set;
 
 import javax.annotation.PostConstruct;
 
+import org.camunda.bpm.engine.IdentityService;
+import org.camunda.bpm.engine.identity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.ftn.nc.NCBackend.web.model.Autor;
 import com.ftn.nc.NCBackend.web.model.Casopis;
@@ -85,6 +88,9 @@ public class StartData {
 	@Autowired
 	private UrednikRepository urednikRepository;
 	
+	@Autowired
+	private IdentityService identityService;
+	
 	public StartData() {
 		
 	}
@@ -145,10 +151,10 @@ public class StartData {
 		Korisnik k3 = new Korisnik(null, "korisnik3@email.com", "lozinka3", "Sima", "Simic", setRE, null, null, null, null);
 		Korisnik k4 = new Korisnik(null, "korisnik4@email.com", "lozinka3", "Sima", "Simic", setRE, null, null, null, null);
 		
-		korisnikRepository.save(k1);
-		korisnikRepository.save(k2);
-		korisnikRepository.save(k3);
-		korisnikRepository.save(k4);
+		k1 = korisnikRepository.save(k1);
+		k2 = korisnikRepository.save(k2);
+		k3 = korisnikRepository.save(k3);
+		k4 = korisnikRepository.save(k4);
 		
 		Autor autor = new Autor(k1.getId(), null, null);
 		RegistrovaniKorisnik registrovaniKorisnik = new RegistrovaniKorisnik(k2.getId());
@@ -165,10 +171,10 @@ public class StartData {
 		k3.setRecenzent(recenzent);
 		k4.setUrednik(urednik);
 		
-		korisnikRepository.save(k1);
-		korisnikRepository.save(k2);
-		korisnikRepository.save(k3);
-		korisnikRepository.save(k4);
+		k1 = korisnikRepository.save(k1);
+		k2 = korisnikRepository.save(k2);
+		k3 = korisnikRepository.save(k3);
+		k4 = korisnikRepository.save(k4);
 		
 		Cena cena1 = new Cena(null, 1, 2019, new Double(11.50));
 		Cena cena2 = new Cena(null, 1, 2019, new Double(71.00));
@@ -217,6 +223,47 @@ public class StartData {
 		c13 = casopisRepository.save(c13);
 		c14 = casopisRepository.save(c14);
 		c15 = casopisRepository.save(c15);
+		
+		System.out.println(k1.getId().toString());
+		System.out.println(k2);
+		System.out.println(k3);
+		System.out.println(k4);
+		
+		User u1 = identityService.newUser(k1.getId().toString());
+		u1.setFirstName(k1.getIme());
+		u1.setLastName(k1.getPrezime());
+		u1.setEmail(k1.getEmail());
+		u1.setPassword(k1.getLozinka());
+		
+		User u2 = identityService.newUser(k2.getId().toString());
+		u2.setFirstName(k2.getIme());
+		u2.setLastName(k2.getPrezime());
+		u2.setEmail(k2.getEmail());
+		u2.setPassword(k2.getLozinka());
+		
+		User u3 = identityService.newUser(k3.getId().toString());
+		u3.setFirstName(k3.getIme());
+		u3.setLastName(k3.getPrezime());
+		u3.setEmail(k3.getEmail());
+		u3.setPassword(k3.getLozinka());
+		
+		User u4 = identityService.newUser(k4.getId().toString());
+		u4.setEmail(k4.getEmail());
+		u4.setFirstName(k4.getIme());
+		u4.setLastName(k4.getPrezime());
+		u4.setPassword(k4.getLozinka());
+		
+		User u5 = identityService.newUser("undefinedUser");
+		u5.setFirstName("Jonh");
+		u5.setLastName("Doe");
+		u5.setEmail("undefined@email.com");
+		u5.setPassword("undefinedpass");
+		
+		identityService.saveUser(u1);
+		identityService.saveUser(u2);
+		identityService.saveUser(u3);
+		identityService.saveUser(u4);
+		identityService.saveUser(u5);
 		
 	}
 

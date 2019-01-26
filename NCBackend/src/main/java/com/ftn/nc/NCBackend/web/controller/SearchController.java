@@ -31,21 +31,17 @@ public class SearchController {
 	private SearchService searchService;
 	
 	@RequestMapping(value = "search", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Page<IndexUnit>> search1(@RequestBody @NotNull QueryDTO searchParams, BindingResult result){
+	public ResponseEntity<Page<IndexUnit>> search(@RequestBody @NotNull QueryDTO searchParams, BindingResult result){
 		
 		if(result.hasErrors()) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		if(searchParams.getParams() == null && searchParams.getNaucneOblasti() == null) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		if(searchParams.getParams() == null) {
+			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		
-		if(searchParams.getParams().isEmpty() && searchParams.getNaucneOblasti().isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		
-		if(searchParams.getParams().size() < 2) {
+		if(searchParams.getParams().isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		
