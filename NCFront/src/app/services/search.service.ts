@@ -7,35 +7,9 @@ export class SearchService {
 
   constructor(private http:  HttpClient) { }
 
-  public executeSearch(pageNum: number, autor: string, casopis: string, naslov: string, kljucne: string, tekst: string, naucne: string[]){
+  public executeSearch(pageNum: number, params: any[]){
 
-    let params: any[] = [];
-    
-    if(pageNum){
-      params.push({"key" : "pageNum", "value" : String(pageNum), "phraseQuery" : false});
-    }
-
-    if(autor){
-      params.push({"key" : "autor", "value" : autor, "phraseQuery" : false});
-    }
-    
-    if(casopis){
-      params.push({"key" : "casopis", "value" : casopis, "phraseQuery" : false});
-    }
-    
-    if(naslov){
-      params.push({"key" : "naslov", "value" : naslov, "phraseQuery" : false});
-    }
-    
-    if(kljucne){
-      params.push({"key" : "kljucne", "value" : kljucne, "phraseQuery" : false});
-    }
-    
-    if(tekst){
-      params.push({"key" : "tekst", "value" : tekst, "phraseQuery" : false});
-    }
-    
-    return this.http.post("/app/search", {"params" : params, "naucneOblasti" : naucne});
+    return this.http.post("/app/search", {"pageNum" : pageNum, "params" : params});
   }
 
   private stringifyArray = function(array : any[]){

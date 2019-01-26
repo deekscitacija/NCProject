@@ -86,6 +86,16 @@ body {
     border-radius: 15px;
 }
 
+.btn-circle-md {
+    width: 33px;
+    height: 33px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    line-height: 1.428571429;
+    border-radius: 17px;
+}
+
 .btn-search-hilighted {
     border: .2em solid #c2dd67;
 }

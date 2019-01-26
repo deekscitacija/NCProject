@@ -1,0 +1,40 @@
+.mat-dialog-container {
+    display: flex !important;
+	flex-direction: column;
+	
+	position: fixed;
+	left: 15%;
+  	top: 10%;
+	max-width: 900px;
+	max-height: 550px;
+	background: #beb6a6;
+	border: #918876;
+	border-width: 3px;
+	border-radius: 6px;
+	z-index: 100000;
+	padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+
+}
+
+.mat-dialog-container > * {
+    display: flex;
+    flex-direction: column;
+}
+
+.mat-dialog-content {
+	max-height: inherit !important;
+	max-width: inherit !important;
+}
+
+.mat-dialog-actions {
+    display: block !important;
+    flex-grow: inherit;
+    flex-shrink: inherit;
+	padding: 12px 0 0 !important;
+	position: absolute;
+	bottom: 40px;
+	width: 95%;
+}

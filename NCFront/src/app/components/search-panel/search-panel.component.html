@@ -3,19 +3,16 @@
       <div class="col-lg-1"></div>
       <div class="col-lg-9">
           <div class="card card-block bg-faded blue-bg1">
-              <div class="container" id="search-tools">
-                  <button class="btn btn-light btn-sm" [ngClass]="{'btn-search-hilighted': sadrzajTekst}" (click)="manageTekst('tekst')">Sadrzaj</button>
-                  <button class="btn btn-light btn-sm" [ngClass]="{'btn-search-hilighted': autorTekst}" (click)="manageTekst('autor')">Autor</button>
-                  <button class="btn btn-light btn-sm" [ngClass]="{'btn-search-hilighted': naslovTekst}" (click)="manageTekst('naslov')">Naslov</button>
-                  <button class="btn btn-light btn-sm" [ngClass]="{'btn-search-hilighted': casopisTekst}" (click)="manageTekst('casopis')">Casopis</button>
-                  <button class="btn btn-light btn-sm" [ngClass]="{'btn-search-hilighted': kljucniTekst}" (click)="manageTekst('kljucni')">Kljucni pojmovi</button>
-                  <button class="btn btn-light btn-sm">Naucna oblast</button>
-                  <button class="btn btn-light btn-circle-sm right-items gap-left" title="Napredna pretraga"><i class="fas fa-cogs"></i></button>
-                  <button class="btn btn-light btn-circle-sm right-items" (click)="executeSearch()" title="Pretrazi"><i class="fas fa-search"></i></button>
+              <div id="search-tools">
+                  <div class="row">
+                      <input type="text" class="form-control col-lg-9" />
+                      <div class="col-lg-3">
+                          <button class="btn btn-light btn-circle-sm right-items gap-left" (click)="clearSearch()" title="Ocisti parametre pretrage"><i class="fas fa-broom"></i></button>
+                          <button class="btn btn-light btn-circle-sm right-items gap-left" (click)="executeAdvancedSearch()" title="Napredna pretraga"><i class="fas fa-cogs"></i></button>
+                          <button class="btn btn-light btn-circle-sm right-items" (click)="executeSearch()" title="Pretrazi"><i class="fas fa-search"></i></button>
+                      </div>
+                  </div>
               </div>
-          </div>
-          <div class="rounded-bottom peach-bg1" *ngIf="openSearchBox">
-            <app-sadrzaj-input [inputParam]="inputParam" [mode]="mode" (commitSearch)="obradiTekst($event)"></app-sadrzaj-input>
           </div>
       </div>
   </div>
@@ -24,7 +21,7 @@
     <div class="col-lg-1"></div>
     <div class="col-lg-9" id="magazineBox">
       <div class="gap-top-sm" *ngFor="let theResult of results">
-        <app-result-view [theResult]="theResult" [isSadrzajTekst]="sadrzajTekst ? true : false"></app-result-view>
+        <app-result-view [theResult]="theResult" [isSadrzajTekst]="isTextSearch"></app-result-view>
       </div>
     </div>
   </div>

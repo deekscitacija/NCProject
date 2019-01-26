@@ -1,0 +1,42 @@
+<mat-dialog-content>
+  
+  <h4 align="center">Napredna pretraga</h4>
+  <hr />
+  <div >
+    <label class="col-lg-2">Operator</label>
+    <label class="col-lg-4 gap-left">Sadrzaj</label>
+    <label class="col-lg-2 gap-left">Tip</label>
+    <label class="col-lg-2 gap-left">Fraza?</label>
+  </div>
+  <hr />
+  <div class="row row-height" *ngFor="let param of queryParams; let idx = index">
+      <select class="form-control col-lg-2 gap-left" [(ngModel)]="param.optional">
+          <option value="false">AND</option>
+          <option value="true">OR</option>
+      </select>
+      <input type="text" [(ngModel)]="param.value" class="form-control col-lg-4 gap-left" />
+      <select class="form-control col-lg-2 gap-left" [(ngModel)]="param.key">
+          <option value="autor">Autor</option>
+          <option value="casopis">Casopis</option>
+          <option value="naslov">Naslov</option>
+          <option value="tekst">Tekst</option>
+          <option value="kljucne">Kljucne reci</option>
+          <option value="naucna">Naucna oblast</option>
+      </select>
+      <div class="checkbox gap-left">
+          <label style="font-size: 1.5em">
+              <input type="checkbox" [(ngModel)]="param.phraseQuery" />
+              <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+          </label>
+      </div>
+      <button class="btn btn-danger btn-circle-sm gap-left-md" (click)="removeParam(idx)"><i class="fas fa-minus"></i></button>
+  </div>
+  
+</mat-dialog-content>
+<hr>
+<mat-dialog-actions>
+  <button class="btn btn-info btn-circle-md" (click)="addParam()" ><i class="fas fa-plus"></i></button>
+  <button class="btn btn-danger btn-circle-md" (click)="removeLastParam()"><i class="fas fa-minus"></i></button>
+  <button class="btn btn-md btn-light right-items gap-left" (click)="zatvori()">Odustani</button>
+  <button class="btn btn-md btn-light right-items gap-left" (click)="potvrdi()">Potvrdi</button>
+</mat-dialog-actions>

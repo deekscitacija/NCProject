@@ -1,6 +1,9 @@
-import { Component, OnInit, SystemJsNgModuleLoader } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '../../../../node_modules/@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialog } from '@angular/material';
 import { SearchService } from '../../services/search.service';
+import { SearchDialogComponent } from '../dialogs/search-dialog/search-dialog.component';
 
 @Component({
   selector: 'app-search-panel',
@@ -12,18 +15,13 @@ export class SearchPanelComponent implements OnInit {
   private pageNum: number = 1;
   private isLast: boolean = false;
   private results: any[] = [];
+  private advancedSearchParams: any[] = [];
+  private naucneOblesti: any[] = [];
+  private isTextSearch: boolean = false;
 
-  private openSearchBox: boolean = false;
-  private mode: string = '';
-  private inputParam: string = '';
 
-  private sadrzajTekst: string;
-  private autorTekst: string;
-  private naslovTekst: string;
-  private casopisTekst: string;
-  private kljucniTekst: string;
-
-  constructor(private router : Router, private route : ActivatedRoute, private searchService: SearchService) { }
+  constructor(private router : Router, private route : ActivatedRoute, private searchService: SearchService,
+    private advancedSearchDialog: MatDialog) { }
 
   ngOnInit() {
     this.getQueryParams();
@@ -99,47 +97,9 @@ export class SearchPanelComponent implements OnInit {
     this.router.navigate(['naucna-centrala.com/pretraga'], {queryParams : this.setQueryParams()});
   }
 
-  obradiTekst = function(retVal: any){
-
-    if(retVal.mode === 'tekst'){
-      this.sadrzajTekst = retVal.sadrzaj;
-    }else if(retVal.mode === 'autor'){
-      this.autorTekst = retVal.sadrzaj;
-    }else if(retVal.mode === 'casopis'){
-      this.casopisTekst = retVal.sadrzaj;
-    }else if(retVal.mode === 'naslov'){
-      this.naslovTekst = retVal.sadrzaj;
-    }else if(retVal.mode === 'kljucni'){
-      this.kljucniTekst = retVal.sadrzaj;
-    }
-
-    this.openSearchBox = false;
-    this.setPath();
-    this.executeSearch();
-  }
-
-  manageTekst = function(mode: string){
-    if(mode === 'tekst'){
-      this.inputParam = this.sadrzajTekst;
-    }else if(mode === 'autor'){
-      this.inputParam = this.autorTekst;
-    }else if(mode === 'casopis'){
-      this.inputParam = this.casopisTekst;
-    }else if(mode === 'naslov'){
-      this.inputParam = this.naslovTekst;
-    }else if(mode === 'kljucni'){
-      this.inputParam = this.kljucniTekst;
-    }else{
-      return;
-    }
-
-    this.mode = mode;
-    this.openSearchBox = !this.openSearchBox;
-  }
-
   executeSearch = function(){
-    this.searchService.executeSearch(this.pageNum, this.autorTekst, this.casopisTekst, 
-      this.naslovTekst, this.kljucniTekst, this.sadrzajTekst, null).subscribe(
+
+    this.searchService.executeSearch(this.pageNum, this.advancedSearchParams).subscribe(
         (res: any) => {
           if(res){
             this.results = res.content;
@@ -153,6 +113,17 @@ export class SearchPanelComponent implements OnInit {
           alert("Greska!");
         }
       );
+  }
+
+  executeAdvancedSearch = function(){
+    let dialogRefSearch = this.advancedSearchDialog.open(SearchDialogComponent, {data: ""})
+
+    dialogRefSearch.afterClosed().subscribe((result:any) => {
+      if(result){
+        this.isTextSearch = result.isTextSearch;
+        this.advancedSearchParams = result.params;
+      }
+    })
   }
 
 }

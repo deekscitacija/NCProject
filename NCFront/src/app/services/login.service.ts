@@ -6,10 +6,10 @@ import { HttpParams, HttpHeaders } from '@angular/common/http';
 export class LoginService {
 
   constructor(private http:  HttpClient) { }
-
+  
   login(loginInfo: any){
 
     return this.http.post("/app/login", loginInfo, {responseType: 'text'});
   }
-
+  
 }

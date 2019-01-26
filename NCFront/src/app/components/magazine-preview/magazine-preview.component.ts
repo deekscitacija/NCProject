@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CasopisService } from '../../services/casopis.service';
+import { RadService } from '../../services/rad.service';
 
 @Component({
   selector: 'app-magazine-preview',
@@ -11,7 +12,7 @@ export class MagazinePreviewComponent implements OnInit {
 
   private casopis: any = {};
 
-  constructor(private casopisService: CasopisService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private casopisService: CasopisService, private radService: RadService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
 
@@ -29,7 +30,10 @@ export class MagazinePreviewComponent implements OnInit {
         alert('Greska');
       }
     )
+  }
 
+  objaviRad = function(){
+    
   }
 
 }

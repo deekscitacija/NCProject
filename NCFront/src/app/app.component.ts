@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '../../node_modules/@angular/router';
-import { LoginService } from './services/login.service'
+import { LoginService } from './services/login.service';
+import { TokenService } from './services/token.service';
 
 @Component({
   selector: 'app-root',
@@ -14,12 +15,12 @@ export class AppComponent {
   private emailPass : any = {"email" : "", "password" : ""};
   private isPrijava = false;
 
-  constructor(private router : Router, private route : ActivatedRoute, private loginService: LoginService) { }
+  constructor(private router : Router, private route : ActivatedRoute, private loginService: LoginService, private tokenService: TokenService) { }
 
   ngOnInit() {
 
-    if(localStorage.getItem('userToken')){
-      console.log(localStorage.getItem('userToken'))
+    if(localStorage.getItem('token')){
+      this.getUserFromToken();
     }
 
   }
@@ -39,6 +40,7 @@ export class AppComponent {
       (res: any)=>{
         localStorage.setItem('token', res);
         this.isPrijava = false;
+        this.getUserFromToken();
       },
       (error: any)=>{
         alert('Greska!');
@@ -49,6 +51,23 @@ export class AppComponent {
   odbij = function(){
     this.isPrijava = false;
     this.emailPass = {"email" : "", "password" : ""};
+  }
+
+  getUserFromToken = function(){
+    this.tokenService.getUserFromToken().subscribe(
+      (res: any)=>{
+        this.korisnik = res;
+        console.log(this.korisnik);
+      },
+      (error: any)=>{
+        alert('Greska');
+      }
+    );
+  }
+
+  odjava = function(){
+    localStorage.removeItem('token');
+    this.korisnik = null;
   }
 
 }
