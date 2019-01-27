@@ -7,15 +7,18 @@ public class QueryDTO {
 	private List<QueryParamDTO> params;
 	
 	private int pageNum;
+	
+	private boolean allFields;
 
 	public QueryDTO() {
 		super();
 	}
 
-	public QueryDTO(int pageNum, List<QueryParamDTO> params, List<QueryParamDTO> naucneOblasti) {
+	public QueryDTO(int pageNum, List<QueryParamDTO> params, boolean allFields) {
 		super();
 		this.pageNum = pageNum;
 		this.params = params;
+		this.allFields = allFields;
 	}
 
 	public List<QueryParamDTO> getParams() {
@@ -32,6 +35,14 @@ public class QueryDTO {
 
 	public void setPageNum(int pageNum) {
 		this.pageNum = pageNum;
+	}
+
+	public boolean isAllFields() {
+		return allFields;
+	}
+
+	public void setAllFields(boolean allFields) {
+		this.allFields = allFields;
 	}
 	
 }

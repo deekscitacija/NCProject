@@ -10,8 +10,8 @@ import com.ftn.nc.NCBackend.elastic.model.NaucnaOblastInfo;
 
 public interface SearchService {
 	
-	public Page<IndexUnit> executeSearch(int pageNum, String autor, String casopis, String naslov, String kljucne, String tekst, List<NaucnaOblastInfo> naucne);
-	
 	public Page<IndexUnit> executeSearch(QueryDTO searchParams);
+	
+	public Page<IndexUnit> executeSearchAll(QueryDTO searchParams);
 
 }

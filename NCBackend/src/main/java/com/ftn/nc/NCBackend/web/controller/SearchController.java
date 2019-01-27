@@ -45,6 +45,10 @@ public class SearchController {
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		
+		if(searchParams.isAllFields()) {
+			return new ResponseEntity<>(searchService.executeSearchAll(searchParams), HttpStatus.OK);
+		}
+		
 		return new ResponseEntity<>(searchService.executeSearch(searchParams), HttpStatus.OK);
 	}
 

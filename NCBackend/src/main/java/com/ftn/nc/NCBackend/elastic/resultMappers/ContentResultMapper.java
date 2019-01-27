@@ -41,7 +41,13 @@ public class ContentResultMapper implements SearchResultMapper{
             indexUnit.setCasopis((String) source.get("casopis"));
             indexUnit.setOpenAccess((boolean) source.get("openAccess"));
             
-            String highValue = "..."+searchHit.getHighlightFields().get("tekst").fragments()[0].toString()+"...";
+            String highValue = "";
+            try {
+            	highValue = "..."+searchHit.getHighlightFields().get("tekst").fragments()[0].toString()+"...";
+            }catch(Exception e) {
+            	highValue = "";
+            }
+            
             indexUnit.setTekst(highValue);
             
             chunk.add(indexUnit);
