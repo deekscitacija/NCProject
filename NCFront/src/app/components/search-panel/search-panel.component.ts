@@ -16,8 +16,10 @@ export class SearchPanelComponent implements OnInit {
   private isLast: boolean = false;
   private results: any[] = [];
   private advancedSearchParams: any[] = [];
-  private naucneOblesti: any[] = [];
+  private searchInput: string = "";
+
   private isTextSearch: boolean = false;
+  private isAllFields: boolean = true;
 
 
   constructor(private router : Router, private route : ActivatedRoute, private searchService: SearchService,
@@ -99,11 +101,15 @@ export class SearchPanelComponent implements OnInit {
 
   executeSearch = function(){
 
-    this.searchService.executeSearch(this.pageNum, this.advancedSearchParams).subscribe(
+    let searchParams:any[] = [];
+    (this.searchInput) ? searchParams.push({"optional" : false, "value" : this.searchInput, "key" : "sve", "phraseQuery" : false}) : searchParams = this.advancedSearchParams;
+
+    console.log(this.isAllFields)
+
+    this.searchService.executeSearch(this.pageNum, searchParams, this.isAllFields).subscribe(
         (res: any) => {
           if(res){
             this.results = res.content;
-            console.log(this.results);
             (this.pageNum*3 < res.totalElements) ? this.isLast = false : this.isLast = true;
           }else{
             this.results = [];
@@ -122,6 +128,9 @@ export class SearchPanelComponent implements OnInit {
       if(result){
         this.isTextSearch = result.isTextSearch;
         this.advancedSearchParams = result.params;
+        this.isAllFields = false;
+        this.searchInput = "";
+        this.executeSearch();
       }
     })
   }

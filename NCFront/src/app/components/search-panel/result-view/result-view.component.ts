@@ -8,12 +8,11 @@ import { Component, OnInit, Input } from '@angular/core';
 export class ResultViewComponent implements OnInit {
 
   @Input() theResult: any;
-  @Input() isSadrzajTekst: boolean;
 
   constructor() { }
 
   ngOnInit() {
-    console.log(this.isSadrzajTekst)
+    
   }
 
 }

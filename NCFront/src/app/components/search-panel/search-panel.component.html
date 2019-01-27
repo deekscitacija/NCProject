@@ -5,7 +5,7 @@
           <div class="card card-block bg-faded blue-bg1">
               <div id="search-tools">
                   <div class="row">
-                      <input type="text" class="form-control col-lg-9" />
+                      <input type="text" class="form-control col-lg-9" [(ngModel)]="searchInput" />
                       <div class="col-lg-3">
                           <button class="btn btn-light btn-circle-sm right-items gap-left" (click)="clearSearch()" title="Ocisti parametre pretrage"><i class="fas fa-broom"></i></button>
                           <button class="btn btn-light btn-circle-sm right-items gap-left" (click)="executeAdvancedSearch()" title="Napredna pretraga"><i class="fas fa-cogs"></i></button>
@@ -21,7 +21,7 @@
     <div class="col-lg-1"></div>
     <div class="col-lg-9" id="magazineBox">
       <div class="gap-top-sm" *ngFor="let theResult of results">
-        <app-result-view [theResult]="theResult" [isSadrzajTekst]="isTextSearch"></app-result-view>
+        <app-result-view [theResult]="theResult"></app-result-view>
       </div>
     </div>
   </div>

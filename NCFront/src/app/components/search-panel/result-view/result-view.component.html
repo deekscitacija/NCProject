@@ -6,10 +6,11 @@
       <label class="col-lg-5 right-items">Autor: {{theResult.autor}}</label> 
       <br/>
       <p>{{theResult.apstrakt | substring : 125}}</p>
+      <p>{{theResult.naucneOblasti | listToString}}</p>
     </div>
   </div>
   <div class="col-lg-4 olive-bg1">
-    <div [innerHTML]="theResult.tekst" id="htmlPanel" *ngIf="isSadrzajTekst"></div>
+    <div [innerHTML]="theResult.tekst" id="htmlPanel" ></div>
   </div>
   <div class="col-lg-2">
       <button class="btn btn-default orange-circle-button" *ngIf="theResult.openAccess"><i class="fas fa-file-download fa-3x"></i></button>

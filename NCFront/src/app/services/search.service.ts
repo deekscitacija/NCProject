@@ -7,9 +7,9 @@ export class SearchService {
 
   constructor(private http:  HttpClient) { }
 
-  public executeSearch(pageNum: number, params: any[]){
+  public executeSearch(pageNum: number, params: any[], allFields: boolean){
 
-    return this.http.post("/app/search", {"pageNum" : pageNum, "params" : params});
+    return this.http.post("/app/search", {"pageNum" : pageNum, "params" : params, "allFields" : allFields});
   }
 
   private stringifyArray = function(array : any[]){
