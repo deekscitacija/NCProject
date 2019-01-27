@@ -71,9 +71,9 @@ public class SearchServiceImpl implements SearchService{
 		NativeSearchQueryBuilder searchQueryBuilder = new NativeSearchQueryBuilder();
 		BoolQueryBuilder queryParams = new BoolQueryBuilder();
 
-		queryParams.should(QueryBuilders.queryStringQuery("*"+queryString+"*")
-	    		.defaultOperator(Operator.OR)
-	    		.analyzeWildcard(true));
+		queryParams.should(QueryBuilders.queryStringQuery("*"+queryString+"*").analyzeWildcard(true)
+                .field("tekst", 2.0f).field("naslov", 2.0f).field("autor", 2.0f).field("casopis", 1.5f)
+                .field("koautori").field("kljucne").field("apstrakt").field("naucneOblasti"));
 		
 	    SearchQuery theQuery = searchQueryBuilder.withQuery(queryParams).withHighlightFields(
 	            new HighlightBuilder.Field("tekst")
