@@ -23,7 +23,6 @@ public class RecenzentInfo {
 	@Field(type = FieldType.text)
 	private String mesto;
 	
-	@Field(type = FieldType.Object)
 	@GeoPointField
 	private GeoPoint lokacija;
 

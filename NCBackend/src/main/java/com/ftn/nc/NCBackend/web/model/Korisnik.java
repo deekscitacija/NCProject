@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 
@@ -31,6 +32,9 @@ public class Korisnik {
 	
 	@Column(nullable = false, length = 120)
 	private String prezime;
+	
+	@ManyToOne(optional = false)
+	private Grad grad;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<TipKorisnika> tip;
@@ -55,14 +59,15 @@ public class Korisnik {
 		super();
 	}
 
-	public Korisnik(Long id, String email, String lozinka, String ime, String prezime, Set<TipKorisnika> tip, Autor autor,
-			Recenzent recenzent, RegistrovaniKorisnik registrovaniKorisnik, Urednik urednik) {
+	public Korisnik(Long id, String email, String lozinka, String ime, String prezime, Grad grad, Set<TipKorisnika> tip,
+			Autor autor, Recenzent recenzent, RegistrovaniKorisnik registrovaniKorisnik, Urednik urednik) {
 		super();
 		this.id = id;
 		this.email = email;
 		this.lozinka = lozinka;
 		this.ime = ime;
 		this.prezime = prezime;
+		this.grad = grad;
 		this.tip = tip;
 		this.autor = autor;
 		this.recenzent = recenzent;
@@ -149,6 +154,14 @@ public class Korisnik {
 	public void setUrednik(Urednik urednik) {
 		this.urednik = urednik;
 	}
+	
+	public Grad getGrad() {
+		return grad;
+	}
+
+	public void setGrad(Grad grad) {
+		this.grad = grad;
+	}
 
 	@Override
 	public String toString() {
@@ -156,6 +169,4 @@ public class Korisnik {
 				+ prezime + "]";
 	}
 	
-	
-
 }

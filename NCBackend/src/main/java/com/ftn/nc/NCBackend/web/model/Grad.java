@@ -19,16 +19,24 @@ public class Grad {
 	
 	@ManyToOne(optional = false)
 	private Drzava drzava;
+	
+	@Column(nullable = false)
+	private double lat;
+	
+	@Column(nullable = false)
+	private double lon;
 
 	public Grad() {
 
 	}
 
-	public Grad(Long id, String naziv, Drzava drzava) {
+	public Grad(Long id, String naziv, Drzava drzava, double lat, double lon) {
 		super();
 		this.id = id;
 		this.naziv = naziv;
 		this.drzava = drzava;
+		this.lat = lat;
+		this.lon = lon;
 	}
 
 	public Long getId() {
@@ -53,6 +61,22 @@ public class Grad {
 
 	public void setDrzava(Drzava drzava) {
 		this.drzava = drzava;
+	}
+
+	public double getLat() {
+		return lat;
+	}
+
+	public void setLat(double lat) {
+		this.lat = lat;
+	}
+
+	public double getLon() {
+		return lon;
+	}
+
+	public void setLon(double lon) {
+		this.lon = lon;
 	}
 
 }

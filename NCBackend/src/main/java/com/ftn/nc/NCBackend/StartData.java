@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 import com.ftn.nc.NCBackend.web.model.Autor;
 import com.ftn.nc.NCBackend.web.model.Casopis;
 import com.ftn.nc.NCBackend.web.model.Cena;
+import com.ftn.nc.NCBackend.web.model.Drzava;
+import com.ftn.nc.NCBackend.web.model.Grad;
 import com.ftn.nc.NCBackend.web.model.Korisnik;
 import com.ftn.nc.NCBackend.web.model.NaucnaOblast;
 import com.ftn.nc.NCBackend.web.model.Permisija;
@@ -146,10 +148,27 @@ public class StartData {
 		naucneOblasti3.add(no1);
 		naucneOblasti3.add(no3);
 		
-		Korisnik k1 = new Korisnik(null, "korisnik1@email.com", "lozinka1", "Pera", "Peric", setAU, null, null, null, null);
-		Korisnik k2 = new Korisnik(null, "korisnik2@email.com", "lozinka2", "Zika", "Zikic", setRK, null, null, null, null);
-		Korisnik k3 = new Korisnik(null, "korisnik3@email.com", "lozinka3", "Sima", "Simic", setRE, null, null, null, null);
-		Korisnik k4 = new Korisnik(null, "korisnik4@email.com", "lozinka3", "Sima", "Simic", setRE, null, null, null, null);
+		Drzava dr1 = new Drzava(null, "SRB", "Srbija");
+		dr1 = drzavaRepository.save(dr1);
+		
+		Grad gr1 = new Grad(null, "Novi Sad", dr1, 45.267136, 19.833549);
+		Grad gr2 = new Grad(null, "Beograd", dr1, 44.787197, 20.457273);
+		Grad gr3 = new Grad(null, "Sremska Mitrovica", dr1, 44.993642, 19.6271983);
+		Grad gr4 = new Grad(null, "Nis", dr1, 43.316238, 21.8583399);
+		Grad gr5 = new Grad(null, "Valjevo", dr1, 44.2708145, 19.8655599);
+		Grad gr6 = new Grad(null, "Uzice", dr1, 43.849342, 19.8098855);
+		
+		gr1 = gradRepository.save(gr1);
+		gr2 = gradRepository.save(gr2);
+		gr3 = gradRepository.save(gr3);
+		gr4 = gradRepository.save(gr4);
+		gr5 = gradRepository.save(gr5);
+		gr6 = gradRepository.save(gr6);
+		
+		Korisnik k1 = new Korisnik(null, "korisnik1@email.com", "lozinka1", "Pera", "Peric", gr1, setAU, null, null, null, null);
+		Korisnik k2 = new Korisnik(null, "korisnik2@email.com", "lozinka2", "Zika", "Zikic", gr2, setRK, null, null, null, null);
+		Korisnik k3 = new Korisnik(null, "korisnik3@email.com", "lozinka3", "Sima", "Simic", gr3, setRE, null, null, null, null);
+		Korisnik k4 = new Korisnik(null, "korisnik4@email.com", "lozinka3", "Sima", "Simic", gr4, setRE, null, null, null, null);
 		
 		k1 = korisnikRepository.save(k1);
 		k2 = korisnikRepository.save(k2);
