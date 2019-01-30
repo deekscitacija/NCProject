@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SystemJsNgModuleLoader } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '../../../../node_modules/@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialog } from '@angular/material';
@@ -20,19 +20,19 @@ export class SearchPanelComponent implements OnInit {
 
   private isTextSearch: boolean = false;
   private isAllFields: boolean = true;
+  private isMoreLikeThis: boolean = false;
 
 
   constructor(private router : Router, private route : ActivatedRoute, private searchService: SearchService,
     private advancedSearchDialog: MatDialog) { }
 
   ngOnInit() {
-    this.getQueryParams();
+    
   }
 
   next = function(){
     this.pageNum++;
-    this.setPath();
-    this.executeSearch();
+    (this.isMoreLikeThis) ? this.moreLikeThis : this.executeSearch();
   }
 
   prev = function(){
@@ -40,79 +40,35 @@ export class SearchPanelComponent implements OnInit {
       return;
 
     this.pageNum--;
-    this.setPath();
-    this.executeSearch();
-  }
-
-  getQueryParams = function(){
-    
-    this.route.queryParamMap.subscribe((queryParams)=>{
-
-      (queryParams.has('pageNum')) ? this.pageNum = +queryParams.get("pageNum") : this.pageNum = 1;
-
-      (queryParams.has('textContent')) ? this.sadrzajTekst = queryParams.get("textContent") : this.sadrzajTekst = "";
-  
-      (queryParams.has('autor')) ? this.autorTekst = queryParams.get("autor") : this.autor = "";
-
-      (queryParams.has('magazine')) ? this.casopisTekst = queryParams.get("magazine") : this.casopisTekst = "";
-
-      (queryParams.has('title')) ? this.naslovTekst = queryParams.get("title") : this.naslovTekst = "";
-      
-      (queryParams.has('keywords')) ? this.kljucniTekst = queryParams.get("keywords") : this.kljucniTekst = "";
-
-      this.executeSearch();
-      
-    });
-  }
-
-  setQueryParams: any = function(){
-    var queryParams: Params = {};
-
-    if(this.pageNum){
-      queryParams['pageNum'] = this.pageNum;
-    }
-
-    if(this.sadrzajTekst){
-      queryParams['textContent'] = this.sadrzajTekst;
-    }
-
-    if(this.autorTekst){
-      queryParams['autor'] = this.autorTekst;
-    }
-
-    if(this.casopisTekst){
-      queryParams['magazine'] = this.casopisTekst;
-    }
-
-    if(this.naslovTekst){
-      queryParams['title'] = this.naslovTekst;
-    }
-
-    if(this.kljucniTekst){
-      queryParams['keywords'] = this.kljucniTekst;
-    }
-
-    return queryParams;
-  }
-
-  setPath = function(){
-    this.router.navigate(['naucna-centrala.com/pretraga'], {queryParams : this.setQueryParams()});
+    (this.isMoreLikeThis) ? this.moreLikeThis : this.executeSearch();
   }
 
   executeSearch = function(){
 
     let searchParams:any[] = [];
-    (this.searchInput) ? searchParams.push({"optional" : false, "value" : this.searchInput, "key" : "sve", "phraseQuery" : false}) : searchParams = this.advancedSearchParams;
-
-    console.log(this.isAllFields)
+    if(this.searchInput) {
+      searchParams.push({"optional" : false, "value" : this.searchInput, "key" : "sve", "phraseQuery" : false}) 
+      this.advancedSearchParams = [];
+      this.isAllFields = true;
+    }else {
+      searchParams = this.advancedSearchParams;
+      this.isAllFields = false;
+    }
+    this.isMoreLikeThis = false;
 
     this.searchService.executeSearch(this.pageNum, searchParams, this.isAllFields).subscribe(
         (res: any) => {
           if(res){
             this.results = res.content;
-            (this.pageNum*3 < res.totalElements) ? this.isLast = false : this.isLast = true;
+            if(this.results){
+              (this.results.length < 3) ? this.isLast = true : this.isLast = false;
+            }
           }else{
             this.results = [];
+            if(this.pageNum > 1){
+              this.pageNum = this.pageNum - 1;
+              this.executeSearch();
+            }
           }
         },
         (error: any) => {
@@ -122,7 +78,8 @@ export class SearchPanelComponent implements OnInit {
   }
 
   executeAdvancedSearch = function(){
-    let dialogRefSearch = this.advancedSearchDialog.open(SearchDialogComponent, {data: ""})
+    this.isMoreLikeThis = false;
+    let dialogRefSearch = this.advancedSearchDialog.open(SearchDialogComponent, {data: this.advancedSearchParams})
 
     dialogRefSearch.afterClosed().subscribe((result:any) => {
       if(result){
@@ -133,6 +90,41 @@ export class SearchPanelComponent implements OnInit {
         this.executeSearch();
       }
     })
+  }
+
+  executeSearchMethod = function(){
+    this.pageNum = 1;
+    this.executeSearch();
+  }
+
+  clearSearch = function(){
+    this.advancedSearchParams = [];
+    this.searchInput = "";
+  }
+
+  moreLikeThis = function(id: string){
+    console.log(id);
+    this.isMoreLikeThis = true;
+    this.searchService.moreLikeThis(id, this.pageNum).subscribe(
+      (res: any) => {
+        if(res){
+          this.results = res.content;
+          if(this.results){
+            (this.results.length < 3) ? this.isLast = true : this.isLast = false;
+          }
+        }else{
+          this.results = [];
+          if(this.pageNum > 1){
+            this.pageNum = this.pageNum - 1;
+            this.moreLikeThis();
+          }
+        }
+        console.log(this.results)
+      },
+      (error: any) =>{
+        alert('Greska!');
+      }
+    );
   }
 
 }

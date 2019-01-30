@@ -1,4 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { SearchService } from '../../../services/search.service';
+import { appInitializerFactory } from '@angular/platform-browser/src/browser/server-transition';
 
 @Component({
   selector: 'app-result-view',
@@ -8,11 +10,16 @@ import { Component, OnInit, Input } from '@angular/core';
 export class ResultViewComponent implements OnInit {
 
   @Input() theResult: any;
+  @Output() docId: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor() { }
+  constructor(private searchService: SearchService) { }
 
   ngOnInit() {
     
+  }
+
+  moreLikeThis = function(id: string){
+    this.docId.emit(id);
   }
 
 }

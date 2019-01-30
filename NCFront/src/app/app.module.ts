@@ -22,10 +22,10 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 import { MagazineListComponent } from './components/magazine-list/magazine-list.component';
 import { ErrorComponent } from './components/error/error.component';
 import { SearchPanelComponent } from './components/search-panel/search-panel.component';
-import { SadrzajInputComponent } from './components/search-panel/sadrzaj-input/sadrzaj-input.component';
 import { ResultViewComponent } from './components/search-panel/result-view/result-view.component';
 import { MagazinePreviewComponent } from './components/magazine-preview/magazine-preview.component';
 import { SearchDialogComponent } from './components/dialogs/search-dialog/search-dialog.component';
+import { GeoSearchComponent } from './components/search-panel/geo-search/geo-search.component';
 
 
 
@@ -38,11 +38,11 @@ import { SearchDialogComponent } from './components/dialogs/search-dialog/search
     YesNoPipe,
     ErrorComponent,
     SearchPanelComponent,
-    SadrzajInputComponent,
     ResultViewComponent,
     SubstringPipe,
     MagazinePreviewComponent,
-    SearchDialogComponent
+    SearchDialogComponent,
+    GeoSearchComponent
   ],
   imports: [
     BrowserModule,
@@ -64,6 +64,10 @@ import { SearchDialogComponent } from './components/dialogs/search-dialog/search
       {
         path : 'naucna-centrala.com/pretraga',
         component : SearchPanelComponent
+      },
+      {
+        path : 'naucna-centrala.com/pretraga/geo',
+        component : GeoSearchComponent
       },
       {
         path : 'naucna-centrala.com/casopis/:id',

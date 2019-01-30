@@ -44,3 +44,22 @@ label{
     font-weight: 700;
 }
 
+.moreLikeThis {
+	background-color: #788993;
+	border: .3em solid #788993;
+	color: #ffffff;
+}
+
+.moreLikeThis:hover {
+	color:#ffffff;
+    background-color: #788993;
+	text-decoration: none;
+	border-color: #9cb0bb;
+	
+}
+.moreLikeThis:visited {
+	color:#ffffff;
+    background-color: #788993;
+	text-decoration: none;
+}
+

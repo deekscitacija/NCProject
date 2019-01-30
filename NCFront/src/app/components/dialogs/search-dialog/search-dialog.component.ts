@@ -15,6 +15,9 @@ export class SearchDialogComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<SearchDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
+    if(this.data.length > 0){
+      this.queryParams = this.data;
+    }
   }
 
   zatvori = function(){

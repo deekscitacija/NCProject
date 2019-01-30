@@ -1,0 +1,29 @@
+<div class="row gap-top-md">
+  <div class="col-lg-1"></div>
+  <div class="col-lg-4 card list-view">
+    <div class="container div-padding-md">
+        <h4 align="center" class="title-text-md">Izaberite grad: </h4>
+        <ul class="list-group">
+            <li class="list-group-item" *ngFor="let city of cities" [ngClass]="{'selected-item' : selectedCity === city.id}" (click)="selectCity(city.id)">
+                <strong>{{city.naziv}}</strong> {{city.drzava.kod}}
+            </li>
+        </ul>
+    </div>
+  </div>
+
+  <div class="col-lg-1 geo-button">
+    <button class="btn btn-primary btn-lg" id="geoButton" [disabled]="selectedCity === -1" (click)="geoSearch()"><i class="fas fa-globe-europe fa-2x"></i></button>
+  </div>
+
+  <div class="col-lg-4 card list-view">
+    <div class="container div-padding-md">
+        <h4 align="center" class="title-text-md">Rezultati: </h4>
+        <ul class="list-group">
+            <li class="list-group-item" *ngFor="let result of results" >
+                <strong>{{result.ime}} {{result.prezime}}</strong>, {{result.mesto}}
+            </li>
+        </ul>
+    </div>
+  </div>
+  
+</div>

@@ -12,6 +12,28 @@ export class SearchService {
     return this.http.post("/app/search", {"pageNum" : pageNum, "params" : params, "allFields" : allFields});
   }
 
+  public moreLikeThis(id: string, pageNum: number){
+   
+    var params = new HttpParams();
+    params = params.append('pageNum', String(pageNum));
+    params = params.append('documentId', id);
+
+    return this.http.get("/app/moreLikeThis", {params : params});
+  }
+
+  public getAllCities(){
+
+    return this.http.get("/app/getAllCities");    
+  }
+
+  public geoSearch(idx: number){
+
+    var params = new HttpParams();
+    params = params.append('cityId', String(idx));
+
+    return this.http.get("/app/geoSearch", {params : params});
+  }
+
   private stringifyArray = function(array : any[]){
 
     var retVal : string = "";

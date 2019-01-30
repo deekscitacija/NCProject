@@ -5,12 +5,19 @@
       <label class="col-lg-5">Casopis: {{theResult.casopis}}</label>
       <label class="col-lg-5 right-items">Autor: {{theResult.autor}}</label> 
       <br/>
-      <p>{{theResult.apstrakt | substring : 125}}</p>
-      <p>{{theResult.naucneOblasti | listToString}}</p>
+      <div class="row">
+        <p class="col-lg-9">{{theResult.naucneOblasti | listToString}}</p>
+        <div align="center" class="col-lg-2">
+          <button class="btn btn-light btn-sm moreLikeThis" (click)="moreLikeThis(theResult.id)">Slicno?</button>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="col-lg-4 olive-bg1">
+  <div class="col-lg-4 olive-bg1" *ngIf="theResult.tekst">
     <div [innerHTML]="theResult.tekst" id="htmlPanel" ></div>
+  </div>
+  <div class="col-lg-4 olive-bg1" *ngIf="!theResult.tekst">
+    <div id="htmlPanel" >{{theResult.apstrakt | substring}}</div>
   </div>
   <div class="col-lg-2">
       <button class="btn btn-default orange-circle-button" *ngIf="theResult.openAccess"><i class="fas fa-file-download fa-3x"></i></button>

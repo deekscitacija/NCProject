@@ -1,0 +1,38 @@
+.list-group{
+    margin-bottom: 10px;
+    margin-top: 10px;
+    overflow:scroll;
+    -webkit-overflow-scrolling: touch;
+    max-height: 430px;
+    min-height: 430px;
+    background: #ffffff;
+}
+
+.list-group-item {
+    color: #3c425c;
+}
+
+.list-view{
+    height: 500px;
+    background: #c0bc8d;
+}
+
+.geo-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#geoButton {
+    width: 55px;
+    height: 55px;
+    text-align: center;
+    padding: 6px 0;
+    border-radius: 27px;
+    background-color: #788993;
+    border-color: #61717a;
+}
+
+.selected-item {
+    background: #aebcc4;
+}
