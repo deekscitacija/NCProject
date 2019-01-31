@@ -10,12 +10,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ftn.nc.NCBackend.elastic.dto.IndexUnitDTO;
 import com.ftn.nc.NCBackend.elastic.dto.QueryDTO;
 import com.ftn.nc.NCBackend.elastic.model.IndexUnit;
 import com.ftn.nc.NCBackend.elastic.model.RecenzentInfo;
@@ -80,6 +82,16 @@ public class SearchController {
 		}
 	
 		return new ResponseEntity<List<RecenzentInfo>>(searchService.geoSearch(grad.getLat(), grad.getLon()), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "index", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Boolean> uploadAndIndex(@ModelAttribute IndexUnitDTO newPaper){
+		
+		if(!searchService.uploadAndIndex(newPaper)){
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return new ResponseEntity<Boolean>(true, HttpStatus.OK);
 	}
 
 }

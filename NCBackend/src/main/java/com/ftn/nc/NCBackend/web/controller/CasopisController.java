@@ -1,5 +1,7 @@
 package com.ftn.nc.NCBackend.web.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -14,8 +16,10 @@ import com.ftn.nc.NCBackend.elastic.repository.NaucnaOblastInfoRepository;
 import com.ftn.nc.NCBackend.web.dto.CasopisDTO;
 import com.ftn.nc.NCBackend.web.model.Casopis;
 import com.ftn.nc.NCBackend.web.model.Korisnik;
+import com.ftn.nc.NCBackend.web.model.NaucnaOblast;
 import com.ftn.nc.NCBackend.web.service.CasopisService;
 import com.ftn.nc.NCBackend.web.service.KorisnikService;
+import com.ftn.nc.NCBackend.web.service.NaucneOblastiService;
 
 @RestController
 @RequestMapping(value = "/app/")
@@ -26,6 +30,9 @@ public class CasopisController {
 	
 	@Autowired
 	private KorisnikService korisnikService;
+	
+	@Autowired
+	private NaucneOblastiService naucneOblastiService;
 	
 	@RequestMapping(value = "getPageMagazine", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Page<Casopis>> getPage(@RequestParam(value = "pageNum", required = true) int pageNum){
@@ -53,6 +60,12 @@ public class CasopisController {
 		Korisnik korisnik = korisnikService.getById(retVal.getUrednik().getId());
 		
 		return new ResponseEntity<CasopisDTO>(new CasopisDTO(retVal, korisnik), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "getNaucneOblasti", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<NaucnaOblast>> getNaucneOblasti(){
+		
+		return new ResponseEntity<List<NaucnaOblast>>(naucneOblastiService.getAll(), HttpStatus.OK);
 	}
 
 }
