@@ -14,6 +14,13 @@ export class TokenService {
     return headers;
   }
 
+  public headerSetupMultipart(): HttpHeaders{
+
+    let headers = new HttpHeaders();
+    headers = headers.set('token', localStorage.getItem('token'));
+    return headers;
+  }
+
   public getUserFromToken(){
     
     return this.http.get("/app/getUserFromToken", {headers : this.headerSetup()});

@@ -24,4 +24,9 @@ export class CasopisService {
     return this.http.get("/app/getMagazine", {params : params});
   }
 
+  getNaucneOblasti(){
+
+    return this.http.get("/app/getNaucneOblasti");
+  }
+
 }

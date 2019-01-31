@@ -26,6 +26,7 @@ import { ResultViewComponent } from './components/search-panel/result-view/resul
 import { MagazinePreviewComponent } from './components/magazine-preview/magazine-preview.component';
 import { SearchDialogComponent } from './components/dialogs/search-dialog/search-dialog.component';
 import { GeoSearchComponent } from './components/search-panel/geo-search/geo-search.component';
+import { NewPaperComponent } from './components/new-paper/new-paper.component';
 
 
 
@@ -42,7 +43,8 @@ import { GeoSearchComponent } from './components/search-panel/geo-search/geo-sea
     SubstringPipe,
     MagazinePreviewComponent,
     SearchDialogComponent,
-    GeoSearchComponent
+    GeoSearchComponent,
+    NewPaperComponent
   ],
   imports: [
     BrowserModule,
@@ -72,6 +74,10 @@ import { GeoSearchComponent } from './components/search-panel/geo-search/geo-sea
       {
         path : 'naucna-centrala.com/casopis/:id',
         component : MagazinePreviewComponent
+      },
+      {
+        path : 'naucna-centrala.com/novi-rad',
+        component : NewPaperComponent
       },
       { 
         path: '**', 

@@ -34,6 +34,11 @@ export class SearchService {
     return this.http.get("/app/geoSearch", {params : params});
   }
 
+  public uploadPaper(val: any, options: any){
+
+    return this.http.post("/app/index", val, options);
+  }
+
   private stringifyArray = function(array : any[]){
 
     var retVal : string = "";

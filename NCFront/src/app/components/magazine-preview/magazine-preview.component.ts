@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 import { CasopisService } from '../../services/casopis.service';
 import { RadService } from '../../services/rad.service';
 
@@ -33,7 +33,11 @@ export class MagazinePreviewComponent implements OnInit {
   }
 
   objaviRad = function(){
-    
+    var queryParams: Params = {};
+  
+    queryParams['casopis'] = this.casopis.id;
+      
+    this.router.navigate(['naucna-centrala.com/novi-rad'], {queryParams : queryParams});
   }
 
 }
