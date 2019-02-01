@@ -6,4 +6,5 @@ import com.ftn.nc.NCBackend.web.model.Casopis;
 
 public interface CasopisRepository extends JpaRepository<Casopis, Long>{
 
+	
 }

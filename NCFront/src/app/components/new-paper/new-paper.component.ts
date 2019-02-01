@@ -16,6 +16,7 @@ export class NewPaperComponent implements OnInit {
   private casopisId: number;
   private file: File = null;
   private naucneOblasti: any[] = [];
+  private recenzenti: any[] = [];
 
   constructor(private searchService: SearchService, private router: Router, private route: ActivatedRoute, 
     private tokenService: TokenService, private casopisService : CasopisService) { }
@@ -45,6 +46,16 @@ export class NewPaperComponent implements OnInit {
     this.casopisService.getNaucneOblasti().subscribe(
       (res: any) => {
         this.naucneOblasti = res;
+      },
+      (error: any) => {
+        alert('Greska')
+      }
+    );
+
+    //
+    this.casopisService.getRecenzenti(this.casopisId).subscribe(
+      (res: any) => {
+        this.recenzenti = res;
       },
       (error: any) => {
         alert('Greska')

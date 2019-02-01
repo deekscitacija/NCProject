@@ -168,32 +168,70 @@ public class StartData {
 		Korisnik k1 = new Korisnik(null, "korisnik1@email.com", "lozinka1", "Pera", "Peric", gr1, setAU, null, null, null, null);
 		Korisnik k2 = new Korisnik(null, "korisnik2@email.com", "lozinka2", "Zika", "Zikic", gr2, setRK, null, null, null, null);
 		Korisnik k3 = new Korisnik(null, "korisnik3@email.com", "lozinka3", "Sima", "Simic", gr3, setRE, null, null, null, null);
-		Korisnik k4 = new Korisnik(null, "korisnik4@email.com", "lozinka3", "Sima", "Simic", gr4, setRE, null, null, null, null);
+		Korisnik k4 = new Korisnik(null, "korisnik4@email.com", "lozinka4", "Mika", "Mikic", gr4, setUR, null, null, null, null);
+		Korisnik k5 = new Korisnik(null, "korisnik5@email.com", "lozinka5", "Mila", "Milanovic", gr5, setRE, null, null, null, null);
+		Korisnik k6 = new Korisnik(null, "korisnik6@email.com", "lozinka6", "Sava", "Savic", gr6, setRE, null, null, null, null);
+		Korisnik k7 = new Korisnik(null, "korisnik7@email.com", "lozinka7", "Nikola", "Nikolic", gr1, setRE, null, null, null, null);
+		Korisnik k8 = new Korisnik(null, "korisnik8@email.com", "lozinka8", "Marko", "Markovic", gr2, setRE, null, null, null, null);
+		Korisnik k9 = new Korisnik(null, "korisnik9@email.com", "lozinka9", "Milica", "Milicic", gr3, setRE, null, null, null, null);
+		Korisnik k10 = new Korisnik(null, "korisnik10@email.com", "lozinka10", "Rada", "Radovanovic", gr5, setRE, null, null, null, null);
 		
 		k1 = korisnikRepository.save(k1);
 		k2 = korisnikRepository.save(k2);
 		k3 = korisnikRepository.save(k3);
 		k4 = korisnikRepository.save(k4);
+		k5 = korisnikRepository.save(k5);
+		k6 = korisnikRepository.save(k6);
+		k7 = korisnikRepository.save(k7);
+		k8 = korisnikRepository.save(k8);
+		k9 = korisnikRepository.save(k9);
+		k10 = korisnikRepository.save(k10);
 		
 		Autor autor = new Autor(k1.getId(), null, null);
 		RegistrovaniKorisnik registrovaniKorisnik = new RegistrovaniKorisnik(k2.getId());
-		Recenzent recenzent = new Recenzent(k3.getId());
 		Urednik urednik = new Urednik(k4.getId(), "Titula 1", naucneOblasti1, null);
 		
 		autor = autorRepository.save(autor);
 		registrovaniKorisnik = registrovaniKorisnikRepository.save(registrovaniKorisnik);
-		recenzent = recenzentRepository.save(recenzent);
 		urednik = urednikRepository.save(urednik);
+		
+		Recenzent rec1 = new Recenzent(k3.getId());
+		Recenzent rec2 = new Recenzent(k5.getId());
+		Recenzent rec3 = new Recenzent(k6.getId());
+		Recenzent rec4 = new Recenzent(k7.getId());
+		Recenzent rec5 = new Recenzent(k8.getId());
+		Recenzent rec6 = new Recenzent(k9.getId());
+		Recenzent rec7 = new Recenzent(k10.getId());
+		
+		rec1 = recenzentRepository.save(rec1);
+		rec2 = recenzentRepository.save(rec2);
+		rec3 = recenzentRepository.save(rec3);
+		rec4 = recenzentRepository.save(rec4);
+		rec5 = recenzentRepository.save(rec5);
+		rec6 = recenzentRepository.save(rec6);
+		rec7 = recenzentRepository.save(rec7);
 		
 		k1.setAutor(autor);
 		k2.setRegistrovaniKorisnik(registrovaniKorisnik);
-		k3.setRecenzent(recenzent);
+		k3.setRecenzent(rec1);
 		k4.setUrednik(urednik);
+		k5.setRecenzent(rec2);
+		k6.setRecenzent(rec3);
+		k7.setRecenzent(rec4);
+		k8.setRecenzent(rec5);
+		k9.setRecenzent(rec6);
+		k10.setRecenzent(rec7);
 		
 		k1 = korisnikRepository.save(k1);
 		k2 = korisnikRepository.save(k2);
 		k3 = korisnikRepository.save(k3);
 		k4 = korisnikRepository.save(k4);
+		k5 = korisnikRepository.save(k5);
+		k6 = korisnikRepository.save(k6);
+		k7 = korisnikRepository.save(k7);
+		k8 = korisnikRepository.save(k8);
+		k9 = korisnikRepository.save(k9);
+		k10 = korisnikRepository.save(k10);
 		
 		Cena cena1 = new Cena(null, 1, 2019, new Double(11.50));
 		Cena cena2 = new Cena(null, 1, 2019, new Double(71.00));
@@ -211,21 +249,43 @@ public class StartData {
 		Set<Cena> clanarina = new HashSet<>();
 		clanarina.add(cena3);
 		
-		Casopis c1 = new Casopis(null, "ABCD", "Casopis 1", true, naucneOblasti1, null, clanarina, urednik, null);
-		Casopis c2 = new Casopis(null, "QWER", "Casopis 2", false, naucneOblasti1, pretplata, null, urednik, null);
-		Casopis c3 = new Casopis(null, "WERT", "Casopis 3", true, naucneOblasti1, null, clanarina, urednik, null);
-		Casopis c4 = new Casopis(null, "ERTY", "Casopis 4", false, naucneOblasti1, pretplata, null, urednik, null);
-		Casopis c5 = new Casopis(null, "RTYU", "Casopis 5", true, naucneOblasti1, null, clanarina, urednik, null);
-		Casopis c6 = new Casopis(null, "ASDF", "Casopis 6", true, naucneOblasti1, null, clanarina, urednik, null);
-		Casopis c7 = new Casopis(null, "SDFG", "Casopis 7", true, naucneOblasti1, null, clanarina, urednik, null);
-		Casopis c8 = new Casopis(null, "DFGH", "Casopis 8", false, naucneOblasti1, pretplata, null, urednik, null);
-		Casopis c9 = new Casopis(null, "FGHJ", "Casopis 9", true, naucneOblasti1, null, clanarina, urednik, null);
-		Casopis c10 = new Casopis(null, "GHJK", "Casopis 11", true, naucneOblasti1, null, clanarina, urednik, null);
-		Casopis c11 = new Casopis(null, "HJKL", "Casopis 12", true, naucneOblasti1, null, clanarina, urednik, null);
-		Casopis c12 = new Casopis(null, "ZXCV", "Casopis 13", false, naucneOblasti1, pretplata, null, urednik, null);
-		Casopis c13 = new Casopis(null, "XCVB", "Casopis 14", true, naucneOblasti1, null, clanarina, urednik, null);
-		Casopis c14 = new Casopis(null, "CVBN", "Casopis 15", true, naucneOblasti1, null, clanarina, urednik, null);
-		Casopis c15 = new Casopis(null, "VBNM", "Casopis 16", false, naucneOblasti1, pretplata, null, urednik, null);
+		Set<Recenzent> recenzenti1 = new HashSet<Recenzent>();
+		recenzenti1.add(rec1);
+		recenzenti1.add(rec3);
+		recenzenti1.add(rec4);
+		recenzenti1.add(rec5);
+		recenzenti1.add(rec7);
+		
+		Set<Recenzent> recenzenti2 = new HashSet<Recenzent>();
+		recenzenti2.add(rec2);
+		recenzenti2.add(rec4);
+		recenzenti2.add(rec6);
+		recenzenti2.add(rec1);
+		recenzenti2.add(rec3);
+		recenzenti2.add(rec7);
+		
+		Set<Recenzent> recenzenti3 = new HashSet<Recenzent>();
+		recenzenti2.add(rec7);
+		recenzenti2.add(rec5);
+		recenzenti2.add(rec4);
+		recenzenti2.add(rec2);
+		recenzenti2.add(rec1);
+		
+		Casopis c1 = new Casopis(null, "ABCD", "Casopis 1", true, naucneOblasti1, null, clanarina, urednik, null, recenzenti3);
+		Casopis c2 = new Casopis(null, "QWER", "Casopis 2", false, naucneOblasti1, pretplata, null, urednik, null, recenzenti2);
+		Casopis c3 = new Casopis(null, "WERT", "Casopis 3", true, naucneOblasti1, null, clanarina, urednik, null, recenzenti1);
+		Casopis c4 = new Casopis(null, "ERTY", "Casopis 4", false, naucneOblasti1, pretplata, null, urednik, null, recenzenti3);
+		Casopis c5 = new Casopis(null, "RTYU", "Casopis 5", true, naucneOblasti1, null, clanarina, urednik, null, recenzenti2);
+		Casopis c6 = new Casopis(null, "ASDF", "Casopis 6", true, naucneOblasti1, null, clanarina, urednik, null, recenzenti1);
+		Casopis c7 = new Casopis(null, "SDFG", "Casopis 7", true, naucneOblasti1, null, clanarina, urednik, null, recenzenti3);
+		Casopis c8 = new Casopis(null, "DFGH", "Casopis 8", false, naucneOblasti1, pretplata, null, urednik, null, recenzenti2);
+		Casopis c9 = new Casopis(null, "FGHJ", "Casopis 9", true, naucneOblasti1, null, clanarina, urednik, null, recenzenti1);
+		Casopis c10 = new Casopis(null, "GHJK", "Casopis 11", true, naucneOblasti1, null, clanarina, urednik, null, recenzenti3);
+		Casopis c11 = new Casopis(null, "HJKL", "Casopis 12", true, naucneOblasti1, null, clanarina, urednik, null, recenzenti2);
+		Casopis c12 = new Casopis(null, "ZXCV", "Casopis 13", false, naucneOblasti1, pretplata, null, urednik, null, recenzenti1);
+		Casopis c13 = new Casopis(null, "XCVB", "Casopis 14", true, naucneOblasti1, null, clanarina, urednik, null, recenzenti3);
+		Casopis c14 = new Casopis(null, "CVBN", "Casopis 15", true, naucneOblasti1, null, clanarina, urednik, null, recenzenti2);
+		Casopis c15 = new Casopis(null, "VBNM", "Casopis 16", false, naucneOblasti1, pretplata, null, urednik, null, recenzenti1);
 		
 		c1 = casopisRepository.save(c1);
 		c2 = casopisRepository.save(c2);
