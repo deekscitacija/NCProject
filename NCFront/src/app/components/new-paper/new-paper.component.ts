@@ -52,7 +52,6 @@ export class NewPaperComponent implements OnInit {
       }
     );
 
-    //
     this.casopisService.getRecenzenti(this.casopisId).subscribe(
       (res: any) => {
         this.recenzenti = res;

@@ -29,4 +29,11 @@ export class CasopisService {
     return this.http.get("/app/getNaucneOblasti");
   }
 
+  getRecenzenti(magazineId: number){
+    var params = new HttpParams();
+    params = params.append('magazineId', String(magazineId));
+
+    return this.http.get("/app/getRecenzenti", {params : params});
+  }
+
 }
