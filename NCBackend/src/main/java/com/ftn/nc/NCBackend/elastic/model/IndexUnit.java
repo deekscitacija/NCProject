@@ -70,9 +70,10 @@ public class IndexUnit {
 		this.naucneOblasti = naucneOblasti;
 	}
 	
-	public IndexUnit(IndexUnitDTO paperData, String textContent, Korisnik korisnik, Casopis casopis, 
+	public IndexUnit(String id, IndexUnitDTO paperData, String textContent, Korisnik korisnik, Casopis casopis, 
 			List<RecenzentInfo> recenzenti, List<NaucnaOblastInfo> naucneOblasti) {
 		super();
+		this.id = id;
 		this.naslov = paperData.getNaslov();
 		this.koautori = paperData.getKoautori();
 		this.kljucne = paperData.getKljucne();

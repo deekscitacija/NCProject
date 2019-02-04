@@ -5,7 +5,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.lucene.search.join.ScoreMode;
 import org.elasticsearch.common.unit.DistanceUnit;
@@ -29,12 +32,24 @@ import com.ftn.nc.NCBackend.elastic.dto.QueryDTO;
 import com.ftn.nc.NCBackend.elastic.dto.QueryParamDTO;
 import com.ftn.nc.NCBackend.elastic.handler.PDFHandler;
 import com.ftn.nc.NCBackend.elastic.model.IndexUnit;
+import com.ftn.nc.NCBackend.elastic.model.NaucnaOblastInfo;
 import com.ftn.nc.NCBackend.elastic.model.RecenzentInfo;
 import com.ftn.nc.NCBackend.elastic.repository.IndexUnitRepository;
+import com.ftn.nc.NCBackend.elastic.repository.NaucnaOblastInfoRepository;
+import com.ftn.nc.NCBackend.elastic.repository.RecenzentInfoRepository;
 import com.ftn.nc.NCBackend.elastic.resultMappers.ContentResultMapper;
+import com.ftn.nc.NCBackend.web.dto.KorisnikDTO;
 import com.ftn.nc.NCBackend.web.model.Casopis;
 import com.ftn.nc.NCBackend.web.model.Korisnik;
+import com.ftn.nc.NCBackend.web.model.NaucnaOblast;
+import com.ftn.nc.NCBackend.web.model.NaucniRad;
+import com.ftn.nc.NCBackend.web.model.Recenzent;
+import com.ftn.nc.NCBackend.web.model.RevizijaRada;
+import com.ftn.nc.NCBackend.web.repository.AutorRepository;
+import com.ftn.nc.NCBackend.web.repository.KorisnikRepository;
 import com.ftn.nc.NCBackend.web.repository.NaucniRadRepository;
+import com.ftn.nc.NCBackend.web.repository.RecenzentRepository;
+import com.ftn.nc.NCBackend.web.repository.RevizijaRadaRepository;
 import com.ftn.nc.NCBackend.web.service.SearchService;
 
 @Service
@@ -49,7 +64,26 @@ public class SearchServiceImpl implements SearchService{
 	private IndexUnitRepository indexUnitRepository;
 	
 	@Autowired
+	private NaucnaOblastInfoRepository naucnaOblastInfoRepository;
+	
+	@Autowired
 	private NaucniRadRepository naucniRadRepository;
+	
+	@Autowired
+	private RevizijaRadaRepository revizijaRadaRepository;
+	
+	@Autowired
+	private KorisnikRepository korisnikRepository;
+	
+	@Autowired
+	private RecenzentRepository recenzentRepository;
+	
+	@Autowired
+	private RecenzentInfoRepository recenzentInfoRepository;
+	
+	@Autowired
+	private AutorRepository autorRepository;
+	
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -220,13 +254,52 @@ public class SearchServiceImpl implements SearchService{
             if (file.isEmpty()) {
                 continue;
             }
+            
             String filePath = saveUploadedFile(file);
             if(filePath != null){
             	PDFHandler pdfHandler = new PDFHandler();
             	String tekst = pdfHandler.getText(getResourceFilePath(filePath));
             	
-            	IndexUnit newPaper = new IndexUnit(paperInfo, tekst, autor, casopis, null, null);
+            	List<NaucnaOblastInfo> naucneOblasti = new ArrayList<NaucnaOblastInfo>();
+            	List<RecenzentInfo> recenzentiInfo = new ArrayList<RecenzentInfo>();
+            	List<Recenzent> recenzenti = new ArrayList<Recenzent>();
             	
+            	for(NaucnaOblast naucna : paperInfo.getNaucneOblasti()) {
+            		NaucnaOblastInfo noi = naucnaOblastInfoRepository.findById(naucna.getId().toString()).get();
+            		naucneOblasti.add(noi);
+            	}
+            	
+            	for(KorisnikDTO recenzentData : paperInfo.getRecenzenti()) {
+            		Korisnik k = korisnikRepository.findByEmail(recenzentData.getEmail());
+            		Recenzent r = recenzentRepository.getOne(k.getId());
+            		RecenzentInfo recenzentInfo = recenzentInfoRepository.findById(k.getId().toString()).get();
+            		recenzentiInfo.add(recenzentInfo);
+            		recenzenti.add(r);
+            	}
+            	
+            	RevizijaRada revizija = new RevizijaRada(null, 
+            			paperInfo.getNaslov(), 
+            			paperInfo.getKoautori(), 
+            			paperInfo.getApstrakt(),
+            			paperInfo.getKljucne(), 
+            			filePath, 
+            			true, true, true, 
+            			autorRepository.findById(autor.getId()).get(), 
+            			casopis, 
+            			new HashSet<NaucnaOblast>(paperInfo.getNaucneOblasti()), 
+            			new HashSet<Recenzent>(recenzenti), null);
+            	
+            	
+            	revizija = revizijaRadaRepository.save(revizija);
+            	
+            	Set<NaucnaOblast> naucneOblasti1 = new HashSet<NaucnaOblast>();
+            	naucneOblasti1.addAll(revizija.getNaucneOblasti());
+            	
+            	NaucniRad naucniRad = new NaucniRad(revizija);
+            	naucniRad.setNaucneOblasti(naucneOblasti1);
+            	naucniRad = naucniRadRepository.save(naucniRad);
+            	
+            	IndexUnit newPaper = new IndexUnit(naucniRad.getId().toString(), paperInfo, tekst, autor, casopis, recenzentiInfo, naucneOblasti);
             	indexUnitRepository.index(newPaper);
             }
     	}

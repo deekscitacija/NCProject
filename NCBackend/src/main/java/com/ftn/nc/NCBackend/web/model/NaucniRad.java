@@ -40,7 +40,7 @@ public class NaucniRad {
 	@ManyToMany
 	private Set<NaucnaOblast> naucneOblasti;
 	
-	@OneToOne(optional = false)
+	@OneToOne(optional = true)
 	private RevizijaRada revizija;
 
 	public NaucniRad() {
