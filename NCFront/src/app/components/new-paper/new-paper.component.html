@@ -3,47 +3,56 @@
   <div class="col-lg-8 card blue-bg1">
 
     <div class="container">
-      <form [formGroup] = "paperForm" (ngSubmit) = "submitPaper(paperForm.value)">
+      <form (ngSubmit) = "submitPaper()" role="form" name="newPaperForm" id="newPaperForm" #newPaperForm="ngForm">
         <fieldset>
 
-        <legend class="leg title-text-md" align="center">Unesite podatke o radu</legend>
+        <legend class="leg title-text-md" align="center"><strong>Unesite podatke o radu</strong></legend>
     
         <div class="form-group row">
             <div class="col-md-10 mx-auto">
-              <input type="text" class="form-control" name="naslov" id="naslov" placeholder="Naslov rada..." formControlName="naslov">
-              <span class = "error-message" *ngIf="paperForm.get('naslov').hasError('required') && paperForm.get('naslov').dirty">Obavezno unesite naslov rada</span>
-              <span class = "error-message" *ngIf="paperForm.get('naslov').hasError('maxlength') && paperForm.get('naslov').dirty">Naziv rada je previse dugacak</span>
+              <input type="text" class="form-control" name="naslov" id="naslov" placeholder="Naslov rada..." [(ngModel)]="paperForm.naslov" required maxlength="120" #naslov="ngModel">
+              <div *ngIf="naslov.invalid && (naslov.dirty || naslov.touched)">
+                  <span class = "error-message" *ngIf="naslov.errors.required">Obavezno unesite naslov rada</span>
+                  <span class = "error-message" *ngIf="naslov.errors.maxlength">Naziv rada je previse dugacak</span>
+              </div>
             </div>
         </div>
 
         <div class="form-group row">
             <div class="col-md-10 mx-auto">
-              <textarea class="form-control" rows="2" id="apstrakt" name="apstrakt" placeholder="Apstrakt..." formControlName="apstrakt"></textarea>
-              <span class = "error-message" *ngIf="paperForm.get('apstrakt').hasError('required') && paperForm.get('apstrakt').dirty">Obavezno unesite apstrakt</span>
-              <span class = "error-message" *ngIf="paperForm.get('apstrakt').hasError('maxlength') && paperForm.get('apstrakt').dirty">Apstrakt je previse dugacak</span>
+              <textarea class="form-control" rows="2" id="apstrakt" name="apstrakt" placeholder="Apstrakt..." [(ngModel)]="paperForm.apstrakt" required maxlength="1024" #apstrakt="ngModel"></textarea>
+              <div *ngIf="apstrakt.invalid && (apstrakt.dirty || apstrakt.touched)">
+                <span class = "error-message" *ngIf="apstrakt.errors.required">Obavezno unesite apstrakt</span>
+                <span class = "error-message" *ngIf="apstrakt.errors.maxlength">Apstrakt je previse dugacak</span>
+              </div>
             </div>
         </div>
 
         <div class="form-group row">
             <div class="col-md-10 mx-auto">
-              <textarea class="form-control" rows="2" id="kljucne" name="kljucne" placeholder="Kljucne reci..." formControlName="kljucne"></textarea>
-              <span class = "error-message" *ngIf="paperForm.get('kljucne').hasError('required') && paperForm.get('kljucne').dirty">Obavezno unesite kljucne reci</span>
-              <span class = "error-message" *ngIf="paperForm.get('kljucne').hasError('maxlength') && paperForm.get('kljucne').dirty">Kljucne reci su previse dugacke</span>
+              <textarea class="form-control" rows="2" id="kljucne" name="kljucne" placeholder="Kljucne reci..." [(ngModel)]="paperForm.kljucne" required maxlength="1024" #kljucne="ngModel"></textarea>
+              <div *ngIf="kljucne.invalid && (kljucne.dirty || kljucne.touched)">              
+                <span class = "error-message" *ngIf="kljucne.errors.required">Obavezno unesite kljucne reci</span>
+                <span class = "error-message" *ngIf="kljucne.errors.maxlength">Kljucne reci su previse dugacke</span>
+              </div>
             </div>
         </div>
 
         <div class="form-group row">
             <div class="col-md-10 mx-auto">
-              <textarea class="form-control" rows="2" id="koautori" name="koautori" placeholder="Koautori..." formControlName="koautori"></textarea>
+              <textarea class="form-control" rows="2" id="koautori" name="koautori" placeholder="Koautori..." [(ngModel)]="paperForm.koautori" maxlength="1024" #koautori="ngModel"></textarea>
+              <div *ngIf="koautori.invalid && (koautori.dirty || koautori.touched)">              
+                <span class = "error-message" *ngIf="koautori.errors.maxlength">Polje koautori je previse dugacko</span>
+              </div>
             </div>
         </div>
 
         <div class="form-group row">
             <div class="col-md-10 mx-auto">
               <input type="file" accept=".pdf" style="display:none" (change)="onFileChanged($event)" #fileInput />
-              <button type="button" class="btn btn-warning btn-md" (click)="fileInput.click()">Izaberite datoteku</button>
-              <label *ngIf="file"> {{file.name}}</label>
-              <label *ngIf="!file"> &lt; vasa_datotela.pdf &gt;</label>
+              <button type="button" class="btn yellow-button btn-md" (click)="fileInput.click()">Izaberite datoteku</button>
+              <label *ngIf="paperForm.fajlovi"> {{paperForm.fajlovi.name}}</label>
+              <label *ngIf="!paperForm.fajlovi"> &lt; vasa_datoteka.pdf &gt;</label>
             </div>
         </div>
 
@@ -53,7 +62,7 @@
                 <div class="scroll form-control">
                     <div *ngFor="let naucnaOblast of naucneOblasti">
                       <div class="row">
-                          <input type="checkbox" class="col-lg-2 gap-top-xxs" />
+                          <input type="checkbox" class="col-lg-2 gap-top-xxs" (change)="bindNaucnaOblast(naucnaOblast)" [checked]="containsElement('N', naucnaOblast)!=-1" />
                           <p class="col-lg-10">{{naucnaOblast.naziv}}</p>
                       </div> 
                   </div>
@@ -67,7 +76,7 @@
               <div class="scroll form-control">
                   <div *ngFor="let recenzent of recenzenti">
                     <div class="row">
-                        <input type="checkbox" class="col-lg-2 gap-top-xxs" />
+                        <input type="checkbox" class="col-lg-2 gap-top-xxs" (change)="bindRecenzent(recenzent)" [checked]="containsElement('R', recenzent)!=-1" />
                         <p class="col-lg-10">{{recenzent.ime}} {{recenzent.prezime}}</p>
                     </div> 
                 </div>
@@ -77,7 +86,7 @@
 
         <div class="form-group row">
           <div class="col-md-10 mx-auto">
-            <button type="submit" class="logregBtn btn btn-light btn-md btn-block" name="submitPaperBtn" [disabled] = "!paperForm.valid">Posalji</button>
+            <button type="submit" class="logregBtn btn btn-light btn-md btn-block" name="submitPaperBtn" [disabled]="!newPaperForm.form.valid" >Posalji</button>
           </div>
         </div>
       </fieldset>

@@ -8,6 +8,8 @@ import com.ftn.nc.NCBackend.elastic.dto.IndexUnitDTO;
 import com.ftn.nc.NCBackend.elastic.dto.QueryDTO;
 import com.ftn.nc.NCBackend.elastic.model.IndexUnit;
 import com.ftn.nc.NCBackend.elastic.model.RecenzentInfo;
+import com.ftn.nc.NCBackend.web.model.Casopis;
+import com.ftn.nc.NCBackend.web.model.Korisnik;
 
 public interface SearchService {
 	
@@ -21,6 +23,6 @@ public interface SearchService {
 	
 	public IndexUnit saveIndexUnit(IndexUnit newPaper);
 	
-	public boolean uploadAndIndex(IndexUnitDTO paperInfo);
+	public boolean uploadAndIndex(IndexUnitDTO paperInfo, Korisnik autor, Casopis casopis);
 
 }

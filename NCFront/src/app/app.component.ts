@@ -57,10 +57,10 @@ export class AppComponent {
     this.tokenService.getUserFromToken().subscribe(
       (res: any)=>{
         this.korisnik = res;
-        console.log(this.korisnik);
       },
       (error: any)=>{
-        alert('Greska');
+        localStorage.removeItem('token');
+        this.korisnik = null;
       }
     );
   }

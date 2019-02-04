@@ -16,4 +16,12 @@ export class RadService {
     return this.http.get("/app/pokreniObjavu", {params : params, headers : this.tokenService.headerSetup()});
   }
 
+  download(paperId: number){
+
+    var params = new HttpParams();
+    params = params.append('paperId', String(paperId));
+
+    return this.http.get("/app/download", {params : params, responseType: 'blob'});
+  }
+
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { SearchService } from '../../../services/search.service';
-import { appInitializerFactory } from '@angular/platform-browser/src/browser/server-transition';
+import { RadService } from '../../../services/rad.service';
+import { saveAs } from 'file-saver/dist/FileSaver';
 
 @Component({
   selector: 'app-result-view',
@@ -12,7 +13,7 @@ export class ResultViewComponent implements OnInit {
   @Input() theResult: any;
   @Output() docId: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(private searchService: SearchService) { }
+  constructor(private searchService: SearchService, private radService: RadService) { }
 
   ngOnInit() {
     
@@ -20,6 +21,19 @@ export class ResultViewComponent implements OnInit {
 
   moreLikeThis = function(id: string){
     this.docId.emit(id);
+  }
+
+  download = function(paperId: number, naslov: string){
+    
+    this.radService.download(paperId).subscribe(
+      (res: any) => {
+        const filename = naslov+'.pdf';
+        saveAs(res, filename);
+      },
+      (error: any) => {
+        alert('Greska!');
+      }
+    );
   }
 
 }

@@ -2,6 +2,7 @@ package com.ftn.nc.NCBackend.web.dto;
 
 import java.util.Set;
 
+import com.ftn.nc.NCBackend.web.model.Grad;
 import com.ftn.nc.NCBackend.web.model.Korisnik;
 import com.ftn.nc.NCBackend.web.model.TipKorisnika;
 
@@ -11,6 +12,7 @@ public class KorisnikDTO {
 	private String prezime;
 	private String email;
 	private Set<TipKorisnika> tip;
+	private Grad grad;
 	
 	public KorisnikDTO() {
 		super();
@@ -22,6 +24,7 @@ public class KorisnikDTO {
 		this.prezime = korisnik.getPrezime();
 		this.email = korisnik.getEmail();
 		this.tip = korisnik.getTip();
+		this.grad = korisnik.getGrad();
 	}
 
 	public String getIme() {
@@ -54,6 +57,14 @@ public class KorisnikDTO {
 
 	public void setTip(Set<TipKorisnika> tip) {
 		this.tip = tip;
+	}
+
+	public Grad getGrad() {
+		return grad;
+	}
+
+	public void setGrad(Grad grad) {
+		this.grad = grad;
 	}
 	
 }

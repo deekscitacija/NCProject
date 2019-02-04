@@ -7,7 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -30,6 +33,9 @@ public class RevizijaRada {
 	@Column(nullable = true, length = 1024)
 	private String kljucneReci;
 	
+	@Column(nullable = false, length = 1024)
+	private String putanja;
+	
 	@Column(nullable = false)
 	private boolean temaOk;
 	
@@ -39,8 +45,14 @@ public class RevizijaRada {
 	@Column(nullable = false)
 	private boolean prihvacen;
 	
-	@OneToOne(optional = false)
+	@ManyToOne(optional = false)
+	@JoinTable(name="AUTOR_REVIZIJE",
+	    joinColumns=@JoinColumn(name="revizija_rada_id"),
+	       inverseJoinColumns=@JoinColumn(name="autor_id"))
 	private Autor autor;
+	
+	@ManyToOne(optional = false)
+	private Casopis casopis;
 	
 	@ManyToMany
 	private Set<NaucnaOblast> naucneOblasti;
@@ -54,20 +66,22 @@ public class RevizijaRada {
 	public RevizijaRada() {
 		super();
 	}
-
-	public RevizijaRada(Long id, String naslov, String koAutori, String apstrakt, String kljucneReci, boolean temaOk,
-			boolean formatOk, boolean prihvacen, Autor autor, Set<NaucnaOblast> naucneOblasti,
-			Set<Recenzent> recenzenti, Set<Komentar> komentari) {
+	
+	public RevizijaRada(Long id, String naslov, String koAutori, String apstrakt, String kljucneReci, String putanja,
+			boolean temaOk, boolean formatOk, boolean prihvacen, Autor autor, Casopis casopis,
+			Set<NaucnaOblast> naucneOblasti, Set<Recenzent> recenzenti, Set<Komentar> komentari) {
 		super();
 		this.id = id;
 		this.naslov = naslov;
 		this.koAutori = koAutori;
 		this.apstrakt = apstrakt;
 		this.kljucneReci = kljucneReci;
+		this.putanja = putanja;
 		this.temaOk = temaOk;
 		this.formatOk = formatOk;
 		this.prihvacen = prihvacen;
 		this.autor = autor;
+		this.casopis = casopis;
 		this.naucneOblasti = naucneOblasti;
 		this.recenzenti = recenzenti;
 		this.komentari = komentari;
@@ -167,6 +181,22 @@ public class RevizijaRada {
 
 	public void setNaucneOblasti(Set<NaucnaOblast> naucneOblasti) {
 		this.naucneOblasti = naucneOblasti;
+	}
+
+	public String getPutanja() {
+		return putanja;
+	}
+
+	public void setPutanja(String putanja) {
+		this.putanja = putanja;
+	}
+
+	public Casopis getCasopis() {
+		return casopis;
+	}
+
+	public void setCasopis(Casopis casopis) {
+		this.casopis = casopis;
 	}
 
 }

@@ -1,3 +1,8 @@
 .gap-top-xxs{
     margin-top : 7px;
 }
+
+.yellow-button{
+    background-color: #ffec3d;
+    border-color: #ecd929;
+}

@@ -20,7 +20,7 @@ public class Casopis {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false, unique = true, length = 9)
 	private String issn;
 	
 	@Column(nullable = false)

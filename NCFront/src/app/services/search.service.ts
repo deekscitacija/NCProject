@@ -39,19 +39,4 @@ export class SearchService {
     return this.http.post("/app/index", val, options);
   }
 
-  private stringifyArray = function(array : any[]){
-
-    var retVal : string = "";
-
-    var i : number = 0;
-    for(let element of array){
-        retVal += element;
-        i++;
-        if(i<array.length){
-            retVal+=",";
-        }        
-    }
-    return retVal;
-  }
-
 }

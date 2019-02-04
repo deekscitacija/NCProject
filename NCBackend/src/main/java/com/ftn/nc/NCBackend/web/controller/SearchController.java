@@ -2,6 +2,7 @@ package com.ftn.nc.NCBackend.web.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,13 @@ import com.ftn.nc.NCBackend.elastic.dto.IndexUnitDTO;
 import com.ftn.nc.NCBackend.elastic.dto.QueryDTO;
 import com.ftn.nc.NCBackend.elastic.model.IndexUnit;
 import com.ftn.nc.NCBackend.elastic.model.RecenzentInfo;
+import com.ftn.nc.NCBackend.security.TokenUtils;
+import com.ftn.nc.NCBackend.web.model.Casopis;
 import com.ftn.nc.NCBackend.web.model.Grad;
+import com.ftn.nc.NCBackend.web.model.Korisnik;
+import com.ftn.nc.NCBackend.web.service.CasopisService;
 import com.ftn.nc.NCBackend.web.service.GradService;
+import com.ftn.nc.NCBackend.web.service.KorisnikService;
 import com.ftn.nc.NCBackend.web.service.SearchService;
 
 @RestController
@@ -34,6 +40,16 @@ public class SearchController {
 	
 	@Autowired
 	private GradService gradService;
+	
+	@Autowired
+	private KorisnikService korisnikService;
+	
+	@Autowired
+	private TokenUtils tokenUtils;
+	
+	@Autowired
+	private CasopisService casopisService;
+
 	
 	@RequestMapping(value = "search", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Page<IndexUnit>> search(@RequestBody @NotNull QueryDTO searchParams, BindingResult result){
@@ -85,9 +101,21 @@ public class SearchController {
 	}
 	
 	@RequestMapping(value = "index", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Boolean> uploadAndIndex(@ModelAttribute IndexUnitDTO newPaper){
+	public ResponseEntity<Boolean> uploadAndIndex(@ModelAttribute IndexUnitDTO newPaper, HttpServletRequest request){
 		
-		if(!searchService.uploadAndIndex(newPaper)){
+		Korisnik autor = korisnikService.getUserFromToken(request, tokenUtils);
+		
+		if(autor == null) {
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
+		
+		Casopis casopis = casopisService.getById(newPaper.getCasopisId());
+		
+		if(casopis == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		if(!searchService.uploadAndIndex(newPaper, autor, casopis)){
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		

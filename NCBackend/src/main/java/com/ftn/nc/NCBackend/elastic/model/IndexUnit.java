@@ -7,6 +7,11 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
+import com.ftn.nc.NCBackend.elastic.dto.IndexUnitDTO;
+import com.ftn.nc.NCBackend.web.model.Casopis;
+import com.ftn.nc.NCBackend.web.model.Korisnik;
+import com.ftn.nc.NCBackend.web.model.NaucniRad;
+
 @Document(indexName = "naucnacentrala", type = "rad", shards = 1, replicas = 0)
 public class IndexUnit {
 	
@@ -63,6 +68,37 @@ public class IndexUnit {
 		this.openAccess = openAccess;
 		this.recenzenti = recenzenti;
 		this.naucneOblasti = naucneOblasti;
+	}
+	
+	public IndexUnit(IndexUnitDTO paperData, String textContent, Korisnik korisnik, Casopis casopis, 
+			List<RecenzentInfo> recenzenti, List<NaucnaOblastInfo> naucneOblasti) {
+		super();
+		this.naslov = paperData.getNaslov();
+		this.koautori = paperData.getKoautori();
+		this.kljucne = paperData.getKljucne();
+		this.apstrakt = paperData.getApstrakt();
+		this.autor = korisnik.getIme()+" "+korisnik.getPrezime();
+		this.casopis = casopis.getNaziv();
+		this.tekst = textContent;
+		this.openAccess = casopis.isOpenAccess();
+		this.recenzenti = recenzenti;
+		this.naucneOblasti = naucneOblasti;
+	}
+	
+	public IndexUnit(NaucniRad rad, String autor, String tekst, 
+			List<RecenzentInfo> recenzenti, List<NaucnaOblastInfo> naucneOblasti) {
+		super();
+		this.id = rad.getId().toString();
+		this.naslov = rad.getNaslov();
+		this.koautori = rad.getKoAutori();
+		this.kljucne = rad.getKljucneReci();
+		this.apstrakt = rad.getApstrakt();
+		this.autor = autor;
+		this.casopis = rad.getRevizija().getCasopis().getNaziv();
+		this.tekst = tekst;
+		this.openAccess = rad.getRevizija().getCasopis().isOpenAccess();
+		this.recenzenti = recenzenti;
+		this.naucneOblasti = naucneOblasti;	
 	}
 
 	public String getId() {

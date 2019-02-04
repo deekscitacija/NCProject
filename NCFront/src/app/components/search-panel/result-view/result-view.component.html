@@ -20,7 +20,7 @@
     <div id="htmlPanel" >{{theResult.apstrakt | substring}}</div>
   </div>
   <div class="col-lg-2">
-      <button class="btn btn-default orange-circle-button" *ngIf="theResult.openAccess"><i class="fas fa-file-download fa-3x"></i></button>
+      <button class="btn btn-default orange-circle-button" (click)="download(theResult.id, theResult.naslov)" *ngIf="theResult.openAccess"><i class="fas fa-file-download fa-3x"></i></button>
       <button class="btn btn-default orange-circle-button" *ngIf="!theResult.openAccess">Pretplati<br />se...</button>
   </div>
 </div>

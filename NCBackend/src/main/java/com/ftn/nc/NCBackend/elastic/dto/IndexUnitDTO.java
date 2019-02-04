@@ -5,7 +5,9 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ftn.nc.NCBackend.web.dto.KorisnikDTO;
 import com.ftn.nc.NCBackend.web.model.NaucnaOblast;
+import com.ftn.nc.NCBackend.web.model.Recenzent;
 
 
 public class IndexUnitDTO {
@@ -18,23 +20,29 @@ public class IndexUnitDTO {
 	
 	private String apstrakt;
 	
+	private Long casopisId;
+	
 	private MultipartFile[] fajlovi;
 	
 	private List<NaucnaOblast> naucneOblasti;
+	
+	private List<KorisnikDTO> recenzenti;
 
 	public IndexUnitDTO() {
 		super();
 	}
 
-	public IndexUnitDTO(String naslov, String koautori, String kljucne, String apstrakt, MultipartFile[] fajlovi,
-			List<NaucnaOblast> naucneOblasti) {
+	public IndexUnitDTO(String naslov, String koautori, String kljucne, String apstrakt, Long casopisId,
+			MultipartFile[] fajlovi, List<NaucnaOblast> naucneOblasti, List<KorisnikDTO> recenzenti) {
 		super();
 		this.naslov = naslov;
 		this.koautori = koautori;
 		this.kljucne = kljucne;
 		this.apstrakt = apstrakt;
+		this.casopisId = casopisId;
 		this.fajlovi = fajlovi;
 		this.naucneOblasti = naucneOblasti;
+		this.recenzenti = recenzenti;
 	}
 
 	public String getNaslov() {
@@ -85,12 +93,27 @@ public class IndexUnitDTO {
 		this.naucneOblasti = naucneOblasti;
 	}
 
+	public List<KorisnikDTO> getRecenzenti() {
+		return recenzenti;
+	}
+
+	public void setRecenzenti(List<KorisnikDTO> recenzenti) {
+		this.recenzenti = recenzenti;
+	}
+
+	public Long getCasopisId() {
+		return casopisId;
+	}
+
+	public void setCasopisId(Long casopisId) {
+		this.casopisId = casopisId;
+	}
+
 	@Override
 	public String toString() {
 		return "IndexUnitDTO [naslov=" + naslov + ", koautori=" + koautori + ", kljucne=" + kljucne + ", apstrakt="
-				+ apstrakt + ", fajlovi=" + Arrays.toString(fajlovi) + ", naucneOblasti=" + naucneOblasti + "]";
+				+ apstrakt + ", casopisId=" + casopisId + ", fajlovi=" + Arrays.toString(fajlovi) + ", naucneOblasti="
+				+ naucneOblasti + ", recenzenti=" + recenzenti + "]";
 	}
-	
-	
 	
 }

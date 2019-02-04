@@ -4,6 +4,9 @@ import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -16,10 +19,12 @@ public class Autor {
 	
 	@OneToMany
 	@JsonBackReference
+	@JoinTable(name="AUTOR_REVIZIJE",
+	    joinColumns=@JoinColumn(name="autor_id"),
+	       inverseJoinColumns=@JoinColumn(name="revizija_rada_id"))
 	private Set<RevizijaRada> revizije;
 	
 	@OneToMany
-	@JsonBackReference
 	private Set<NaucniRad> radovi;
 
 	public Autor() {

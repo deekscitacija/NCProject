@@ -31,6 +31,9 @@ public class NaucniRad {
 	@Column(nullable = true, length = 1024)
 	private String kljucneReci;
 	
+	@Column(nullable = false, length = 1024)
+	private String putanja;
+	
 	@OneToMany
 	private List<Cena> cena;
 	
@@ -44,20 +47,32 @@ public class NaucniRad {
 		super();
 	}
 
-	public NaucniRad(Long id, String naslov, String koAutori, String apstrakt, String kljucneReci, List<Cena> cena,
-			Set<NaucnaOblast> naucneOblasti, RevizijaRada revizija) {
+	public NaucniRad(Long id, String naslov, String koAutori, String apstrakt, String kljucneReci, String putanja,
+			List<Cena> cena, Set<NaucnaOblast> naucneOblasti, RevizijaRada revizija) {
 		super();
 		this.id = id;
 		this.naslov = naslov;
 		this.koAutori = koAutori;
 		this.apstrakt = apstrakt;
 		this.kljucneReci = kljucneReci;
+		this.putanja = putanja;
 		this.cena = cena;
 		this.naucneOblasti = naucneOblasti;
 		this.revizija = revizija;
 	}
+	
 
-
+	public NaucniRad(RevizijaRada revizija) {
+		super();
+		this.revizija = revizija;
+		this.naslov = revizija.getNaslov();
+		this.koAutori = revizija.getKoAutori();
+		this.apstrakt = revizija.getApstrakt();
+		this.kljucneReci = revizija.getApstrakt();
+		this.putanja = revizija.getPutanja();
+		this.naucneOblasti = revizija.getNaucneOblasti();
+		this.revizija = revizija;
+	}
 
 	public Long getId() {
 		return id;
@@ -121,6 +136,14 @@ public class NaucniRad {
 
 	public void setNaucneOblasti(Set<NaucnaOblast> naucneOblasti) {
 		this.naucneOblasti = naucneOblasti;
+	}
+
+	public String getPutanja() {
+		return putanja;
+	}
+
+	public void setPutanja(String putanja) {
+		this.putanja = putanja;
 	}
 
 }

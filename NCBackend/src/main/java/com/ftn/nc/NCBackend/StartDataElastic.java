@@ -17,7 +17,7 @@ import com.ftn.nc.NCBackend.elastic.repository.IndexUnitRepository;
 import com.ftn.nc.NCBackend.elastic.repository.NaucnaOblastInfoRepository;
 import com.ftn.nc.NCBackend.elastic.repository.RecenzentInfoRepository;
 
-@Component
+//@Component
 public class StartDataElastic {
 	
 	

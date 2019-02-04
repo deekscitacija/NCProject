@@ -12,32 +12,20 @@ import { TokenService } from '../../services/token.service';
 })
 export class NewPaperComponent implements OnInit {
 
-  private paperForm: any;
+  private paperForm: any = {naslov : "", apstrakt : "", kljucne : "", koautori : "", fajlovi : null, naucneOblasti : [], recenzenti : []};
   private casopisId: number;
-  private file: File = null;
   private naucneOblasti: any[] = [];
   private recenzenti: any[] = [];
+
 
   constructor(private searchService: SearchService, private router: Router, private route: ActivatedRoute, 
     private tokenService: TokenService, private casopisService : CasopisService) { }
 
   ngOnInit() {
 
-    this.paperForm = new FormGroup({
-      naslov : new FormControl("",Validators.compose([
-        Validators.required,
-        Validators.maxLength(120)
-      ])),
-      apstrakt : new FormControl("",Validators.compose([
-        Validators.required,
-        Validators.maxLength(1000)
-      ])),
-      kljucne : new FormControl("",Validators.compose([
-        Validators.required,
-        Validators.maxLength(1000)
-      ])),
-      koautori : new FormControl("")
-    });
+    if(!localStorage.getItem('token')){
+      this.router.navigate(['naucna-centrala.com']);
+    }
 
     this.route.queryParamMap.subscribe((queryParams)=>{
       this.casopisId = +queryParams.get("casopis");
@@ -64,18 +52,23 @@ export class NewPaperComponent implements OnInit {
   }
 
   onFileChanged = function(event: any) {
-    this.file = event.target.files[0];
+    this.paperForm.fajlovi = event.target.files[0];
   }
 
-  submitPaper = function(val: any){
+  submitPaper = function(){
     const uploadData = new FormData();
-    uploadData.append('naslov', val.naslov);
-    uploadData.append('apstrakt', val.apstrakt);
-    uploadData.append('kljucne', val.kljucne);
-    uploadData.append('koautori', val.koautori);
-    uploadData.append('fajlovi', this.file, this.file.name);
+    uploadData.append('naslov', this.paperForm.naslov);
+    uploadData.append('apstrakt', this.paperForm.apstrakt);
+    uploadData.append('kljucne', this.paperForm.kljucne);
+    uploadData.append('koautori', this.paperForm.koautori);
+    uploadData.append('casopisId', this.casopisId);
+    this.stringifyNaucneOblasti(uploadData);
+    this.stringifyRecenzenti(uploadData);
+    uploadData.append('fajlovi', this.paperForm.fajlovi, this.paperForm.fajlovi.name);
     var options = { content: uploadData, headers : this.tokenService.headerSetupMultipart()};
     
+    console.log(this.paperForm)
+
     this.searchService.uploadPaper(uploadData, options).subscribe( 
       (res: any) => {
         console.log(res)
@@ -84,6 +77,91 @@ export class NewPaperComponent implements OnInit {
         alert('Greska!')
       }
     );
+  
   }
+
+  stringifyNaucneOblasti = function(uploadData: FormData){
+    let idx = 0;
+    for(let naucna of this.paperForm.naucneOblasti){
+      uploadData.append("naucneOblasti["+idx+"].id", naucna.id);
+      uploadData.append("naucneOblasti["+idx+"].kod", naucna.kod);
+      uploadData.append("naucneOblasti["+idx+"].naziv", naucna.naziv);
+      idx++;
+    }
+  }
+  
+  stringifyRecenzenti = function(uploadData: FormData){
+    let idx = 0;
+    for(let recenzent of this.paperForm.recenzenti){
+      uploadData.append("recenzenti["+idx+"].email", recenzent.email);
+      uploadData.append("recenzenti["+idx+"].ime", recenzent.ime);
+      uploadData.append("recenzenti["+idx+"].prezime", recenzent.prezime);
+      idx++;
+    }
+  }
+
+  bindNaucnaOblast = function(val: any){
+    let idx = this.containsElement('N', val);
+    if(idx === -1){
+      this.paperForm.naucneOblasti.push(val);
+      return;
+    }
+
+    this.paperForm.naucneOblasti.splice(idx, 1);
+  }
+
+  bindRecenzent = function(val: any){
+    let idx = this.containsElement('R', val);
+    if(idx === -1){
+      this.paperForm.recenzenti.push(val);
+      return;
+    }
+
+    this.paperForm.recenzenti.splice(idx, 1);
+  }
+
+  containsElement = function(mode: string, item: any) : number{
+    let theList = [];
+    let idx = 0;
+
+    if(mode === 'N'){
+      theList = this.paperForm.naucneOblasti;
+
+      for(let temp of theList){
+        if(temp.id === item.id){
+          return idx;
+        }
+        idx++;
+      }
+
+    }else if(mode === 'R'){
+      theList = this.paperForm.recenzenti;
+
+      for(let temp of theList){
+        if(temp.email === item.email){
+          return idx;
+        }
+      }
+      idx++;
+    }
+      
+    return -1;
+  }
+
+  private stringifyArray = function(array : any[]){
+
+    var retVal : string = "";
+
+    var i : number = 0;
+    for(let element of array){
+        retVal += element;
+        i++;
+        if(i<array.length){
+            retVal+=",";
+        }        
+    }
+    return retVal;
+  }
+   
 
 }

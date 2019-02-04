@@ -21,7 +21,6 @@ import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.query.MoreLikeThisQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,6 +32,8 @@ import com.ftn.nc.NCBackend.elastic.model.IndexUnit;
 import com.ftn.nc.NCBackend.elastic.model.RecenzentInfo;
 import com.ftn.nc.NCBackend.elastic.repository.IndexUnitRepository;
 import com.ftn.nc.NCBackend.elastic.resultMappers.ContentResultMapper;
+import com.ftn.nc.NCBackend.web.model.Casopis;
+import com.ftn.nc.NCBackend.web.model.Korisnik;
 import com.ftn.nc.NCBackend.web.repository.NaucniRadRepository;
 import com.ftn.nc.NCBackend.web.service.SearchService;
 
@@ -49,7 +50,6 @@ public class SearchServiceImpl implements SearchService{
 	
 	@Autowired
 	private NaucniRadRepository naucniRadRepository;
-	
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -197,16 +197,14 @@ public class SearchServiceImpl implements SearchService{
 	}
 	
 	@Override
-	public boolean uploadAndIndex(IndexUnitDTO paperInfo) {
+	public boolean uploadAndIndex(IndexUnitDTO paperInfo, Korisnik autor, Casopis casopis) {
 		
 		if(paperInfo == null) {
 			return false;
 		}
 		
-		System.out.println(paperInfo);
-		
 		try {
-			indexUploadedFile(paperInfo);
+			indexUploadedFile(paperInfo, autor, casopis);
 		}catch (Exception e) {
 			e.printStackTrace();
 			return false;
@@ -215,16 +213,21 @@ public class SearchServiceImpl implements SearchService{
 		return true;
 	}
 	
-	private void indexUploadedFile(IndexUnitDTO model) throws IOException{
+	private void indexUploadedFile(IndexUnitDTO paperInfo, Korisnik autor, Casopis casopis) throws IOException{
     	
-    	for (MultipartFile file : model.getFajlovi()) {
+    	for (MultipartFile file : paperInfo.getFajlovi()) {
 
             if (file.isEmpty()) {
                 continue;
             }
-            String fileName = saveUploadedFile(file);
-            if(fileName != null){
+            String filePath = saveUploadedFile(file);
+            if(filePath != null){
             	PDFHandler pdfHandler = new PDFHandler();
+            	String tekst = pdfHandler.getText(getResourceFilePath(filePath));
+            	
+            	IndexUnit newPaper = new IndexUnit(paperInfo, tekst, autor, casopis, null, null);
+            	
+            	indexUnitRepository.index(newPaper);
             }
     	}
     }
@@ -244,5 +247,5 @@ public class SearchServiceImpl implements SearchService{
 		
 	    return new File(path);
 	}
-
+	
 }
