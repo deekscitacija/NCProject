@@ -7,6 +7,7 @@ import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.core.LowerCaseFilter;
 import org.apache.lucene.analysis.core.StopFilter;
+import org.apache.lucene.analysis.snowball.SnowballFilter;
 import org.apache.lucene.analysis.standard.StandardTokenizer;
 import org.apache.lucene.util.AttributeFactory;
 import org.apache.lucene.util.Version;
@@ -54,6 +55,7 @@ public class SerbianAnalyzer extends Analyzer {
 		TokenStream result = new LowerCaseFilter(source);
 		result = new LatCyrFilter(result);
 		result = new StopFilter(result, serbianStopSet);
+		result = new SnowballFilter(result, new SerbianStemmer());
 		result = new RemoveAccentsFilter(result);
 		return new TokenStreamComponents(source, result);
 	}

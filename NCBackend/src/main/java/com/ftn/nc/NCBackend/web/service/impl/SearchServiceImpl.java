@@ -39,6 +39,7 @@ import com.ftn.nc.NCBackend.elastic.repository.NaucnaOblastInfoRepository;
 import com.ftn.nc.NCBackend.elastic.repository.RecenzentInfoRepository;
 import com.ftn.nc.NCBackend.elastic.resultMappers.ContentResultMapper;
 import com.ftn.nc.NCBackend.web.dto.KorisnikDTO;
+import com.ftn.nc.NCBackend.web.enums.SearchParamType;
 import com.ftn.nc.NCBackend.web.model.Casopis;
 import com.ftn.nc.NCBackend.web.model.Korisnik;
 import com.ftn.nc.NCBackend.web.model.NaucnaOblast;
@@ -100,9 +101,9 @@ public class SearchServiceImpl implements SearchService{
 			if((key != null && value != null)) {
 				
 				if(key.equals("naucna")) {
-					buildNestedParam(queryParams, value, searchParam.isOptional(), searchParam.isPhraseQuery());
+					buildNestedParam(queryParams, value, searchParam.getParamType(), searchParam.isPhraseQuery());
 				}else {
-					buildParam(queryParams, key, value, searchParam.isOptional(), searchParam.isPhraseQuery());
+					buildParam(queryParams, key, value, searchParam.getParamType(), searchParam.isPhraseQuery());
 				}
 			}
 		}
@@ -111,7 +112,7 @@ public class SearchServiceImpl implements SearchService{
 	            new HighlightBuilder.Field("tekst")
 	                .preTags("<b>")
 	                .postTags("</b>")
-	                .numOfFragments(10)
+	                .numOfFragments(1)
 	                .fragmentSize(250)
 	    ).withPageable(new PageRequest(pageNum-1, 3))
 		.build();
@@ -128,14 +129,18 @@ public class SearchServiceImpl implements SearchService{
 		
 		NativeSearchQueryBuilder searchQueryBuilder = new NativeSearchQueryBuilder();
 		BoolQueryBuilder queryParams = new BoolQueryBuilder();
-
-		queryParams.should(QueryBuilders.queryStringQuery("*"+queryString+"*").analyzeWildcard(true)
-                .field("tekst", 2.0f).field("naslov", 2.0f).field("autor", 2.0f).field("casopis", 1.5f)
-                .field("koautori").field("kljucne").field("apstrakt"));
+		
+		queryParams.should(QueryBuilders.commonTermsQuery("tekst", queryString));
+		queryParams.should(QueryBuilders.commonTermsQuery("naslov", queryString));
+		queryParams.should(QueryBuilders.commonTermsQuery("autor", queryString));
+		queryParams.should(QueryBuilders.commonTermsQuery("casopis", queryString));
+		queryParams.should(QueryBuilders.commonTermsQuery("koautori", queryString));
+		queryParams.should(QueryBuilders.commonTermsQuery("kljucne", queryString));
+		queryParams.should(QueryBuilders.commonTermsQuery("apstrakt", queryString));
 		
 		BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
-		NestedQueryBuilder nestedQuery = QueryBuilders.nestedQuery("naucneOblasti", boolQuery.should(QueryBuilders.queryStringQuery("*"+queryString+"*")
-						.analyzeWildcard(true).field("naucneOblasti.naziv")), ScoreMode.None);
+		NestedQueryBuilder nestedQuery = QueryBuilders.nestedQuery("naucneOblasti", boolQuery.should(
+				QueryBuilders.commonTermsQuery("naucneOblasti.naziv", queryString)), ScoreMode.Total);
 		
 		queryParams.should(nestedQuery);
 		
@@ -143,7 +148,7 @@ public class SearchServiceImpl implements SearchService{
 	            new HighlightBuilder.Field("tekst")
 	                .preTags("<b>")
 	                .postTags("</b>")
-	                .numOfFragments(10)
+	                .numOfFragments(1)
 	                .fragmentSize(250)
 	    ).withPageable(new PageRequest(pageNum-1, 3))
 		.build();
@@ -152,44 +157,58 @@ public class SearchServiceImpl implements SearchService{
 	}
 
 	
-	private void buildParam(BoolQueryBuilder queryParams, String key, String value, boolean isOptional, boolean isPhraseQuery) {
+	private void buildParam(BoolQueryBuilder queryParams, String key, String value, SearchParamType paramType, boolean isPhraseQuery) {
 		
-		if(isOptional) {
+		if(paramType.equals(SearchParamType.OR)) {
 			if(isPhraseQuery) {
 				queryParams.should(QueryBuilders.matchPhraseQuery(key, value));
 			}else {
 				queryParams.should(QueryBuilders.commonTermsQuery(key, value));
 			}
-		}else {
+		}else if(paramType.equals(SearchParamType.AND)) {
 			if(isPhraseQuery){
 				queryParams.must(QueryBuilders.matchPhraseQuery(key, value));
 			}else {
 				queryParams.must(QueryBuilders.commonTermsQuery(key, value));
 			}
+		}else if(paramType.equals(SearchParamType.MUST_NOT)) {
+			if(isPhraseQuery){
+				queryParams.mustNot(QueryBuilders.matchPhraseQuery(key, value));
+			}else {
+				queryParams.mustNot(QueryBuilders.commonTermsQuery(key, value));
+			}
 		}
 	}
 	
-	private void buildNestedParam(BoolQueryBuilder queryParams, String value, boolean isOptional, boolean isPhraseQuery) {
+	private void buildNestedParam(BoolQueryBuilder queryParams, String value, SearchParamType paramType, boolean isPhraseQuery) {
 		
 		BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
 		NestedQueryBuilder nestedQuery = null;
 		
-		if(isOptional) {
+		if(paramType.equals(SearchParamType.OR)) {
 			if(isPhraseQuery) {
 				nestedQuery = QueryBuilders.nestedQuery("naucneOblasti", boolQuery.should(QueryBuilders.matchPhraseQuery("naucneOblasti.naziv", value)), ScoreMode.None);
 			}else {
 				nestedQuery = QueryBuilders.nestedQuery("naucneOblasti", boolQuery.should(QueryBuilders.commonTermsQuery("naucneOblasti.naziv", value)), ScoreMode.None);
 			}
 			queryParams.should(nestedQuery);
-		}else {
+			
+		}else if(paramType.equals(SearchParamType.AND)){
 			if(isPhraseQuery) {
 				nestedQuery = QueryBuilders.nestedQuery("naucneOblasti", boolQuery.must(QueryBuilders.matchPhraseQuery("naucneOblasti.naziv", value)), ScoreMode.None);
 			}else {
 				nestedQuery = QueryBuilders.nestedQuery("naucneOblasti", boolQuery.must(QueryBuilders.commonTermsQuery("naucneOblasti.naziv", value)), ScoreMode.None);
 			}
 			queryParams.must(nestedQuery);
-		}
 		
+		}else if(paramType.equals(SearchParamType.MUST_NOT)){
+			if(isPhraseQuery) {
+				nestedQuery = QueryBuilders.nestedQuery("naucneOblasti", boolQuery.mustNot(QueryBuilders.matchPhraseQuery("naucneOblasti.naziv", value)), ScoreMode.None);
+			}else {
+				nestedQuery = QueryBuilders.nestedQuery("naucneOblasti", boolQuery.mustNot(QueryBuilders.commonTermsQuery("naucneOblasti.naziv", value)), ScoreMode.None);
+			}
+			queryParams.mustNot(nestedQuery);
+		}
 		
 	}
 
@@ -202,8 +221,8 @@ public class SearchServiceImpl implements SearchService{
 		moreLikeThisQuery.setType("rad");
 		moreLikeThisQuery.setId(documentId);
 		moreLikeThisQuery.addFields("tekst");
-		moreLikeThisQuery.setMinDocFreq(1);
-		moreLikeThisQuery.setMaxQueryTerms(25);
+		moreLikeThisQuery.setMinDocFreq(5);
+		moreLikeThisQuery.setMaxQueryTerms(5);
 		moreLikeThisQuery.setPageable(new PageRequest(pageNum-1, 3));
 		
 		return elasticsearchTemplate.moreLikeThis(moreLikeThisQuery, IndexUnit.class);

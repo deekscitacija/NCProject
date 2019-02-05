@@ -1,5 +1,7 @@
 package com.ftn.nc.NCBackend.elastic.dto;
 
+import com.ftn.nc.NCBackend.web.enums.SearchParamType;
+
 public class QueryParamDTO {
 	
 	private String key;
@@ -8,18 +10,18 @@ public class QueryParamDTO {
 	
 	private boolean phraseQuery;
 	
-	private boolean optional;
+	private SearchParamType paramType;
 
 	public QueryParamDTO() {
 		super();
 	}
 
-	public QueryParamDTO(String key, String value, boolean phraseQuery, boolean optional) {
+	public QueryParamDTO(String key, String value, boolean phraseQuery, SearchParamType paramType) {
 		super();
 		this.key = key;
 		this.value = value;
 		this.phraseQuery = phraseQuery;
-		this.optional = optional;
+		this.paramType = paramType;
 	}
 
 	public String getKey() {
@@ -46,12 +48,12 @@ public class QueryParamDTO {
 		this.phraseQuery = phraseQuery;
 	}
 
-	public boolean isOptional() {
-		return optional;
+	public SearchParamType getParamType() {
+		return paramType;
 	}
 
-	public void setOptional(boolean optional) {
-		this.optional = optional;
+	public void setParamType(SearchParamType paramType) {
+		this.paramType = paramType;
 	}
 
 }

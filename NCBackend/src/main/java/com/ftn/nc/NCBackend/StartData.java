@@ -550,14 +550,13 @@ public class StartData {
 		IndexUnit iu6 = new IndexUnit(rad6, k1.getIme()+" "+k1.getPrezime(), pdfHandler.getText(new File(rad6.getPutanja())), recenzentiI3, naucneOblastiI4);
 		IndexUnit iu7 = new IndexUnit(rad7, k1.getIme()+" "+k1.getPrezime(), pdfHandler.getText(new File(rad7.getPutanja())), recenzentiI1, naucneOblastiI5);
 		
-		
-		iu1 = indexUnitRepository.save(iu1);
-		iu2 = indexUnitRepository.save(iu2);
-		iu3 = indexUnitRepository.save(iu3);
-		iu4 = indexUnitRepository.save(iu4);
-		iu5 = indexUnitRepository.save(iu5);
-		iu6 = indexUnitRepository.save(iu6);
-		iu7 = indexUnitRepository.save(iu7);
+		iu1 = indexUnitRepository.index(iu1);
+		iu2 = indexUnitRepository.index(iu2);
+		iu3 = indexUnitRepository.index(iu3);
+		iu4 = indexUnitRepository.index(iu4);
+		iu5 = indexUnitRepository.index(iu5);
+		iu6 = indexUnitRepository.index(iu6);
+		iu7 = indexUnitRepository.index(iu7);
 	
 	}
 }
