@@ -10,7 +10,7 @@ import { P } from '@angular/core/src/render3';
 })
 export class SearchDialogComponent implements OnInit {
 
-  private queryParams: any[] = [{"optional" : false, "value" : "", "key" : "", "phraseQuery" : false}];
+  private queryParams: any[] = [{"paramType" : "AND", "value" : "", "key" : "", "phraseQuery" : false}];
 
   constructor(public dialogRef: MatDialogRef<SearchDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
@@ -35,7 +35,7 @@ export class SearchDialogComponent implements OnInit {
 
   addParam = function(){
     if(this.queryParams.length < 15){
-      let newParam = {"optional" : false, "value" : "", "key" : "", "phraseQuery" : false};
+      let newParam = {"paramType" : "AND", "value" : "", "key" : "", "phraseQuery" : false};
       this.queryParams.push(newParam);
     }
   }

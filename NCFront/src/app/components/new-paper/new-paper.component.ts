@@ -71,7 +71,9 @@ export class NewPaperComponent implements OnInit {
 
     this.searchService.uploadPaper(uploadData, options).subscribe( 
       (res: any) => {
-        console.log(res)
+        if(res){
+          this.router.navigate([""]);
+        }
       },
       (error: any) =>{
         alert('Greska!')

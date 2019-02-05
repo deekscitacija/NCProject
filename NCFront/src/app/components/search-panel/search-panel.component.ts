@@ -108,6 +108,9 @@ export class SearchPanelComponent implements OnInit {
     this.searchService.moreLikeThis(id, this.pageNum).subscribe(
       (res: any) => {
         if(res){
+          for(let tmp of res.content){
+            tmp.tekst = "";
+          }
           this.results = res.content;
           if(this.results){
             (this.results.length < 3) ? this.isLast = true : this.isLast = false;

@@ -10,9 +10,10 @@
   </div>
   <hr />
   <div class="row row-height" *ngFor="let param of queryParams; let idx = index">
-      <select class="form-control col-lg-2 gap-left" [(ngModel)]="param.optional">
-          <option value="false">AND</option>
-          <option value="true">OR</option>
+      <select class="form-control col-lg-2 gap-left" [(ngModel)]="param.paramType">
+          <option value="AND">Obavezno sadrzi</option>
+          <option value="OR">Opciono sadrzi</option>
+          <option value="MUST_NOT">Ne sadrzi</option>
       </select>
       <input type="text" [(ngModel)]="param.value" class="form-control col-lg-4 gap-left" />
       <select class="form-control col-lg-2 gap-left" [(ngModel)]="param.key">
@@ -20,6 +21,7 @@
           <option value="casopis">Casopis</option>
           <option value="naslov">Naslov</option>
           <option value="tekst">Tekst</option>
+          <option value="apstrakt">Apstrakt</option>
           <option value="kljucne">Kljucne reci</option>
           <option value="naucna">Naucna oblast</option>
       </select>
