@@ -41,6 +41,7 @@ export class AppComponent {
         localStorage.setItem('token', res);
         this.isPrijava = false;
         this.getUserFromToken();
+        location.reload();
       },
       (error: any)=>{
         alert('Greska!');
@@ -68,6 +69,11 @@ export class AppComponent {
   odjava = function(){
     localStorage.removeItem('token');
     this.korisnik = null;
+    location.reload();
+  }
+
+  profil = function(){
+    this.router.navigate(['/naucna-centrala.com/profil']);
   }
 
 }

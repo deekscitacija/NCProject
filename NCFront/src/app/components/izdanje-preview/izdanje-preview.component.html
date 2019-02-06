@@ -1,0 +1,38 @@
+<div class="row gap-top-sm">
+
+  <div class="col-lg-2"></div>
+  <div class="col-lg-8">
+    <div class="row card olive-bg1">
+      <h3 align="center" class="title-text-lg">{{izdanje.naslov}}</h3>
+    </div>
+
+    <div class="row izdanje-info-block">
+      <div class="col-lg-10">
+        <label class="title-text-sm">Casopis: <i>{{izdanje.casopis}}</i></label>
+        <br/>
+        <label class="title-text-sm">Datum objave: {{izdanje.objavljen | dateDisplay}}</label>
+        <br/>
+        <p class="title-text-sm">
+          Naucne oblasti: {{izdanje.naucneOblasti | listToString}}
+        </p>
+      </div>
+
+      <div class="col-lg-2">
+        <button *ngIf="!izdanje.openAccess" class="btn btn-default orange-circle-button">Kupi</button>
+        <button *ngIf="izdanje.openAccess" class="btn btn-default orange-circle-button"><i class="fas fa-file-download fa-3x"></i></button>
+        <h6 *ngIf="!izdanje.openAccess" align="center">{{izdanje.cena}} USD</h6>
+      </div>
+    </div>
+
+    <div class="row gap-top-sm card olive-bg1">
+        <h3 align="center" class="title-text-md">Radovi :</h3>
+      </div>
+
+    <div class="row gap-top-sm div-padding-sm light-border" *ngFor="let paper of izdanje.radovi">
+      <app-paper-preview [paper]="paper"></app-paper-preview>
+    </div>
+
+  </div>
+
+
+</div>

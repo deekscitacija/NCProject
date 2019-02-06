@@ -17,6 +17,7 @@ import { RadService } from './services/rad.service';
 import { ListToStringPipe } from './pipes/list-to-string.pipe';
 import { YesNoPipe } from './pipes/yes-no.pipe';
 import { SubstringPipe } from './pipes/substring.pipe';
+import { DateDisplayPipe } from './pipes/date-display.pipe';
 
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { MagazineListComponent } from './components/magazine-list/magazine-list.component';
@@ -27,6 +28,9 @@ import { MagazinePreviewComponent } from './components/magazine-preview/magazine
 import { SearchDialogComponent } from './components/dialogs/search-dialog/search-dialog.component';
 import { GeoSearchComponent } from './components/search-panel/geo-search/geo-search.component';
 import { NewPaperComponent } from './components/new-paper/new-paper.component';
+import { IzdanjePreviewComponent } from './components/izdanje-preview/izdanje-preview.component';
+import { PaperPreviewComponent } from './components/paper-preview/paper-preview.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
 
 
 
@@ -44,7 +48,11 @@ import { NewPaperComponent } from './components/new-paper/new-paper.component';
     MagazinePreviewComponent,
     SearchDialogComponent,
     GeoSearchComponent,
-    NewPaperComponent
+    NewPaperComponent,
+    DateDisplayPipe,
+    IzdanjePreviewComponent,
+    PaperPreviewComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -76,8 +84,16 @@ import { NewPaperComponent } from './components/new-paper/new-paper.component';
         component : MagazinePreviewComponent
       },
       {
+        path : 'naucna-centrala.com/izdanje/:id',
+        component : IzdanjePreviewComponent
+      },
+      {
         path : 'naucna-centrala.com/novi-rad',
         component : NewPaperComponent
+      },
+      {
+        path : 'naucna-centrala.com/profil',
+        component : UserProfileComponent
       },
       { 
         path: '**', 

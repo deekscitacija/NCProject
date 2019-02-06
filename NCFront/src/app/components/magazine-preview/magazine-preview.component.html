@@ -1,13 +1,50 @@
-<div class="row">
+<div class="row gap-top-sm">
 
   <div class="col-lg-1"></div>
   <div class="col-lg-10">
-    <div class="gap-top-sm card card-block bg-faded olive-bg1">
+    <div class="row card olive-bg1">
       <h3 align="center" class="title-text-lg">{{casopis.naziv}}</h3>
     </div>
-    <div class="white-bg1">
-      <button class="btn btn-info btn-lg right-items" (click)="objaviRad()">Objavi Rad</button>
+    
+    <div class="row magazine-info-block">
+      <div class="white-bg1 col-lg-9">
+        <label class="title-text-sm">ISSN: {{casopis.issn}}</label>
+        <br/>
+        <label class="title-text-sm">Urednik: {{casopis.urednik}}</label>
+        <p class="title-text-sm">
+          Naucne oblasti: {{casopis.naucneOblasti | listToString}}
+        </p>
+      </div>
+      <div class="white-bg1 col-lg-3 div-padding-md">
+        <button class="btn btn-default blue-box-button" (click)="objaviRad()">Objavi rad</button>
+        <br/>
+        <button class="btn btn-default blue-box-button" (click)="objaviRad()">Pretplati se</button>
+      </div>
     </div>
+
+    <div class="row gap-top-sm mx-auto">
+      <div class="col-lg-3 blue-bg1 div-padding-sm light-border izdanje-info-block" *ngFor="let izdanje of izdanja">
+        <h6 align="center" class="izdanje-naslov"><i>{{izdanje.naslov}}</i></h6>
+        <label class="izdanje-text">Datum objave : {{izdanje.objavljen | dateDisplay}}</label>
+        <br/>
+        <label *ngIf="!casopis.openAccess" class="izdanje-text">Cena : {{izdanje.cenaIzdanja}}</label>
+        <p class="izdanje-text">
+          Naucne oblasti: {{izdanje.naucneOblasti | listToString}}
+        </p>
+        <button *ngIf="casopis.openAccess" class="btn btn-light right-bottomn-items" (click)="otvoriIzdanje(izdanje.id)">Pregledaj</button>
+      </div>
+    </div>
+
+    <div class="row gap-top-sm">
+        <div class="card blue-bg1" id="outer-div">
+            <div class="container" id="inner-div">
+                <button class="btn btn-light btn-sm" (click)="prev()" [disabled]="pageNum <= 1">&lt;</button>
+                <button class="btn btn-light btn-sm">{{pageNum}}</button>
+                <button class="btn btn-light btn-sm" (click)="next()" [disabled]="isLast">&gt;</button>
+            </div>
+          </div>
+      </div>
+    
   </div>
 
 </div>

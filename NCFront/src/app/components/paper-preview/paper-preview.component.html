@@ -1,0 +1,24 @@
+<div>
+  <h6 align="center"><strong>{{paper.naslov}}</strong></h6>
+  <div class="row">
+    <div class="col-lg-10">
+        <p>
+            Apstrakt : <i>{{paper.apstrakt | substring : 200}}</i>
+        </p>
+    </div>
+    <div class="col-lg-2 padding-md">
+      <button *ngIf="!paper.openAccess" class="btn btn-default download-circle-button"><i class="far fa-money-bill-alt fa-2x fa-fix-left"></i></button>
+      <button *ngIf="paper.openAccess" class="btn btn-default download-circle-button"><i class="fas fa-file-download fa-2x"></i></button>
+      <h6 *ngIf="!paper.openAccess" align="center">{{paper.cena}} USD</h6>
+    </div>
+  </div>
+  <hr/>
+  <div class="row">
+    <p class="col-lg-8">
+      Naucne oblasti: <i>{{paper.naucneOblasti | listToString}}</i>
+    </p>
+    <p class="col-lg-4">
+        Autor: <i>{{paper.autor}}</i>
+    </p>
+  </div>
+</div>

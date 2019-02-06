@@ -1,0 +1,33 @@
+.magazine-info-block{
+    min-height: 220px;
+}
+
+.izdanje-info-block{
+    min-height: 150px;
+    margin-right: 5%;
+    margin-left: 3%;
+}
+
+.izdanje-text{
+    color: #09133d;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.izdanje-naslov{
+    color: #09133d;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+#outer-div {
+    margin-left: 2%; 
+    width: 96%;
+    text-align: center;
+}
+  
+#inner-div {
+    display: inline-block;
+    padding-top : 0.5%;
+    padding-bottom : 0.5%;
+}

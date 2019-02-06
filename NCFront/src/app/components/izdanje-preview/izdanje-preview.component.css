@@ -1,0 +1,17 @@
+.izdanje-info-block {
+    background: #ffffff;
+    min-height: 150px;
+    padding: 2%;
+}
+
+.light-border{
+    box-shadow: 2px 4px 0 2px rgba(0,0,0,0.1);
+	border: .5em solid #6b777e;
+	font-size: 1em;
+	line-height: 1.1em;
+    color: #ffffff;
+    text-shadow: 1px 1px 1px #383535;
+	background-color: #6b777e;
+    position: relative;
+    display:block;
+}

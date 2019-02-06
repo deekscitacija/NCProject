@@ -1,0 +1,37 @@
+.download-circle-button {
+	box-shadow: 2px 4px 0 2px rgba(0,0,0,0.1);
+	border: .5em solid #b1ac73;
+	font-size: 1em;
+    line-height: 1.1em;
+	color: #303029;
+	background-color: #b1ac73;
+	margin: auto;
+	border-radius: 50%;
+	height: 4em;
+	width: 4em;
+    position: relative;
+    display:block;
+}
+
+.download-circle-button:hover {
+	color:#303029;
+    background-color: #b1ac73;
+	text-decoration: none;
+	border-color: #ccc9aa;
+	
+}
+
+.download-circle-button:visited {
+	color:#303029;
+    background-color: #b1ac73;
+	text-decoration: none;
+	
+}
+
+.download-circle-link-greater-than {
+    font-size: 1em;
+}
+
+.fa-fix-left{
+    margin-left: -30%;
+}

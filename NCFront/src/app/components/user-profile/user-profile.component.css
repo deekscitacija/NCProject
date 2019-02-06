@@ -1,0 +1,13 @@
+.nav-pills > li.nav-item > .active {
+    background-color: #bacad3;
+    border-color: #9cb0bb;
+}
+
+.nav-pills > li.nav-item > .nav-link{
+    color: #29373f;
+}
+
+.tab-content > .active {
+    background-color: #f3f6f7;
+    min-height: 500px;
+}

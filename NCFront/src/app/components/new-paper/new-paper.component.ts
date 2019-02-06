@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { SearchService } from '../../services/search.service';
 import { CasopisService } from '../../services/casopis.service';
@@ -149,21 +148,5 @@ export class NewPaperComponent implements OnInit {
       
     return -1;
   }
-
-  private stringifyArray = function(array : any[]){
-
-    var retVal : string = "";
-
-    var i : number = 0;
-    for(let element of array){
-        retVal += element;
-        i++;
-        if(i<array.length){
-            retVal+=",";
-        }        
-    }
-    return retVal;
-  }
-   
 
 }

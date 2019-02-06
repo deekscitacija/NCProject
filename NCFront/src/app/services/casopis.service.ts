@@ -36,4 +36,19 @@ export class CasopisService {
     return this.http.get("/app/getRecenzenti", {params : params});
   }
 
+  getIzdanja(magazineId: number, pageNum: number){
+    var params = new HttpParams();
+    params = params.append('magazineId', String(magazineId));
+    params = params.append('pageNum', String(pageNum));
+
+    return this.http.get("/app/getIzdanja", {params : params});
+  }
+
+  getIzdanje(izdanjeId: number){
+    var params = new HttpParams();
+    params = params.append('izdanjeId', String(izdanjeId));
+  
+    return this.http.get("/app/getIzdanje", {params : params});
+  }
+
 }
