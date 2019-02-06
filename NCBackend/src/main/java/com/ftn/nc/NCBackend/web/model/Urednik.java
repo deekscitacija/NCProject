@@ -6,7 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Urednik {
@@ -20,19 +20,22 @@ public class Urednik {
 	@ManyToMany
 	private Set<NaucnaOblast> naucneOblasti;
 	
-	@OneToMany
-	private Set<Casopis> uredjujeCasopise;
+	@ManyToOne
+	private Casopis uredjujeCasopis;
+	
+	@ManyToOne
+	private Casopis odgovorniUrednik;
 
 	public Urednik() {
 		super();
 	}
 	
-	public Urednik(Long id, String titula, Set<NaucnaOblast> naucneOblasti, Set<Casopis> uredjujeCasopise) {
+	public Urednik(Long id, String titula, Set<NaucnaOblast> naucneOblasti, Casopis odgovorniUrednik) {
 		super();
 		this.id = id;
 		this.titula = titula;
 		this.naucneOblasti = naucneOblasti;
-		this.uredjujeCasopise = uredjujeCasopise;
+		this.odgovorniUrednik = odgovorniUrednik;
 	}
 
 	public Long getId() {
@@ -59,12 +62,20 @@ public class Urednik {
 		this.naucneOblasti = naucneOblasti;
 	}
 
-	public Set<Casopis> getUredjujeCasopise() {
-		return uredjujeCasopise;
+	public Casopis getUredjujeCasopis() {
+		return uredjujeCasopis;
 	}
 
-	public void setUredjujeCasopise(Set<Casopis> uredjujeCasopise) {
-		this.uredjujeCasopise = uredjujeCasopise;
+	public void setUredjujeCasopis(Casopis uredjujeCasopis) {
+		this.uredjujeCasopis = uredjujeCasopis;
+	}
+
+	public Casopis getOdgovorniUrednik() {
+		return odgovorniUrednik;
+	}
+
+	public void setOdgovorniUrednik(Casopis odgovorniUrednik) {
+		this.odgovorniUrednik = odgovorniUrednik;
 	}
 	
 }

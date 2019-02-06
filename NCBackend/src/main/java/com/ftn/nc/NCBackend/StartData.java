@@ -2,6 +2,7 @@ package com.ftn.nc.NCBackend;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,9 +24,9 @@ import com.ftn.nc.NCBackend.elastic.repository.NaucnaOblastInfoRepository;
 import com.ftn.nc.NCBackend.elastic.repository.RecenzentInfoRepository;
 import com.ftn.nc.NCBackend.web.model.Autor;
 import com.ftn.nc.NCBackend.web.model.Casopis;
-import com.ftn.nc.NCBackend.web.model.Cena;
 import com.ftn.nc.NCBackend.web.model.Drzava;
 import com.ftn.nc.NCBackend.web.model.Grad;
+import com.ftn.nc.NCBackend.web.model.Izdanje;
 import com.ftn.nc.NCBackend.web.model.Korisnik;
 import com.ftn.nc.NCBackend.web.model.NaucnaOblast;
 import com.ftn.nc.NCBackend.web.model.NaucniRad;
@@ -37,7 +38,6 @@ import com.ftn.nc.NCBackend.web.model.TipKorisnika;
 import com.ftn.nc.NCBackend.web.model.Urednik;
 import com.ftn.nc.NCBackend.web.repository.AutorRepository;
 import com.ftn.nc.NCBackend.web.repository.CasopisRepository;
-import com.ftn.nc.NCBackend.web.repository.CenaReposiotry;
 import com.ftn.nc.NCBackend.web.repository.DrzavaRepository;
 import com.ftn.nc.NCBackend.web.repository.GradRepository;
 import com.ftn.nc.NCBackend.web.repository.IzdanjeRepository;
@@ -62,9 +62,6 @@ public class StartData {
 	
 	@Autowired
 	private CasopisRepository casopisRepository;
-	
-	@Autowired
-	private CenaReposiotry cenaReposiotry; 
 	
 	@Autowired
 	private DrzavaRepository drzavaRepository;
@@ -268,6 +265,19 @@ public class StartData {
 		Korisnik k9 = new Korisnik(null, "korisnik9@email.com", "lozinka9", "Milica", "Milicic", gr3, setRE, null, null, null, null);
 		Korisnik k10 = new Korisnik(null, "korisnik10@email.com", "lozinka10", "Rada", "Radovanovic", gr5, setRE, null, null, null, null);
 		
+		// *** Autori *** //
+		Korisnik k11 = new Korisnik(null, "korisnik11@email.com", "lozinka11", "Sara", "Savic", gr1, setAU, null, null, null, null);
+		Korisnik k12 = new Korisnik(null, "korisnik12@email.com", "lozinka12", "Luka", "Lukic", gr3, setAU, null, null, null, null);
+		Korisnik k13 = new Korisnik(null, "korisnik13@email.com", "lozinka13", "Lazar", "Lazarevic", gr6, setAU, null, null, null, null);
+		
+		// *** Urednici *** //
+		Korisnik k14 = new Korisnik(null, "korisnik14@email.com", "lozinka14", "Sara", "Lazarevic", gr3, setUR, null, null, null, null);
+		Korisnik k15 = new Korisnik(null, "korisnik15@email.com", "lozinka15", "Luka", "Savic", gr4, setUR, null, null, null, null);
+		Korisnik k16 = new Korisnik(null, "korisnik16@email.com", "lozinka16", "Marko", "Lazarevic", gr6, setUR, null, null, null, null);
+		Korisnik k17 = new Korisnik(null, "korisnik17@email.com", "lozinka17", "Sara", "Savic", gr5, setUR, null, null, null, null);
+		Korisnik k18 = new Korisnik(null, "korisnik18@email.com", "lozinka18", "Zika", "Mikic", gr5, setUR, null, null, null, null);
+		Korisnik k19 = new Korisnik(null, "korisnik19@email.com", "lozinka19", "Lazar", "Milicic", gr6, setUR, null, null, null, null);
+		
 		k1 = korisnikRepository.save(k1);
 		k2 = korisnikRepository.save(k2);
 		k3 = korisnikRepository.save(k3);
@@ -278,14 +288,45 @@ public class StartData {
 		k8 = korisnikRepository.save(k8);
 		k9 = korisnikRepository.save(k9);
 		k10 = korisnikRepository.save(k10);
+		k11 = korisnikRepository.save(k11);
+		k12 = korisnikRepository.save(k12);
+		k13 = korisnikRepository.save(k13);
+		k14 = korisnikRepository.save(k14);
+		k15 = korisnikRepository.save(k15);
+		k16 = korisnikRepository.save(k16);
+		k17 = korisnikRepository.save(k17);
+		k18 = korisnikRepository.save(k18);
+		k19 = korisnikRepository.save(k19);
 		
-		Autor autor = new Autor(k1.getId(), null, null);
+		Autor autor1 = new Autor(k1.getId(), null, null);
+		Autor autor2 = new Autor(k11.getId(), null, null);
+		Autor autor3 = new Autor(k12.getId(), null, null);
+		Autor autor4 = new Autor(k13.getId(), null, null);
+		
 		RegistrovaniKorisnik registrovaniKorisnik = new RegistrovaniKorisnik(k2.getId());
-		Urednik urednik = new Urednik(k4.getId(), "Titula 1", naucneOblasti1, null);
 		
-		autor = autorRepository.save(autor);
+		Urednik urednik1 = new Urednik(k4.getId(), "Titula 1", naucneOblasti1, null);
+		Urednik urednik2 = new Urednik(k14.getId(), "Titula 2", naucneOblasti2, null);
+		Urednik urednik3 = new Urednik(k15.getId(), "Titula 3", naucneOblasti3, null);
+		Urednik urednik4 = new Urednik(k16.getId(), "Titula 4", naucneOblasti4, null);
+		Urednik urednik5 = new Urednik(k17.getId(), "Titula 5", naucneOblasti5, null);
+		Urednik urednik6 = new Urednik(k18.getId(), "Titula 6", naucneOblasti3, null);
+		Urednik urednik7 = new Urednik(k19.getId(), "Titula 7", naucneOblasti2, null);
+		
+		autor1 = autorRepository.save(autor1);
+		autor2 = autorRepository.save(autor2);
+		autor3 = autorRepository.save(autor3);
+		autor4 = autorRepository.save(autor4);
+		
 		registrovaniKorisnik = registrovaniKorisnikRepository.save(registrovaniKorisnik);
-		urednik = urednikRepository.save(urednik);
+		
+		urednik1 = urednikRepository.save(urednik1);
+		urednik2 = urednikRepository.save(urednik2);
+		urednik3 = urednikRepository.save(urednik3);
+		urednik4 = urednikRepository.save(urednik4);
+		urednik5 = urednikRepository.save(urednik5);
+		urednik6 = urednikRepository.save(urednik6);
+		urednik7 = urednikRepository.save(urednik7);
 		
 		Recenzent rec1 = new Recenzent(k3.getId());
 		Recenzent rec2 = new Recenzent(k5.getId());
@@ -332,16 +373,25 @@ public class StartData {
 		reci6 = recenzentInfoRepository.save(reci6);
 		reci7 = recenzentInfoRepository.save(reci7);
 		
-		k1.setAutor(autor);
+		k1.setAutor(autor1);
 		k2.setRegistrovaniKorisnik(registrovaniKorisnik);
 		k3.setRecenzent(rec1);
-		k4.setUrednik(urednik);
+		k4.setUrednik(urednik1);
 		k5.setRecenzent(rec2);
 		k6.setRecenzent(rec3);
 		k7.setRecenzent(rec4);
 		k8.setRecenzent(rec5);
 		k9.setRecenzent(rec6);
 		k10.setRecenzent(rec7);
+		k11.setAutor(autor2);
+		k12.setAutor(autor3);
+		k13.setAutor(autor4);
+		k14.setUrednik(urednik2);
+		k15.setUrednik(urednik3);
+		k16.setUrednik(urednik4);
+		k17.setUrednik(urednik5);
+		k18.setUrednik(urednik6);
+		k19.setUrednik(urednik7);
 		
 		k1 = korisnikRepository.save(k1);
 		k2 = korisnikRepository.save(k2);
@@ -353,6 +403,15 @@ public class StartData {
 		k8 = korisnikRepository.save(k8);
 		k9 = korisnikRepository.save(k9);
 		k10 = korisnikRepository.save(k10);
+		k11 = korisnikRepository.save(k11);
+		k12 = korisnikRepository.save(k12);
+		k13 = korisnikRepository.save(k13);
+		k14 = korisnikRepository.save(k14);
+		k15 = korisnikRepository.save(k15);
+		k16 = korisnikRepository.save(k16);
+		k17 = korisnikRepository.save(k17);
+		k18 = korisnikRepository.save(k18);
+		k19 = korisnikRepository.save(k19);
 		
 		// *** Camunda Korisnici *** //
 		
@@ -391,24 +450,6 @@ public class StartData {
 		identityService.saveUser(u3);
 		identityService.saveUser(u4);
 		identityService.saveUser(u5);
-		
-		// *** Cene *** //
-		
-		Cena cena1 = new Cena(null, 1, 2019, new Double(11.50));
-		Cena cena2 = new Cena(null, 1, 2019, new Double(71.00));
-		Cena cena3 = new Cena(null, 1, 2019, new Double(16.99));
-		Cena cena4 = new Cena(null, 1, 2019, new Double(9.99));
-		
-		cena1 = cenaReposiotry.save(cena1);
-		cena2 = cenaReposiotry.save(cena2);
-		cena3 = cenaReposiotry.save(cena3);
-		cena4 = cenaReposiotry.save(cena4);
-		
-		Set<Cena> pretplata = new HashSet<>();
-		pretplata.add(cena1);
-		
-		Set<Cena> clanarina = new HashSet<>();
-		clanarina.add(cena3);
 		
 		Set<Recenzent> recenzenti1 = new HashSet<Recenzent>();
 		recenzenti1.add(rec1);
@@ -456,21 +497,18 @@ public class StartData {
 		
 		// *** Casopisi *** //
 		
-		Casopis c1 = new Casopis(null, "0001-184X", "Acta herbologica", true, naucneOblasti1, null, clanarina, urednik, null, recenzenti3);
-		Casopis c2 = new Casopis(null, "0002-1X22", "Arhitektura i urbanizam", false, naucneOblasti1, pretplata, null, urednik, null, recenzenti2);
-		Casopis c3 = new Casopis(null, "0003-45X6", "Balkan Journal of Dental Medicine", true, naucneOblasti1, null, clanarina, urednik, null, recenzenti1);
-		Casopis c4 = new Casopis(null, "0004-7895", "Ekonomika poljoprivrede", false, naucneOblasti1, pretplata, null, urednik, null, recenzenti3);
-		Casopis c5 = new Casopis(null, "0005-7802", "Civitas", true, naucneOblasti1, null, clanarina, urednik, null, recenzenti2);
-		Casopis c6 = new Casopis(null, "0006-5630", "Geonauka", true, naucneOblasti1, null, clanarina, urednik, null, recenzenti1);
-		Casopis c7 = new Casopis(null, "0007-XX78", "Geographica Pannonica", true, naucneOblasti1, null, clanarina, urednik, null, recenzenti3);
-		Casopis c8 = new Casopis(null, "0008-9621", "Jugoslovensko bankarstvo", false, naucneOblasti1, pretplata, null, urednik, null, recenzenti2);
-		Casopis c9 = new Casopis(null, "0009-8862", "Mathematica Moravica", true, naucneOblasti1, null, clanarina, urednik, null, recenzenti1);
-		Casopis c10 = new Casopis(null, "0010-1403", "Medicinski časopis", true, naucneOblasti1, null, clanarina, urednik, null, recenzenti3);
-		Casopis c11 = new Casopis(null, "0011-54X6", "Sanamed", true, naucneOblasti1, null, clanarina, urednik, null, recenzenti2);
-		Casopis c12 = new Casopis(null, "0012-7863", "Spatium", false, naucneOblasti1, pretplata, null, urednik, null, recenzenti1);
-		Casopis c13 = new Casopis(null, "0013-1452", "Sociološki pregled", true, naucneOblasti1, null, clanarina, urednik, null, recenzenti3);
-		Casopis c14 = new Casopis(null, "0014-8787", "Tehnika - Elektrotehnika", true, naucneOblasti1, null, clanarina, urednik, null, recenzenti2);
-		Casopis c15 = new Casopis(null, "0015-1465", "Veterinarski glasnik", false, naucneOblasti1, pretplata, null, urednik, null, recenzenti1);
+		Casopis c1 = new Casopis(null, "0001-184X", "Acta herbologica", true, naucneOblasti1, null, 11.99, urednik1, null, recenzenti3);
+		Casopis c2 = new Casopis(null, "0002-1X22", "Arhitektura i urbanizam", false, naucneOblasti2, 14.99, null, urednik2, null, recenzenti2);
+		Casopis c3 = new Casopis(null, "0003-45X6", "Balkan Journal of Dental Medicine", true, naucneOblasti3, null, 9.99, urednik3, null, recenzenti1);
+		Casopis c4 = new Casopis(null, "0004-7895", "Ekonomika poljoprivrede", false, naucneOblasti4, 7.99, null, urednik4, null, recenzenti3);
+		Casopis c5 = new Casopis(null, "0005-7802", "Civitas", true, naucneOblasti5, null, 12.99, urednik5, null, recenzenti2);
+		Casopis c6 = new Casopis(null, "0006-5630", "Geonauka", true, naucneOblasti1, null, 17.99, urednik6, null, recenzenti1);
+		Casopis c7 = new Casopis(null, "0007-XX78", "Geographica Pannonica", true, naucneOblasti2, null, 15.99, urednik1, null, recenzenti3);
+		Casopis c8 = new Casopis(null, "0009-8862", "Mathematica Moravica", true, naucneOblasti3, null, 19.99, urednik2, null, recenzenti1);
+		Casopis c9 = new Casopis(null, "0010-1403", "Medicinski časopis", true, naucneOblasti4, null, 14.99, urednik3, null, recenzenti3);
+		Casopis c10 = new Casopis(null, "0012-7863", "Spatium", false, naucneOblasti5, 16.54, null, urednik4, null, recenzenti1);
+		Casopis c11 = new Casopis(null, "0013-1452", "Sociološki pregled", true, naucneOblasti1, null, 11.99, urednik5, null, recenzenti3);
+		Casopis c12 = new Casopis(null, "0014-8787", "Tehnika - Elektrotehnika", true, naucneOblasti3, null, 17.99, urednik6, null, recenzenti2);
 		
 		c1 = casopisRepository.save(c1);
 		c2 = casopisRepository.save(c2);
@@ -484,37 +522,34 @@ public class StartData {
 		c10 = casopisRepository.save(c10);
 		c11 = casopisRepository.save(c11);
 		c12 = casopisRepository.save(c12);
-		c13 = casopisRepository.save(c13);
-		c14 = casopisRepository.save(c14);
-		c15 = casopisRepository.save(c15);
 		
 		RevizijaRada revizija1 = new RevizijaRada(null, "Predikcija ishoda teniskih meceva", "Milan Milanovic, Predrag Preradovic", 
 				"U radu je opisana predkcija ishoda teniskih meceva.", "predikcija, tenis, mec, loptica, Naive Bayes", LIBRARY_DIR_PATH+"\\2015 Predikcija ishoda teniskih meceva.pdf", 
-				true, true, true, autor, c1, naucneOblasti1, recenzenti1, null);
+				true, true, true, autor1, c1, naucneOblasti1, recenzenti1, null);
 		
 		RevizijaRada revizija2 = new RevizijaRada(null, "Цене некретнина", "Соња Петровић, Бранка Радовановић", 
 				"Кретање цена некретнина, опширно и детаљно,", "предикција, некретнине, некретнина, кластернованје, кластер, цена, новац, стан, кућа", LIBRARY_DIR_PATH+"\\2016 Predikcija cene nekretnina.pdf", 
-				true, true, true, autor, c2, naucneOblasti2, recenzenti2, null);
+				true, true, true, autor2, c2, naucneOblasti2, recenzenti2, null);
 		
 		RevizijaRada revizija3 = new RevizijaRada(null, "Predikcija musterija koje ce napustiti kompaniju", "Darko Jovanovic, Nikola Nikolic, Jovana Jovanovic", 
 				"Postoji li rizik da vasi zaposleni napuste kompaniju?", "predikcija, kompanija, zaposleni, nezadovoljstvo, klaster, klasterovanje", LIBRARY_DIR_PATH+"\\2016 Predikcija Churn (musterije koje ce napustiti kompaniju).pdf", 
-				true, true, true, autor, c2, naucneOblasti3, recenzenti3, null);
+				true, true, true, autor3, c2, naucneOblasti3, recenzenti3, null);
 		
 		RevizijaRada revizija4 = new RevizijaRada(null, "IMDB, predikcija ranka filmova", "Ostoja Ostojic, Nenad Nenadovic", 
 				"Metode koriscenje kako bi se izvrsila predikcija ranka filma na IMDB sajtu.", "predikcija, film, uspeh, rank, zanr, faktori", LIBRARY_DIR_PATH+"\\2016 Predikcija ranka filmova na IMDB.pdf", 
-				true, true, true, autor, c3, naucneOblasti1, recenzenti1, null);
+				true, true, true, autor4, c3, naucneOblasti1, recenzenti1, null);
 		
 		RevizijaRada revizija5 = new RevizijaRada(null, "Анализа кашњења авионских летова", "Драгана Драгић", 
 				"Анализа и прикз доминантних разлога кашњења авионских летова на свим рутама.", "анализа, кашњење, касни, авион, лет, писта", LIBRARY_DIR_PATH+"\\2017 Analiza kasnjenja avionskih letova.pdf", 
-				true, true, true, autor, c1, naucneOblasti2, recenzenti2, null);
+				true, true, true, autor1, c1, naucneOblasti2, recenzenti2, null);
 		
 		RevizijaRada revizija6 = new RevizijaRada(null, "Hronicne bubrezne bolesti", "Aleksandar Stankovic, Luka Lukic, Ana Petrovic", 
 				"Predikcija hronicnih bubreznih bolesti iz prethodnih anamneza nekog pacijenta i procena rizika razvijanja.", "predikcija, bubreg, bubrezi, bolest, anamneza, hronicno", LIBRARY_DIR_PATH+"\\2017 Chronic kidney disease.pdf", 
-				true, true, true, autor, c1, naucneOblasti4, recenzenti3, null);
+				true, true, true, autor2, c1, naucneOblasti4, recenzenti3, null);
 		
 		RevizijaRada revizija7 = new RevizijaRada(null, "СМС спам", "Марко Марковић", 
 				"Анализа смс порука и предикција спама на основу претходне анализе", "предикција, анализа, смс, спам", LIBRARY_DIR_PATH+"\\2017 Predikcija SMS spama.pdf", 
-				true, true, true, autor, c3, naucneOblasti5, recenzenti1, null);
+				true, true, true, autor3, c3, naucneOblasti5, recenzenti1, null);
 		
 		revizija1 = revizijaRadaRepository.save(revizija1);
 		revizija2 = revizijaRadaRepository.save(revizija2);
@@ -539,6 +574,27 @@ public class StartData {
 		rad5 = naucniRadRepository.save(rad5);
 		rad6 = naucniRadRepository.save(rad6);
 		rad7 = naucniRadRepository.save(rad7);
+		
+		Set<NaucniRad> radovi1 = new HashSet<>();
+		radovi1.add(rad1);
+		radovi1.add(rad2);
+		radovi1.add(rad3);
+		
+		Set<NaucniRad> radovi2 = new HashSet<>();
+		radovi2.add(rad4);
+		radovi2.add(rad5);
+		
+		Set<NaucniRad> radovi3 = new HashSet<>();
+		radovi3.add(rad6);
+		radovi3.add(rad7);
+	
+		Izdanje izdanje1 = new Izdanje(null, new Date(System.currentTimeMillis()), c1, "Acta herbologica Izdanje 1", null, naucneOblasti1, radovi1);
+		Izdanje izdanje2 = new Izdanje(null, new Date(System.currentTimeMillis()), c2, "Arhitektura i urbanizam Izdanje 1", 2.99, naucneOblasti2, radovi2);
+		Izdanje izdanje3 = new Izdanje(null, new Date(System.currentTimeMillis()), c3, "Balkan Journal of Dental Medicine Izdanje 1", null, naucneOblasti3, radovi3);
+		
+		izdanje1 = izdanjeRepository.save(izdanje1);
+		izdanje2 = izdanjeRepository.save(izdanje2);
+		izdanje3 = izdanjeRepository.save(izdanje3);
 		
 		PDFHandler pdfHandler = new PDFHandler(); 
 		

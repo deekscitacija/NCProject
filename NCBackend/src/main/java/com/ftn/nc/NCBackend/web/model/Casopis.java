@@ -32,11 +32,11 @@ public class Casopis {
 	@ManyToMany
 	private Set<NaucnaOblast> naucneOblasti;
 	
-	@ManyToMany
-	private Set<Cena> cenePretplate;
+	@Column(nullable = true)
+	private Double cenaPretplate;
 	
-	@ManyToMany
-	private Set<Cena> ceneClanarine;
+	@Column(nullable = true)
+	private Double cenaClanarine;
 	
 	@ManyToOne(optional = false)
 	private Urednik urednik;
@@ -55,7 +55,7 @@ public class Casopis {
 	}
 
 	public Casopis(Long id, String issn, String naziv, boolean openAccess, Set<NaucnaOblast> naucneOblasti,
-			Set<Cena> cenePretplate, Set<Cena> ceneClanarine, Urednik urednik, Set<Urednik> uredjivackiOdbor,
+			Double cenaPretplate, Double cenaClanarine, Urednik urednik, Set<Urednik> uredjivackiOdbor,
 			Set<Recenzent> recenzenti) {
 		super();
 		this.id = id;
@@ -63,8 +63,8 @@ public class Casopis {
 		this.naziv = naziv;
 		this.openAccess = openAccess;
 		this.naucneOblasti = naucneOblasti;
-		this.cenePretplate = cenePretplate;
-		this.ceneClanarine = ceneClanarine;
+		this.cenaPretplate = cenaPretplate;
+		this.cenaClanarine = cenaClanarine;
 		this.urednik = urednik;
 		this.uredjivackiOdbor = uredjivackiOdbor;
 		this.recenzenti = recenzenti;
@@ -94,20 +94,20 @@ public class Casopis {
 		this.openAccess = openAccess;
 	}
 
-	public Set<Cena> getCenePretplate() {
-		return cenePretplate;
+	public Double getCenaPretplate() {
+		return cenaPretplate;
 	}
 
-	public void setCenePretplate(Set<Cena> cenePretplate) {
-		this.cenePretplate = cenePretplate;
+	public void setCenaPretplate(Double cenaPretplate) {
+		this.cenaPretplate = cenaPretplate;
 	}
 
-	public Set<Cena> getCeneClanarine() {
-		return ceneClanarine;
+	public Double getCenaClanarine() {
+		return cenaClanarine;
 	}
 
-	public void setCeneClanarine(Set<Cena> ceneClanarine) {
-		this.ceneClanarine = ceneClanarine;
+	public void setCenaClanarine(Double cenaClanarine) {
+		this.cenaClanarine = cenaClanarine;
 	}
 
 	public Set<NaucnaOblast> getNaucneOblasti() {

@@ -86,7 +86,6 @@ public class SearchServiceImpl implements SearchService{
 	private AutorRepository autorRepository;
 	
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public Page<IndexUnit> executeSearch(QueryDTO searchParams) {
 		
@@ -108,19 +107,9 @@ public class SearchServiceImpl implements SearchService{
 			}
 		}
 		
-		SearchQuery theQuery = searchQueryBuilder.withQuery(queryParams).withHighlightFields(
-	            new HighlightBuilder.Field("tekst")
-	                .preTags("<b>")
-	                .postTags("</b>")
-	                .numOfFragments(1)
-	                .fragmentSize(250)
-	    ).withPageable(new PageRequest(pageNum-1, 3))
-		.build();
-		
-		return elasticsearchTemplate.queryForPage(theQuery, IndexUnit.class, new ContentResultMapper());
+		return elasticsearchTemplate.queryForPage(buildQueryWithHilight(searchQueryBuilder, queryParams, pageNum), IndexUnit.class, new ContentResultMapper());
 	}
 	
-	@SuppressWarnings("deprecation")
 	@Override
 	public Page<IndexUnit> executeSearchAll(QueryDTO searchParams) {
 		
@@ -144,19 +133,62 @@ public class SearchServiceImpl implements SearchService{
 		
 		queryParams.should(nestedQuery);
 		
-	    SearchQuery theQuery = searchQueryBuilder.withQuery(queryParams).withHighlightFields(
-	            new HighlightBuilder.Field("tekst")
-	                .preTags("<b>")
-	                .postTags("</b>")
-	                .numOfFragments(1)
-	                .fragmentSize(250)
-	    ).withPageable(new PageRequest(pageNum-1, 3))
-		.build();
+		return elasticsearchTemplate.queryForPage(buildQueryWithHilight(searchQueryBuilder, queryParams, pageNum), IndexUnit.class, new ContentResultMapper());
+	}
+	
+	@Override
+	public Page<IndexUnit> moreLikeThis(String documentId, int pageNum) {
 		
-		return elasticsearchTemplate.queryForPage(theQuery, IndexUnit.class, new ContentResultMapper());
+		MoreLikeThisQuery moreLikeThisQuery = new MoreLikeThisQuery();
+		moreLikeThisQuery.setIndexName("naucnacentrala");
+		moreLikeThisQuery.setType("rad");
+		moreLikeThisQuery.setId(documentId);
+		moreLikeThisQuery.addFields("tekst");
+		moreLikeThisQuery.setMinDocFreq(5);
+		moreLikeThisQuery.setMaxQueryTerms(5);
+		moreLikeThisQuery.setPageable(PageRequest.of(pageNum-1, 3));
+		
+		return elasticsearchTemplate.moreLikeThis(moreLikeThisQuery, IndexUnit.class);
 	}
 
+	@Override
+	public List<RecenzentInfo> geoSearch(double lat, double lon) {
+		
+		QueryBuilder filter = QueryBuilders.geoDistanceQuery("lokacija")
+				.point(lat, lon)
+				.distance(100, DistanceUnit.KILOMETERS);
+		
+		BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
+		boolQuery.mustNot(filter);
+		
+		SearchQuery theQuery =new NativeSearchQueryBuilder().withQuery(boolQuery).build();
+		
+		return elasticsearchTemplate.queryForList(theQuery, RecenzentInfo.class);
+	}
 	
+	@Override
+	public IndexUnit saveIndexUnit(IndexUnit newPaper) {
+		
+		return indexUnitRepository.save(newPaper);
+	}
+	
+	@Override
+	public boolean uploadAndIndex(IndexUnitDTO paperInfo, Korisnik autor, Casopis casopis) {
+		
+		if(paperInfo == null) {
+			return false;
+		}
+		
+		try {
+			indexUploadedFile(paperInfo, autor, casopis);
+		}catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+		return true;
+	}
+
 	private void buildParam(BoolQueryBuilder queryParams, String key, String value, SearchParamType paramType, boolean isPhraseQuery) {
 		
 		if(paramType.equals(SearchParamType.OR)) {
@@ -211,59 +243,16 @@ public class SearchServiceImpl implements SearchService{
 		}
 		
 	}
-
-	@SuppressWarnings("deprecation")
-	@Override
-	public Page<IndexUnit> moreLikeThis(String documentId, int pageNum) {
-		
-		MoreLikeThisQuery moreLikeThisQuery = new MoreLikeThisQuery();
-		moreLikeThisQuery.setIndexName("naucnacentrala");
-		moreLikeThisQuery.setType("rad");
-		moreLikeThisQuery.setId(documentId);
-		moreLikeThisQuery.addFields("tekst");
-		moreLikeThisQuery.setMinDocFreq(5);
-		moreLikeThisQuery.setMaxQueryTerms(5);
-		moreLikeThisQuery.setPageable(new PageRequest(pageNum-1, 3));
-		
-		return elasticsearchTemplate.moreLikeThis(moreLikeThisQuery, IndexUnit.class);
-	}
-
-	@Override
-	public List<RecenzentInfo> geoSearch(double lat, double lon) {
-		
-		QueryBuilder filter = QueryBuilders.geoDistanceQuery("lokacija")
-				.point(lat, lon)
-				.distance(100, DistanceUnit.KILOMETERS);
-		
-		BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
-		boolQuery.mustNot(filter);
-		
-		SearchQuery theQuery =new NativeSearchQueryBuilder().withQuery(boolQuery).build();
-		
-		return elasticsearchTemplate.queryForList(theQuery, RecenzentInfo.class);
-	}
 	
-	@Override
-	public IndexUnit saveIndexUnit(IndexUnit newPaper) {
+	private SearchQuery buildQueryWithHilight(NativeSearchQueryBuilder searchQueryBuilder, BoolQueryBuilder queryParams, int pageNum) {
 		
-		return indexUnitRepository.save(newPaper);
-	}
-	
-	@Override
-	public boolean uploadAndIndex(IndexUnitDTO paperInfo, Korisnik autor, Casopis casopis) {
-		
-		if(paperInfo == null) {
-			return false;
-		}
-		
-		try {
-			indexUploadedFile(paperInfo, autor, casopis);
-		}catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-		
-		return true;
+		return searchQueryBuilder.withQuery(queryParams).withHighlightFields(
+	            new HighlightBuilder.Field("tekst")
+	                .preTags("<b>")
+	                .postTags("</b>")
+	                .numOfFragments(1)
+	                .fragmentSize(250)
+	    ).withPageable(PageRequest.of(pageNum-1, 3)).build();
 	}
 	
 	private void indexUploadedFile(IndexUnitDTO paperInfo, Korisnik autor, Casopis casopis) throws IOException{

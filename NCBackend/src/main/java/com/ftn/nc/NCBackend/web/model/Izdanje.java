@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 public class Izdanje {
@@ -24,29 +27,34 @@ public class Izdanje {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date objavljen;
 	
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	@JsonBackReference
 	private Casopis casopis;
 	
 	@Column(nullable = false)
 	private String naslov;
 	
-	@ManyToMany
+	@Column(nullable = true)
+	private Double cenaIzdanja;
+	
+	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<NaucnaOblast> naucneOblasti;
 	
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	private Set<NaucniRad> radovi;
 
 	public Izdanje() {
 		super();
 	}
 
-	public Izdanje(Long id, Date objavljen, Casopis casopis, String naslov, Set<NaucnaOblast> naucneOblasti,
-			Set<NaucniRad> radovi) {
+	public Izdanje(Long id, Date objavljen, Casopis casopis, String naslov, Double cenaIzdanja,
+			Set<NaucnaOblast> naucneOblasti, Set<NaucniRad> radovi) {
 		super();
 		this.id = id;
 		this.objavljen = objavljen;
 		this.casopis = casopis;
 		this.naslov = naslov;
+		this.cenaIzdanja = cenaIzdanja;
 		this.naucneOblasti = naucneOblasti;
 		this.radovi = radovi;
 	}
@@ -97,6 +105,14 @@ public class Izdanje {
 
 	public void setRadovi(Set<NaucniRad> radovi) {
 		this.radovi = radovi;
+	}
+
+	public Double getCenaIzdanja() {
+		return cenaIzdanja;
+	}
+
+	public void setCenaIzdanja(Double cenaIzdanja) {
+		this.cenaIzdanja = cenaIzdanja;
 	}
 		
 }

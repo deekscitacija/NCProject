@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ftn.nc.NCBackend.web.dto.CasopisDTO;
 import com.ftn.nc.NCBackend.web.dto.KorisnikDTO;
 import com.ftn.nc.NCBackend.web.model.Casopis;
+import com.ftn.nc.NCBackend.web.model.Izdanje;
 import com.ftn.nc.NCBackend.web.model.Korisnik;
 import com.ftn.nc.NCBackend.web.model.NaucnaOblast;
 import com.ftn.nc.NCBackend.web.model.Recenzent;
 import com.ftn.nc.NCBackend.web.service.CasopisService;
+import com.ftn.nc.NCBackend.web.service.IzdanjeService;
 import com.ftn.nc.NCBackend.web.service.KorisnikService;
 import com.ftn.nc.NCBackend.web.service.NaucneOblastiService;
 import com.ftn.nc.NCBackend.web.service.RecenzentService;
@@ -39,6 +42,9 @@ public class CasopisController {
 	
 	@Autowired
 	private NaucneOblastiService naucneOblastiService;
+	
+	@Autowired 
+	private IzdanjeService izdanjeSerice;
 	
 	@RequestMapping(value = "getPageMagazine", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Page<Casopis>> getPage(@RequestParam(value = "pageNum", required = true) int pageNum){
@@ -95,6 +101,24 @@ public class CasopisController {
 		}
 		
 		return new ResponseEntity<List<KorisnikDTO>>(retVal, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "getIzdanja", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Page<Izdanje>> getIzdanjaByCasopis(
+			@RequestParam(value = "magazineId", required = true) int magazineId,
+			@RequestParam(value = "pageNum", required = true) int pageNum){
+		
+		if(magazineId < 0 || pageNum < 1) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		Casopis casopis = casopisService.getById(new Long(magazineId));
+		
+		if(casopis == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return new ResponseEntity<Page<Izdanje>>(izdanjeSerice.findByCasopis(casopis, PageRequest.of(pageNum-1, 3)), HttpStatus.OK);
 	}
 
 }

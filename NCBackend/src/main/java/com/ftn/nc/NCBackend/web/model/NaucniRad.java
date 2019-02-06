@@ -1,6 +1,5 @@
 package com.ftn.nc.NCBackend.web.model;
 
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -9,8 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 public class NaucniRad {
@@ -34,13 +34,14 @@ public class NaucniRad {
 	@Column(nullable = false, length = 1024)
 	private String putanja;
 	
-	@OneToMany
-	private List<Cena> cena;
+	@Column(nullable = true)
+	private double cena;
 	
 	@ManyToMany
 	private Set<NaucnaOblast> naucneOblasti;
 	
 	@OneToOne(optional = true)
+	@JsonBackReference
 	private RevizijaRada revizija;
 
 	public NaucniRad() {
@@ -48,7 +49,7 @@ public class NaucniRad {
 	}
 
 	public NaucniRad(Long id, String naslov, String koAutori, String apstrakt, String kljucneReci, String putanja,
-			List<Cena> cena, Set<NaucnaOblast> naucneOblasti, RevizijaRada revizija) {
+			double cena, Set<NaucnaOblast> naucneOblasti, RevizijaRada revizija) {
 		super();
 		this.id = id;
 		this.naslov = naslov;
@@ -114,11 +115,11 @@ public class NaucniRad {
 		this.kljucneReci = kljucneReci;
 	}
 
-	public List<Cena> getCena() {
+	public double getCena() {
 		return cena;
 	}
 
-	public void setCena(List<Cena> cena) {
+	public void setCena(double cena) {
 		this.cena = cena;
 	}
 

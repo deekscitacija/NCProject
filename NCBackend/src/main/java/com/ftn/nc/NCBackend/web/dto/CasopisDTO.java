@@ -1,10 +1,9 @@
 package com.ftn.nc.NCBackend.web.dto;
 
-import java.util.Iterator;
+
 import java.util.Set;
 
 import com.ftn.nc.NCBackend.web.model.Casopis;
-import com.ftn.nc.NCBackend.web.model.Cena;
 import com.ftn.nc.NCBackend.web.model.Korisnik;
 import com.ftn.nc.NCBackend.web.model.NaucnaOblast;
 
@@ -15,8 +14,8 @@ public class CasopisDTO {
 	private String naziv;
 	private boolean openAccess;
 	private Set<NaucnaOblast> naucneOblasti;
-	private Cena cenaPretplate;
-	private Cena cenaClanarine;
+	private Double cenaPretplate;
+	private Double cenaClanarine;
 	private String urednik;
 	
 	public CasopisDTO() {
@@ -30,19 +29,8 @@ public class CasopisDTO {
 		this.naziv = casopis.getNaziv();
 		this.openAccess = casopis.isOpenAccess();
 		this.naucneOblasti = casopis.getNaucneOblasti();
-		
-		Set<Cena> clanarine = casopis.getCeneClanarine();
-		if(clanarine != null && !clanarine.isEmpty()) {
-			Iterator<Cena> clanarina = casopis.getCeneClanarine().iterator();
-			this.cenaClanarine = clanarina.next();
-		}
-		
-		Set<Cena> pretplate = casopis.getCenePretplate();
-		if(pretplate != null && !pretplate.isEmpty()) {
-			Iterator<Cena> pretplata = casopis.getCenePretplate().iterator();
-			this.cenaClanarine = pretplata.next();
-		}
-		
+		this.cenaClanarine = casopis.getCenaClanarine();
+		this.cenaPretplate = casopis.getCenaPretplate();
 		this.urednik = korisnik.getIme()+" "+korisnik.getPrezime();
 	}
 
@@ -86,19 +74,19 @@ public class CasopisDTO {
 		this.naucneOblasti = naucneOblasti;
 	}
 
-	public Cena getCenaPretplate() {
+	public Double getCenaPretplate() {
 		return cenaPretplate;
 	}
 
-	public void setCenaPretplate(Cena cenaPretplate) {
+	public void setCenaPretplate(Double cenaPretplate) {
 		this.cenaPretplate = cenaPretplate;
 	}
 
-	public Cena getCenaClanarine() {
+	public Double getCenaClanarine() {
 		return cenaClanarine;
 	}
 
-	public void setCenaClanarine(Cena cenaClanarine) {
+	public void setCenaClanarine(Double cenaClanarine) {
 		this.cenaClanarine = cenaClanarine;
 	}
 
