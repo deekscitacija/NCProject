@@ -1,18 +1,14 @@
 package com.ftn.nc.NCBackend.web.controller;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.core.io.Resource;
-import org.springframework.data.domain.Page;
-import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,13 +18,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ftn.nc.NCBackend.web.dto.CasopisDTO;
 import com.ftn.nc.NCBackend.web.dto.IzdanjeDTO;
-import com.ftn.nc.NCBackend.web.model.Casopis;
+import com.ftn.nc.NCBackend.web.dto.RadDTO;
 import com.ftn.nc.NCBackend.web.model.Izdanje;
 import com.ftn.nc.NCBackend.web.model.Korisnik;
 import com.ftn.nc.NCBackend.web.model.NaucniRad;
-import com.ftn.nc.NCBackend.web.service.CasopisService;
 import com.ftn.nc.NCBackend.web.service.IzdanjeService;
 import com.ftn.nc.NCBackend.web.service.KorisnikService;
 import com.ftn.nc.NCBackend.web.service.NaucniRadService;
@@ -88,7 +82,14 @@ public class RadController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		return new ResponseEntity<IzdanjeDTO>(new IzdanjeDTO(izdanje), HttpStatus.OK);
+		Set<RadDTO> radovi = new HashSet<>();
+		for(NaucniRad rad : izdanje.getRadovi()) {
+			Korisnik autor = korisnikService.getById(rad.getRevizija().getAutor().getId());
+			RadDTO radDTO = new RadDTO(rad, autor);
+			radovi.add(radDTO);
+		}
+		
+		return new ResponseEntity<IzdanjeDTO>(new IzdanjeDTO(izdanje, radovi), HttpStatus.OK);
 	}
 	
 

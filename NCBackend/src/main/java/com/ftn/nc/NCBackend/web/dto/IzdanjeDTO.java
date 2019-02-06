@@ -22,7 +22,7 @@ public class IzdanjeDTO {
 	
 	private Set<NaucnaOblast> naucneOblasti;
 	
-	private Set<NaucniRad> radovi;
+	private Set<RadDTO> radovi;
 	
 	private boolean openAccess;
 
@@ -31,7 +31,7 @@ public class IzdanjeDTO {
 	}
 
 	public IzdanjeDTO(Long id, Date objavljen, String casopis, String naslov, Double cenaIzdanja,
-			Set<NaucnaOblast> naucneOblasti, Set<NaucniRad> radovi) {
+			Set<NaucnaOblast> naucneOblasti, Set<RadDTO> radovi) {
 		super();
 		this.id = id;
 		this.objavljen = objavljen;
@@ -42,7 +42,7 @@ public class IzdanjeDTO {
 		this.radovi = radovi;
 	}
 	
-	public IzdanjeDTO(Izdanje izdanje) {
+	public IzdanjeDTO(Izdanje izdanje, Set<RadDTO> radovi) {
 		super();
 		this.id = izdanje.getId();
 		this.objavljen = izdanje.getObjavljen();
@@ -50,7 +50,7 @@ public class IzdanjeDTO {
 		this.naslov = izdanje.getNaslov();
 		this.cenaIzdanja = izdanje.getCenaIzdanja();
 		this.naucneOblasti = izdanje.getNaucneOblasti();
-		this.radovi = izdanje.getRadovi();
+		this.radovi = radovi;
 		this.openAccess = izdanje.getCasopis().isOpenAccess();
 	}
 
@@ -102,11 +102,11 @@ public class IzdanjeDTO {
 		this.naucneOblasti = naucneOblasti;
 	}
 
-	public Set<NaucniRad> getRadovi() {
+	public Set<RadDTO> getRadovi() {
 		return radovi;
 	}
 
-	public void setRadovi(Set<NaucniRad> radovi) {
+	public void setRadovi(Set<RadDTO> radovi) {
 		this.radovi = radovi;
 	}
 
