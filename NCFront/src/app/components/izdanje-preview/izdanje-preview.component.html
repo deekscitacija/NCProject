@@ -17,10 +17,10 @@
         </p>
       </div>
 
-      <div class="col-lg-2">
-        <button *ngIf="!izdanje.openAccess" class="btn btn-default orange-circle-button">Kupi</button>
+      <div class="col-lg-2" *ngIf="korisnik.tip[0].kod === 'RK' || korisnik.tip[0].kod == ''">
+        <button *ngIf="!izdanje.openAccess" class="btn btn-default orange-circle-button" (click)="kupi()"><i class="far fa-money-bill-alt fa-3x fa-fix-left"></i></button>
         <button *ngIf="izdanje.openAccess" class="btn btn-default orange-circle-button"><i class="fas fa-file-download fa-3x"></i></button>
-        <h6 *ngIf="!izdanje.openAccess" align="center">{{izdanje.cena}} USD</h6>
+        <h6 *ngIf="!izdanje.openAccess" align="center">{{izdanje.cenaIzdanja}} USD</h6>
       </div>
     </div>
 
@@ -29,7 +29,7 @@
       </div>
 
     <div class="row gap-top-sm div-padding-sm light-border" *ngFor="let paper of izdanje.radovi">
-      <app-paper-preview [paper]="paper"></app-paper-preview>
+      <app-paper-preview [paper]="paper" [korisnik]="korisnik"></app-paper-preview>
     </div>
 
   </div>

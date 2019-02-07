@@ -23,5 +23,6 @@ export class RadService {
 
     return this.http.get("/app/download", {params : params, responseType: 'blob'});
   }
+  
 
 }

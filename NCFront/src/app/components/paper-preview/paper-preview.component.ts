@@ -8,6 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class PaperPreviewComponent implements OnInit {
 
   @Input() paper: any;
+  @Input() korisnik: any;
 
   constructor() { }
 

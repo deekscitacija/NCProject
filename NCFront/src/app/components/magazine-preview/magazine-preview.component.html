@@ -31,7 +31,9 @@
         <p class="izdanje-text">
           Naucne oblasti: {{izdanje.naucneOblasti | listToString}}
         </p>
-        <button *ngIf="casopis.openAccess" class="btn btn-light right-bottomn-items" (click)="otvoriIzdanje(izdanje.id)">Pregledaj</button>
+        <br/>
+        <br/>
+        <button class="btn btn-light right-bottomn-items" (click)="otvoriIzdanje(izdanje.id)">Pregledaj</button>
       </div>
     </div>
 

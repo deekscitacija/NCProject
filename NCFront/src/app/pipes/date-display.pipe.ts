@@ -7,6 +7,10 @@ import { stringify } from '@angular/core/src/util';
 export class DateDisplayPipe implements PipeTransform {
 
   transform(value: any, args?: any): any {
+
+    if(!value) 
+      return;
+
     let dateStr = value.substring(0, 10);
     let year = dateStr.substring(0, 4);
     let month = dateStr.substring(5, 7);

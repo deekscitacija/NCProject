@@ -11,12 +11,24 @@ import { TokenService } from '../../services/token.service';
 })
 export class IzdanjePreviewComponent implements OnInit {
 
-  private izdanje: any = {};
+  private izdanje: any = {naslov : "", casopis: "", naucneOblasti : [], datumObjave : ""};
+  private korisnik: any = {tip : [{kod: ""}]};
 
   constructor(private casopisService: CasopisService, private radService: RadService, private tokenService: TokenService, 
     private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
+
+    if(localStorage.getItem('token')){
+      this.tokenService.getUserFromToken().subscribe(
+        (res: any) => {
+          this.korisnik = res;
+        },
+        (error: any) => {
+          alert('Neophodno ponovo izvrsiti prijavu.')
+        }
+      )
+    }
 
     let izdanjeId: number;
     this.route.params.subscribe(params => {
@@ -32,6 +44,15 @@ export class IzdanjePreviewComponent implements OnInit {
         alert('Greska!')
       }
     );
+  }
+
+  kupi = function(){
+    if(!localStorage.getItem('token')){
+      alert('Prijavite se pre obavljanja kupovine.');
+      return;
+    }
+
+    
   }
 
 }

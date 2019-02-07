@@ -1,7 +1,11 @@
 {
     "/app/*" : {
-        "target" : "http://localhost:8077",
-        "secure" : false
+        "target" : "https://localhost:8077",
+        "secure" : false,
+        "changeOrigin": true,
+        "pathRewrite": {
+            "^/proxy": ""
+        }
     }
     
 }
