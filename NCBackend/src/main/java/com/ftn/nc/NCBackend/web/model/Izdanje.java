@@ -37,6 +37,9 @@ public class Izdanje {
 	@Column(nullable = true)
 	private Double cenaIzdanja;
 	
+	@Column(nullable = true, length = 10, unique = true)
+	private String koncentratorKod;
+	
 	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<NaucnaOblast> naucneOblasti;
 	
@@ -47,7 +50,7 @@ public class Izdanje {
 		super();
 	}
 
-	public Izdanje(Long id, Date objavljen, Casopis casopis, String naslov, Double cenaIzdanja,
+	public Izdanje(Long id, Date objavljen, Casopis casopis, String naslov, Double cenaIzdanja, String koncentratorKod,
 			Set<NaucnaOblast> naucneOblasti, Set<NaucniRad> radovi) {
 		super();
 		this.id = id;
@@ -55,6 +58,7 @@ public class Izdanje {
 		this.casopis = casopis;
 		this.naslov = naslov;
 		this.cenaIzdanja = cenaIzdanja;
+		this.koncentratorKod = koncentratorKod;
 		this.naucneOblasti = naucneOblasti;
 		this.radovi = radovi;
 	}
@@ -113,6 +117,14 @@ public class Izdanje {
 
 	public void setCenaIzdanja(Double cenaIzdanja) {
 		this.cenaIzdanja = cenaIzdanja;
+	}
+
+	public String getKoncentratorKod() {
+		return koncentratorKod;
+	}
+
+	public void setKoncentratorKod(String koncentratorKod) {
+		this.koncentratorKod = koncentratorKod;
 	}
 		
 }

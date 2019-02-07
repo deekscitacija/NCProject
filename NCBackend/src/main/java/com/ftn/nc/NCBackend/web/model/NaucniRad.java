@@ -35,7 +35,10 @@ public class NaucniRad {
 	private String putanja;
 	
 	@Column(nullable = true)
-	private double cena;
+	private Double cena;
+	
+	@Column(nullable = true, length = 10, unique = true)
+	private String koncentratorKod;
 	
 	@ManyToMany
 	private Set<NaucnaOblast> naucneOblasti;
@@ -47,9 +50,9 @@ public class NaucniRad {
 	public NaucniRad() {
 		super();
 	}
-
+	
 	public NaucniRad(Long id, String naslov, String koAutori, String apstrakt, String kljucneReci, String putanja,
-			double cena, Set<NaucnaOblast> naucneOblasti, RevizijaRada revizija) {
+			Double cena, String koncentratorKod, Set<NaucnaOblast> naucneOblasti, RevizijaRada revizija) {
 		super();
 		this.id = id;
 		this.naslov = naslov;
@@ -58,12 +61,12 @@ public class NaucniRad {
 		this.kljucneReci = kljucneReci;
 		this.putanja = putanja;
 		this.cena = cena;
+		this.koncentratorKod = koncentratorKod;
 		this.naucneOblasti = naucneOblasti;
 		this.revizija = revizija;
 	}
-	
 
-	public NaucniRad(RevizijaRada revizija) {
+	public NaucniRad(RevizijaRada revizija, Double cena, String koncentratorKod) {
 		super();
 		this.revizija = revizija;
 		this.naslov = revizija.getNaslov();
@@ -73,6 +76,7 @@ public class NaucniRad {
 		this.putanja = revizija.getPutanja();
 		this.naucneOblasti = revizija.getNaucneOblasti();
 		this.revizija = revizija;
+		this.cena = cena;
 	}
 
 	public Long getId() {
@@ -115,11 +119,11 @@ public class NaucniRad {
 		this.kljucneReci = kljucneReci;
 	}
 
-	public double getCena() {
+	public Double getCena() {
 		return cena;
 	}
 
-	public void setCena(double cena) {
+	public void setCena(Double cena) {
 		this.cena = cena;
 	}
 
@@ -145,6 +149,14 @@ public class NaucniRad {
 
 	public void setPutanja(String putanja) {
 		this.putanja = putanja;
+	}
+
+	public String getKoncentratorKod() {
+		return koncentratorKod;
+	}
+
+	public void setKoncentratorKod(String koncentratorKod) {
+		this.koncentratorKod = koncentratorKod;
 	}
 
 }

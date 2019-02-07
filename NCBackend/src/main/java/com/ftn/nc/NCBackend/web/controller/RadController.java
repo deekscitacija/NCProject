@@ -38,7 +38,7 @@ public class RadController {
 	private NaucniRadService naucniRadService;
 	
 	@Autowired
-	private IzdanjeService izdanjeSerice;
+	private IzdanjeService izdanjeService;
 	
 	
 	@RequestMapping(value = "download", method = RequestMethod.GET, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
@@ -58,7 +58,6 @@ public class RadController {
 		try {
 			File paperPdf = new File(rad.getPutanja());
 			content = Files.readAllBytes(paperPdf.toPath());
-			System.out.println(paperPdf.getName());
 			headers.setContentDispositionFormData(paperPdf.getName(), paperPdf.getName());
 		    headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 		} catch (IOException e) {
@@ -76,7 +75,7 @@ public class RadController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		Izdanje izdanje = izdanjeSerice.findById(new Long(izdanjeId));
+		Izdanje izdanje = izdanjeService.findById(new Long(izdanjeId));
 		
 		if(izdanje == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

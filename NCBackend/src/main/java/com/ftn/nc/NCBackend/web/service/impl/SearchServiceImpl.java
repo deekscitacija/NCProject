@@ -303,7 +303,7 @@ public class SearchServiceImpl implements SearchService{
             	Set<NaucnaOblast> naucneOblasti1 = new HashSet<NaucnaOblast>();
             	naucneOblasti1.addAll(revizija.getNaucneOblasti());
             	
-            	NaucniRad naucniRad = new NaucniRad(revizija);
+            	NaucniRad naucniRad = new NaucniRad(revizija, null, "");
             	naucniRad.setNaucneOblasti(naucneOblasti1);
             	naucniRad = naucniRadRepository.save(naucniRad);
             	

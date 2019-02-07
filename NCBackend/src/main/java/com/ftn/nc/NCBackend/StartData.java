@@ -497,18 +497,18 @@ public class StartData {
 		
 		// *** Casopisi *** //
 		
-		Casopis c1 = new Casopis(null, "0001-184X", "Acta herbologica", true, naucneOblasti1, null, 11.99, urednik1, null, recenzenti3);
-		Casopis c2 = new Casopis(null, "0002-1X22", "Arhitektura i urbanizam", false, naucneOblasti2, 14.99, null, urednik2, null, recenzenti2);
-		Casopis c3 = new Casopis(null, "0003-45X6", "Balkan Journal of Dental Medicine", true, naucneOblasti3, null, 9.99, urednik3, null, recenzenti1);
-		Casopis c4 = new Casopis(null, "0004-7895", "Ekonomika poljoprivrede", false, naucneOblasti4, 7.99, null, urednik4, null, recenzenti3);
-		Casopis c5 = new Casopis(null, "0005-7802", "Civitas", true, naucneOblasti5, null, 12.99, urednik5, null, recenzenti2);
-		Casopis c6 = new Casopis(null, "0006-5630", "Geonauka", true, naucneOblasti1, null, 17.99, urednik6, null, recenzenti1);
-		Casopis c7 = new Casopis(null, "0007-XX78", "Geographica Pannonica", true, naucneOblasti2, null, 15.99, urednik1, null, recenzenti3);
-		Casopis c8 = new Casopis(null, "0009-8862", "Mathematica Moravica", true, naucneOblasti3, null, 19.99, urednik2, null, recenzenti1);
-		Casopis c9 = new Casopis(null, "0010-1403", "Medicinski časopis", true, naucneOblasti4, null, 14.99, urednik3, null, recenzenti3);
-		Casopis c10 = new Casopis(null, "0012-7863", "Spatium", false, naucneOblasti5, 16.54, null, urednik4, null, recenzenti1);
-		Casopis c11 = new Casopis(null, "0013-1452", "Sociološki pregled", true, naucneOblasti1, null, 11.99, urednik5, null, recenzenti3);
-		Casopis c12 = new Casopis(null, "0014-8787", "Tehnika - Elektrotehnika", true, naucneOblasti3, null, 17.99, urednik6, null, recenzenti2);
+		Casopis c1 = new Casopis(null, "0001-184X", "Acta herbologica", true, naucneOblasti1, null, 11.99, "CAS#1#MARA",urednik1, null, recenzenti3);
+		Casopis c2 = new Casopis(null, "0002-1X22", "Arhitektura i urbanizam", false, naucneOblasti2, 14.99, null, "CAS#2#MARA", urednik2, null, recenzenti2);
+		Casopis c3 = new Casopis(null, "0003-45X6", "Balkan Journal of Dental Medicine", true, naucneOblasti3, null, 9.99, "CAS#3#MARA", urednik3, null, recenzenti1);
+		Casopis c4 = new Casopis(null, "0004-7895", "Ekonomika poljoprivrede", false, naucneOblasti4, 7.99, null, "CAS#4#MARA", urednik4, null, recenzenti3);
+		Casopis c5 = new Casopis(null, "0005-7802", "Civitas", true, naucneOblasti5, null, 12.99, "CAS#5#MARA", urednik5, null, recenzenti2);
+		Casopis c6 = new Casopis(null, "0006-5630", "Geonauka", true, naucneOblasti1, null, 17.99, "CAS#6#MARA", urednik6, null, recenzenti1);
+		Casopis c7 = new Casopis(null, "0007-XX78", "Geographica Pannonica", true, naucneOblasti2, null, 15.99, "CAS#7#MARA", urednik1, null, recenzenti3);
+		Casopis c8 = new Casopis(null, "0009-8862", "Mathematica Moravica", true, naucneOblasti3, null, 19.99, "CAS#8#MARA", urednik2, null, recenzenti1);
+		Casopis c9 = new Casopis(null, "0010-1403", "Medicinski časopis", true, naucneOblasti4, null, 14.99, "CAS#9#MARA", urednik3, null, recenzenti3);
+		Casopis c10 = new Casopis(null, "0012-7863", "Spatium", false, naucneOblasti5, 16.54, null, "CAS#10MARA", urednik4, null, recenzenti1);
+		Casopis c11 = new Casopis(null, "0013-1452", "Sociološki pregled", true, naucneOblasti1, null, 11.99, "CAS#11MARA", urednik5, null, recenzenti3);
+		Casopis c12 = new Casopis(null, "0014-8787", "Tehnika - Elektrotehnika", true, naucneOblasti3, null, 17.99, "CAS#12MARA", urednik6, null, recenzenti2);
 		
 		c1 = casopisRepository.save(c1);
 		c2 = casopisRepository.save(c2);
@@ -559,13 +559,13 @@ public class StartData {
 		revizija6 = revizijaRadaRepository.save(revizija6);
 		revizija7 = revizijaRadaRepository.save(revizija7);
 		
-		NaucniRad rad1 = new NaucniRad(revizija1);
-		NaucniRad rad2 = new NaucniRad(revizija2);
-		NaucniRad rad3 = new NaucniRad(revizija3);
-		NaucniRad rad4 = new NaucniRad(revizija4);
-		NaucniRad rad5 = new NaucniRad(revizija5);
-		NaucniRad rad6 = new NaucniRad(revizija6);
-		NaucniRad rad7 = new NaucniRad(revizija7);
+		NaucniRad rad1 = new NaucniRad(revizija1, null, "RAD#1#MARA");
+		NaucniRad rad2 = new NaucniRad(revizija2, 2.99, "RAD#2#MARA");
+		NaucniRad rad3 = new NaucniRad(revizija3, 3.99, "RAD#3#MARA");
+		NaucniRad rad4 = new NaucniRad(revizija4, null, "RAD#4#MARA");
+		NaucniRad rad5 = new NaucniRad(revizija5, null, "RAD#5#MARA");
+		NaucniRad rad6 = new NaucniRad(revizija6, null, "RAD#6#MARA");
+		NaucniRad rad7 = new NaucniRad(revizija7, null, "RAD#7#MARA");
 		
 		rad1 = naucniRadRepository.save(rad1);
 		rad2 = naucniRadRepository.save(rad2);
@@ -577,20 +577,20 @@ public class StartData {
 		
 		Set<NaucniRad> radovi1 = new HashSet<>();
 		radovi1.add(rad1);
-		radovi1.add(rad2);
-		radovi1.add(rad3);
+		radovi1.add(rad5);
+		radovi1.add(rad6);
 		
 		Set<NaucniRad> radovi2 = new HashSet<>();
-		radovi2.add(rad4);
-		radovi2.add(rad5);
+		radovi2.add(rad2);
+		radovi2.add(rad3);
 		
 		Set<NaucniRad> radovi3 = new HashSet<>();
-		radovi3.add(rad6);
+		radovi3.add(rad4);
 		radovi3.add(rad7);
 	
-		Izdanje izdanje1 = new Izdanje(null, new Date(System.currentTimeMillis()), c1, "Acta herbologica Izdanje 1", null, naucneOblasti1, radovi1);
-		Izdanje izdanje2 = new Izdanje(null, new Date(System.currentTimeMillis()), c2, "Arhitektura i urbanizam Izdanje 1", 2.99, naucneOblasti2, radovi2);
-		Izdanje izdanje3 = new Izdanje(null, new Date(System.currentTimeMillis()), c3, "Balkan Journal of Dental Medicine Izdanje 1", null, naucneOblasti3, radovi3);
+		Izdanje izdanje1 = new Izdanje(null, new Date(System.currentTimeMillis()), c1, "Acta herbologica Izdanje 1", null, "IZD#1#MARA", naucneOblasti1, radovi1);
+		Izdanje izdanje2 = new Izdanje(null, new Date(System.currentTimeMillis()), c2, "Arhitektura i urbanizam Izdanje 1", 2.99, "IZD#2#MARA", naucneOblasti2, radovi2);
+		Izdanje izdanje3 = new Izdanje(null, new Date(System.currentTimeMillis()), c3, "Balkan Journal of Dental Medicine Izdanje 1", null, "IZD#3#MARA", naucneOblasti3, radovi3);
 		
 		izdanje1 = izdanjeRepository.save(izdanje1);
 		izdanje2 = izdanjeRepository.save(izdanje2);
@@ -598,13 +598,44 @@ public class StartData {
 		
 		PDFHandler pdfHandler = new PDFHandler(); 
 		
+		autor1.setRadovi(new HashSet<NaucniRad>());
+		autor2.setRadovi(new HashSet<NaucniRad>());
+		autor3.setRadovi(new HashSet<NaucniRad>());
+		autor4.setRadovi(new HashSet<NaucniRad>());
+		
+		autor1.setRevizije(new HashSet<RevizijaRada>());
+		autor2.setRevizije(new HashSet<RevizijaRada>());
+		autor3.setRevizije(new HashSet<RevizijaRada>());
+		autor4.setRevizije(new HashSet<RevizijaRada>());
+		
+		autor1.getRadovi().add(rad1);
+		autor1.getRadovi().add(rad5);
+		autor2.getRadovi().add(rad2);
+		autor2.getRadovi().add(rad6);
+		autor3.getRadovi().add(rad3);
+		autor3.getRadovi().add(rad7);
+		autor4.getRadovi().add(rad4);
+		
+		autor1.getRevizije().add(revizija1);
+		autor1.getRevizije().add(revizija5);
+		autor2.getRevizije().add(revizija2);
+		autor2.getRevizije().add(revizija6);
+		autor3.getRevizije().add(revizija3);
+		autor3.getRevizije().add(revizija7);
+		autor4.getRevizije().add(revizija4);
+		
+		autor1 = autorRepository.save(autor1);
+		autor2 = autorRepository.save(autor2);
+		autor3 = autorRepository.save(autor3);
+		autor4 = autorRepository.save(autor4);
+		
 		IndexUnit iu1 = new IndexUnit(rad1, k1.getIme()+" "+k1.getPrezime(), pdfHandler.getText(new File(rad1.getPutanja())), recenzentiI1, naucneOblastiI1);
-		IndexUnit iu2 = new IndexUnit(rad2, k1.getIme()+" "+k1.getPrezime(), pdfHandler.getText(new File(rad2.getPutanja())), recenzentiI2, naucneOblastiI2);
-		IndexUnit iu3 = new IndexUnit(rad3, k1.getIme()+" "+k1.getPrezime(), pdfHandler.getText(new File(rad3.getPutanja())), recenzentiI3, naucneOblastiI3);
-		IndexUnit iu4 = new IndexUnit(rad4, k1.getIme()+" "+k1.getPrezime(), pdfHandler.getText(new File(rad4.getPutanja())), recenzentiI1, naucneOblastiI1);
+		IndexUnit iu2 = new IndexUnit(rad2, k11.getIme()+" "+k11.getPrezime(), pdfHandler.getText(new File(rad2.getPutanja())), recenzentiI2, naucneOblastiI2);
+		IndexUnit iu3 = new IndexUnit(rad3, k12.getIme()+" "+k12.getPrezime(), pdfHandler.getText(new File(rad3.getPutanja())), recenzentiI3, naucneOblastiI3);
+		IndexUnit iu4 = new IndexUnit(rad4, k13.getIme()+" "+k13.getPrezime(), pdfHandler.getText(new File(rad4.getPutanja())), recenzentiI1, naucneOblastiI1);
 		IndexUnit iu5 = new IndexUnit(rad5, k1.getIme()+" "+k1.getPrezime(), pdfHandler.getText(new File(rad5.getPutanja())), recenzentiI2, naucneOblastiI2);
-		IndexUnit iu6 = new IndexUnit(rad6, k1.getIme()+" "+k1.getPrezime(), pdfHandler.getText(new File(rad6.getPutanja())), recenzentiI3, naucneOblastiI4);
-		IndexUnit iu7 = new IndexUnit(rad7, k1.getIme()+" "+k1.getPrezime(), pdfHandler.getText(new File(rad7.getPutanja())), recenzentiI1, naucneOblastiI5);
+		IndexUnit iu6 = new IndexUnit(rad6, k11.getIme()+" "+k11.getPrezime(), pdfHandler.getText(new File(rad6.getPutanja())), recenzentiI3, naucneOblastiI4);
+		IndexUnit iu7 = new IndexUnit(rad7, k12.getIme()+" "+k12.getPrezime(), pdfHandler.getText(new File(rad7.getPutanja())), recenzentiI1, naucneOblastiI5);
 		
 		iu1 = indexUnitRepository.index(iu1);
 		iu2 = indexUnitRepository.index(iu2);

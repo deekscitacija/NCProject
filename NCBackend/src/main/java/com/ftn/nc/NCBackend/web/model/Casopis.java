@@ -38,6 +38,9 @@ public class Casopis {
 	@Column(nullable = true)
 	private Double cenaClanarine;
 	
+	@Column(nullable = true, length = 10, unique = true)
+	private String koncentratorKod;
+	
 	@ManyToOne(optional = false)
 	private Urednik urednik;
 	
@@ -55,8 +58,8 @@ public class Casopis {
 	}
 
 	public Casopis(Long id, String issn, String naziv, boolean openAccess, Set<NaucnaOblast> naucneOblasti,
-			Double cenaPretplate, Double cenaClanarine, Urednik urednik, Set<Urednik> uredjivackiOdbor,
-			Set<Recenzent> recenzenti) {
+			Double cenaPretplate, Double cenaClanarine, String koncentratorKod, Urednik urednik,
+			Set<Urednik> uredjivackiOdbor, Set<Recenzent> recenzenti) {
 		super();
 		this.id = id;
 		this.issn = issn;
@@ -65,6 +68,7 @@ public class Casopis {
 		this.naucneOblasti = naucneOblasti;
 		this.cenaPretplate = cenaPretplate;
 		this.cenaClanarine = cenaClanarine;
+		this.koncentratorKod = koncentratorKod;
 		this.urednik = urednik;
 		this.uredjivackiOdbor = uredjivackiOdbor;
 		this.recenzenti = recenzenti;
@@ -148,6 +152,14 @@ public class Casopis {
 
 	public void setRecenzenti(Set<Recenzent> recenzenti) {
 		this.recenzenti = recenzenti;
+	}
+
+	public String getKoncentratorKod() {
+		return koncentratorKod;
+	}
+
+	public void setKoncentratorKod(String koncentratorKod) {
+		this.koncentratorKod = koncentratorKod;
 	}
 
 }

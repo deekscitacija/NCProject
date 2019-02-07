@@ -14,7 +14,7 @@ public class RadDTO {
 	
 	private String apstrakt;
 	
-	private double cena;
+	private Double cena;
 	
 	private Set<NaucnaOblast> naucneOblasti;
 	
@@ -71,11 +71,11 @@ public class RadDTO {
 		this.apstrakt = apstrakt;
 	}
 
-	public double getCena() {
+	public Double getCena() {
 		return cena;
 	}
 
-	public void setCena(double cena) {
+	public void setCena(Double cena) {
 		this.cena = cena;
 	}
 
