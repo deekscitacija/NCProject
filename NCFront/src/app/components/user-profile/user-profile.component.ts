@@ -9,7 +9,7 @@ import { TokenService } from '../../services/token.service';
 })
 export class UserProfileComponent implements OnInit {
   
-  private regUser: any = {ime : "", prezime : "", grad : {naziv : "", drzava : {naziv : ""}}};
+  private regUser: any = {ime : "", prezime : "", grad : {naziv : "", drzava : {naziv : ""}}, tip: [{kod: ""}]};
 
   constructor(private router: Router, private route: ActivatedRoute, private tokenService: TokenService) { }
 

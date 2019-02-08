@@ -13,6 +13,8 @@ import { SearchService } from './services/search.service';
 import { LoginService } from './services/login.service';
 import { TokenService } from './services/token.service';
 import { RadService } from './services/rad.service';
+import { TransakcijaService } from './services/transakcija.service';
+import { PaymentService } from './services/payment.service';
 
 import { ListToStringPipe } from './pipes/list-to-string.pipe';
 import { YesNoPipe } from './pipes/yes-no.pipe';
@@ -31,6 +33,8 @@ import { NewPaperComponent } from './components/new-paper/new-paper.component';
 import { IzdanjePreviewComponent } from './components/izdanje-preview/izdanje-preview.component';
 import { PaperPreviewComponent } from './components/paper-preview/paper-preview.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { TransactionPanelComponent } from './components/user-profile/transaction-panel/transaction-panel.component';
+import { TransactionTypePipe } from './pipes/transaction-type.pipe';
 
 
 
@@ -52,7 +56,9 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
     DateDisplayPipe,
     IzdanjePreviewComponent,
     PaperPreviewComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    TransactionPanelComponent,
+    TransactionTypePipe
   ],
   imports: [
     BrowserModule,
@@ -106,7 +112,9 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
     SearchService,
     LoginService,
     TokenService,
-    RadService
+    RadService,
+    TransakcijaService,
+    PaymentService
   ],
   entryComponents: [SearchDialogComponent],
   bootstrap: [AppComponent]

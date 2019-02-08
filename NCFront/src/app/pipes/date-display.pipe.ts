@@ -9,7 +9,7 @@ export class DateDisplayPipe implements PipeTransform {
   transform(value: any, args?: any): any {
 
     if(!value) 
-      return;
+      return "";
 
     let dateStr = value.substring(0, 10);
     let year = dateStr.substring(0, 4);

@@ -1,0 +1,26 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">rbr</th>
+      <th scope="col">Entitet</th>
+      <th scope="col">Naziv</th>
+      <th scope="col">Formirano</th>
+      <th scope="col">Izvrseno</th>
+      <th scope="col">Iznos</th>
+      <th scope="col">Status</th>
+      <th scope="col">Link</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let transakcija of transakcije; let idx = index">
+      <th>{{idx+1}}</th>
+      <th>{{transakcija.entitet}}</th>
+      <th>{{transakcija.naziv}}</th>
+      <th>{{transakcija.datumFormiranja | dateDisplay}}</th>
+      <th>{{transakcija.datumIzvrsenja | dateDisplay}}</th>
+      <th>{{transakcija.iznos}}</th>
+      <th>{{transakcija.status | transactionType}}</th>
+      <th><a href="{{transakcija.putanja}}">link</a></th>
+    </tr>
+  </tbody>
+</table>
