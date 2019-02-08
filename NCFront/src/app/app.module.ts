@@ -35,6 +35,9 @@ import { PaperPreviewComponent } from './components/paper-preview/paper-preview.
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { TransactionPanelComponent } from './components/user-profile/transaction-panel/transaction-panel.component';
 import { TransactionTypePipe } from './pipes/transaction-type.pipe';
+import { SuccessComponent } from './components/success/success.component';
+import { FailComponent } from './components/fail/fail.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 
 
@@ -58,7 +61,10 @@ import { TransactionTypePipe } from './pipes/transaction-type.pipe';
     PaperPreviewComponent,
     UserProfileComponent,
     TransactionPanelComponent,
-    TransactionTypePipe
+    TransactionTypePipe,
+    SuccessComponent,
+    FailComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -101,9 +107,21 @@ import { TransactionTypePipe } from './pipes/transaction-type.pipe';
         path : 'naucna-centrala.com/profil',
         component : UserProfileComponent
       },
+      {
+        path : 'naucna-centrala.com/payment-success',
+        component : SuccessComponent
+      },
+      {
+        path : 'naucna-centrala.com/payment-error',
+        component : ErrorComponent
+      },
+      {
+        path : 'naucna-centrala.com/payment-fail',
+        component : FailComponent
+      },
       { 
         path: '**', 
-        component: ErrorComponent 
+        component: NotFoundComponent 
       }
     ])
   ],

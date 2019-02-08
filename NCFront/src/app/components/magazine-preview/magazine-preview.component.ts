@@ -3,6 +3,7 @@ import { ActivatedRoute, Router, Params } from '@angular/router';
 import { CasopisService } from '../../services/casopis.service';
 import { RadService } from '../../services/rad.service';
 import { TokenService } from '../../services/token.service';
+import { PaymentService } from '../../services/payment.service';
 
 @Component({
   selector: 'app-magazine-preview',
@@ -13,12 +14,12 @@ export class MagazinePreviewComponent implements OnInit {
 
   private casopis: any = {id: "", issn : "", urednik : "", naucneOblasti : []};
   private izdanja: any[] = [];
-  private korisnik: any = {};
+  private korisnik: any = {tip: [{kod: ""}] };
   private pageNum: number = 1;
   private isLast: boolean = false;
 
   constructor(private casopisService: CasopisService, private radService: RadService, private tokenService: TokenService, 
-    private router: Router, private route: ActivatedRoute) { }
+    private router: Router, private route: ActivatedRoute, private paymentService: PaymentService) { }
 
   ngOnInit() {
 
@@ -73,6 +74,28 @@ export class MagazinePreviewComponent implements OnInit {
       }
     )
 
+  }
+
+  pretplatiSe(){
+    if(!localStorage.getItem('token')){
+      alert('Prijavite se pre obavljanja kupovine.');
+      return;
+    }
+
+    this.paymentService.pretplata(this.casopis.id).subscribe(
+      (res: any) => {
+        if(res.headers.get('Location')){
+          window.location.href = res.headers.get('Location');
+        }
+        
+        if(!res.body){
+          alert('Vec ste se pretplatili ili se ceka na obradu transakcije.')
+        }
+      },
+      (error: any) => {
+        alert('Greska prilikom slanja zahteva za placanje. Pokusajte ponovo.')
+      }
+    );
   }
 
   otvoriIzdanje = function(izdanjeId: number){

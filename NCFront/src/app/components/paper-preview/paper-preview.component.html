@@ -7,7 +7,7 @@
         </p>
     </div>
     <div class="col-lg-2 padding-md" *ngIf="korisnik.tip[0].kod === 'RK' || korisnik.tip[0].kod == ''">
-      <button *ngIf="!paper.openAccess" class="btn btn-default download-circle-button"><i class="far fa-money-bill-alt fa-2x fa-fix-left"></i></button>
+      <button *ngIf="!paper.openAccess" class="btn btn-default download-circle-button" (click)="kupi()"><i class="far fa-money-bill-alt fa-2x fa-fix-left"></i></button>
       <button *ngIf="paper.openAccess" class="btn btn-default download-circle-button"><i class="fas fa-file-download fa-2x"></i></button>
       <h6 *ngIf="!paper.openAccess" align="center">{{paper.cena}} USD</h6>
     </div>

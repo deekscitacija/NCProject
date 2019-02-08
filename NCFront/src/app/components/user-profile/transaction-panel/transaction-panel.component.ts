@@ -18,7 +18,6 @@ export class TransactionPanelComponent implements OnInit {
     this.transakcijaService.getTransakcije(this.mode).subscribe(
       (res: any) => {
         this.transakcije = res;
-        console.log(this.transakcije)
       },
       (error: any) => {
         alert('Greska!');

@@ -58,8 +58,8 @@ export class IzdanjePreviewComponent implements OnInit {
         if(res.headers.get('Location')){
           window.location.href = res.headers.get('Location');
         }
-
-        if(!res){
+        
+        if(!res.body){
           alert('Izabrano izdanje ste vec kupili ili se ceka na obradu transakcije.')
         }
       },

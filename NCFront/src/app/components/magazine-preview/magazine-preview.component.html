@@ -16,9 +16,9 @@
         </p>
       </div>
       <div class="white-bg1 col-lg-3 div-padding-md">
-        <button class="btn btn-default blue-box-button" (click)="objaviRad()">Objavi rad</button>
+        <button *ngIf="korisnik.tip[0].kod === 'AU'" class="btn btn-default blue-box-button" (click)="objaviRad()">Objavi rad</button>
         <br/>
-        <button class="btn btn-default blue-box-button" (click)="objaviRad()">Pretplati se</button>
+        <button class="btn btn-default blue-box-button" (click)="pretplatiSe()">Pretplati se</button>
       </div>
     </div>
 
