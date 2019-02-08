@@ -30,7 +30,7 @@ public class Transakcija {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date datumFormiranja;
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date datumIzvrsenja;
 	

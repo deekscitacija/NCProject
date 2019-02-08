@@ -1,6 +1,7 @@
 package com.ftn.nc.NCBackend.web.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ftn.nc.NCBackend.security.TokenUtils;
 import com.ftn.nc.NCBackend.web.dto.payment.PaymentRequestDTO;
+import com.ftn.nc.NCBackend.web.dto.payment.PaymentResponseDTO;
 import com.ftn.nc.NCBackend.web.enums.TransakcijaStatus;
 import com.ftn.nc.NCBackend.web.model.Izdanje;
 import com.ftn.nc.NCBackend.web.model.Korisnik;
@@ -59,7 +61,7 @@ public class PaymentContoller {
 	}
 	
 	@RequestMapping(value = "kupiIzdanje", method =  RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> kupiIzdanje(@RequestParam(value = "izdanjeId", required = true) int izdanjeId, HttpServletRequest request){
+	public ResponseEntity<PaymentResponseDTO> kupiIzdanje(@RequestParam(value = "izdanjeId", required = true) int izdanjeId, HttpServletRequest request){
 		
 		Korisnik korisnik = korisnikService.getUserFromToken(request, tokenUtils);
 		
@@ -73,12 +75,18 @@ public class PaymentContoller {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
+		List<Transakcija> kupio = transakcijaService.getAllForKorisnikAndIzdanje(korisnik, izdanje);
+		
+		if(!kupio.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		
 		Transakcija transakcija = new Transakcija(null, TransakcijaStatus.C, new Date(System.currentTimeMillis()), null, korisnik, false, null, izdanje, null, izdanje.getCenaIzdanja());
 		transakcija = transakcijaService.save(transakcija);
 		
 		PaymentRequestDTO kpRequest = paymentService.buildPaymentRequest(izdanje.getKoncentratorKod(), izdanje.getCenaIzdanja(), false, transakcija.getId());
 		
-		return null;
+		return paymentService.sendPaymentRequest(kpRequest, kpRequestPath);
 	}
 	
 	@RequestMapping(value = "kupiRad", method =  RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -96,12 +104,18 @@ public class PaymentContoller {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
+		List<Transakcija> kupio = transakcijaService.getAllForKorisnikAndRad(korisnik, rad);
+		
+		if(!kupio.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		
 		Transakcija transakcija = new Transakcija(null, TransakcijaStatus.C, new Date(System.currentTimeMillis()), null, korisnik, false, null, null, rad, rad.getCena());
 		transakcija = transakcijaService.save(transakcija);
 		
 		PaymentRequestDTO kpRequest = paymentService.buildPaymentRequest(rad.getKoncentratorKod(), rad.getCena(), false, transakcija.getId());
 		
-		return null;
+		return paymentService.sendPaymentRequest(kpRequest, kpRequestPath);
 	}
 
 }

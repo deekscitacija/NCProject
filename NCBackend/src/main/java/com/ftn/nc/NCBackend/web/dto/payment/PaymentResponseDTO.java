@@ -50,5 +50,11 @@ public class PaymentResponseDTO {
 	public void setPoruka(String poruka) {
 		this.poruka = poruka;
 	}
+
+	@Override
+	public String toString() {
+		return "PaymentResponseDTO [maticnaTransakcija=" + maticnaTransakcija + ", status=" + status + ", poruka="
+				+ poruka + "]";
+	}
 	
 }
