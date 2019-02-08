@@ -6,6 +6,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ftn.nc.NCBackend.web.enums.TransakcijaStatus;
 import com.ftn.nc.NCBackend.web.model.Casopis;
@@ -55,8 +58,6 @@ public class TransakcijaServiceImpl implements TransakcijaService {
 	@Override
 	public List<Transakcija> ifExsistsKorisnikAndCasopis(Korisnik korisnik, Casopis casopis) {
 		
-		
-		
 		return transakcijaRepository.findByVrsiPlacanjeAndCasopisAndStatusIn(korisnik, casopis, buildStatusi());
 	}
 
@@ -70,6 +71,19 @@ public class TransakcijaServiceImpl implements TransakcijaService {
 	public List<Transakcija> ifExsistsKorisnikAndRad(Korisnik korisnik, NaucniRad naucniRad) {
 		
 		return transakcijaRepository.findByVrsiPlacanjeAndNaucniRadAndStatusIn(korisnik, naucniRad, buildStatusi());
+	}
+
+	@Override
+	public Transakcija findById(Long id) {
+		
+		return transakcijaRepository.getOne(id);
+	}
+	
+	@Override
+	@Transactional(readOnly = false, rollbackFor = Exception.class, propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
+	public Transakcija saveNewStatus(Transakcija transakcija, TransakcijaStatus noviStatus) {
+		transakcija.setStatus(noviStatus);
+		return transakcijaRepository.save(transakcija);
 	}
 	
 	private Collection<TransakcijaStatus> buildStatusi(){

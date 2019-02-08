@@ -2,6 +2,7 @@ package com.ftn.nc.NCBackend.web.service.impl;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -13,6 +14,9 @@ import org.springframework.web.client.RestTemplate;
 import com.ftn.nc.NCBackend.web.dto.payment.EntitetPlacanjaDTO;
 import com.ftn.nc.NCBackend.web.dto.payment.PaymentRequestDTO;
 import com.ftn.nc.NCBackend.web.dto.payment.PaymentResponseDTO;
+import com.ftn.nc.NCBackend.web.enums.TransakcijaStatus;
+import com.ftn.nc.NCBackend.web.model.Transakcija;
+import com.ftn.nc.NCBackend.web.repository.TransakcijaRepository;
 import com.ftn.nc.NCBackend.web.service.PaymentService;
 
 @Service
@@ -29,6 +33,9 @@ public class PaymentServiceImpl implements PaymentService{
 	
 	@Value("${payment-gateway.success}")
 	private String failPage;
+	
+	@Autowired
+	private TransakcijaRepository transakcijaRepository;
 
 	@Override
 	public PaymentRequestDTO buildPaymentRequest(String entitetKod, double iznos, boolean pretplata, Long transakcijaId) {
@@ -53,6 +60,11 @@ public class PaymentServiceImpl implements PaymentService{
 			response = restTemplate.exchange(kpRequestPath, HttpMethod.POST, requestEntity, PaymentResponseDTO.class); 
 		}catch(Exception e) {
 			System.out.println("PUKLO PLACANJE");
+			Transakcija transakcija = transakcijaRepository.getOne(kpRequest.getMaticnaTransakcija());
+			if(transakcija != null) {
+				transakcija.setStatus(TransakcijaStatus.N);
+				transakcijaRepository.save(transakcija);
+			}
 			//e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}

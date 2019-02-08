@@ -77,6 +77,7 @@ public class NaucniRad {
 		this.naucneOblasti = revizija.getNaucneOblasti();
 		this.revizija = revizija;
 		this.cena = cena;
+		this.koncentratorKod = koncentratorKod;
 	}
 
 	public Long getId() {

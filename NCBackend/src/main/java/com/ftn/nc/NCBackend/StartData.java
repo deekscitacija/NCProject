@@ -497,8 +497,8 @@ public class StartData {
 		
 		// *** Casopisi *** //
 		
-		Casopis c1 = new Casopis(null, "0001-184X", "Acta herbologica", true, naucneOblasti1, null, 11.99, "CAS#1#MARA",urednik1, null, recenzenti3);
-		Casopis c2 = new Casopis(null, "0002-1X22", "Arhitektura i urbanizam", false, naucneOblasti2, 14.99, null, "CAS#2#MARA", urednik2, null, recenzenti2);
+		Casopis c1 = new Casopis(null, "0001-184X", "Acta herbologica", true, naucneOblasti1, 11.99, 11.99, "CAS#1#MARA",urednik1, null, recenzenti3);
+		Casopis c2 = new Casopis(null, "0002-1X22", "Arhitektura i urbanizam", false, naucneOblasti2, 14.99, 14.99, "CAS#2#MARA", urednik2, null, recenzenti2);
 		Casopis c3 = new Casopis(null, "0003-45X6", "Balkan Journal of Dental Medicine", true, naucneOblasti3, null, 9.99, "CAS#3#MARA", urednik3, null, recenzenti1);
 		Casopis c4 = new Casopis(null, "0004-7895", "Ekonomika poljoprivrede", false, naucneOblasti4, 7.99, null, "CAS#4#MARA", urednik4, null, recenzenti3);
 		Casopis c5 = new Casopis(null, "0005-7802", "Civitas", true, naucneOblasti5, null, 12.99, "CAS#5#MARA", urednik5, null, recenzenti2);

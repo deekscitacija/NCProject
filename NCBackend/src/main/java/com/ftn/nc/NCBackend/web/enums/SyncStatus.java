@@ -1,5 +1,5 @@
 package com.ftn.nc.NCBackend.web.enums;
 
-public enum TransakcijaStatus {
-	C, U, N, E
+public enum SyncStatus {
+	SUCCESS, FAILD
 }
