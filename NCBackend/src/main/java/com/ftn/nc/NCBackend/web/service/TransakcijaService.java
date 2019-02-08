@@ -20,10 +20,10 @@ public interface TransakcijaService {
 	
 	public List<Transakcija> getAllForKorisnikAndRadNotNull(Korisnik korisnik);
 	
-	public List<Transakcija> getAllForKorisnikAndCasopis(Korisnik korisnik, Casopis casopis);
+	public List<Transakcija> ifExsistsKorisnikAndCasopis(Korisnik korisnik, Casopis casopis);
 	
-	public List<Transakcija> getAllForKorisnikAndIzdanje(Korisnik korisnik, Izdanje izdanje);
+	public List<Transakcija> ifExsistsKorisnikAndIzdanje(Korisnik korisnik, Izdanje izdanje);
 	
-	public List<Transakcija> getAllForKorisnikAndRad(Korisnik korisnik, NaucniRad naucniRad);
+	public List<Transakcija> ifExsistsKorisnikAndRad(Korisnik korisnik, NaucniRad naucniRad);
 	
 }

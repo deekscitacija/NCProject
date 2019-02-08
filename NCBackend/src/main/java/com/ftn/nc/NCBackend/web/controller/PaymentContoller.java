@@ -75,7 +75,7 @@ public class PaymentContoller {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		List<Transakcija> kupio = transakcijaService.getAllForKorisnikAndIzdanje(korisnik, izdanje);
+		List<Transakcija> kupio = transakcijaService.ifExsistsKorisnikAndIzdanje(korisnik, izdanje);
 		
 		if(!kupio.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.OK);
@@ -104,7 +104,7 @@ public class PaymentContoller {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		List<Transakcija> kupio = transakcijaService.getAllForKorisnikAndRad(korisnik, rad);
+		List<Transakcija> kupio = transakcijaService.ifExsistsKorisnikAndRad(korisnik, rad);
 		
 		if(!kupio.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.OK);

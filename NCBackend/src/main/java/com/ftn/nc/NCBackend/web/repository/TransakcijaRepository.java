@@ -1,9 +1,11 @@
 package com.ftn.nc.NCBackend.web.repository;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.ftn.nc.NCBackend.web.enums.TransakcijaStatus;
 import com.ftn.nc.NCBackend.web.model.Casopis;
 import com.ftn.nc.NCBackend.web.model.Izdanje;
 import com.ftn.nc.NCBackend.web.model.Korisnik;
@@ -20,10 +22,10 @@ public interface TransakcijaRepository extends JpaRepository<Transakcija, Long>{
 	
 	List<Transakcija> findByVrsiPlacanjeAndNaucniRadNotNull(Korisnik vrsiPlacanje);
 	
-	List<Transakcija> findByVrsiPlacanjeAndCasopis(Korisnik vrsiPlacanje, Casopis casopis);
+	List<Transakcija> findByVrsiPlacanjeAndCasopisAndStatusIn(Korisnik vrsiPlacanje, Casopis casopis, Collection<TransakcijaStatus> statusi);
 	
-	List<Transakcija> findByVrsiPlacanjeAndIzdanje(Korisnik vrsiPlacanje, Izdanje izdanje);
+	List<Transakcija> findByVrsiPlacanjeAndIzdanjeAndStatusIn(Korisnik vrsiPlacanje, Izdanje izdanje, Collection<TransakcijaStatus> statusi);
 	
-	List<Transakcija> findByVrsiPlacanjeAndNaucniRad(Korisnik vrsiPlacanje, NaucniRad naucniRad);
+	List<Transakcija> findByVrsiPlacanjeAndNaucniRadAndStatusIn(Korisnik vrsiPlacanje, NaucniRad naucniRad, Collection<TransakcijaStatus> statusi);
 	
 }

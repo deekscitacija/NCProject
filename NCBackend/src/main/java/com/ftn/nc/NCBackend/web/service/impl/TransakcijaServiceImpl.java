@@ -1,10 +1,13 @@
 package com.ftn.nc.NCBackend.web.service.impl;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ftn.nc.NCBackend.web.enums.TransakcijaStatus;
 import com.ftn.nc.NCBackend.web.model.Casopis;
 import com.ftn.nc.NCBackend.web.model.Izdanje;
 import com.ftn.nc.NCBackend.web.model.Korisnik;
@@ -50,21 +53,30 @@ public class TransakcijaServiceImpl implements TransakcijaService {
 	}
 
 	@Override
-	public List<Transakcija> getAllForKorisnikAndCasopis(Korisnik korisnik, Casopis casopis) {
+	public List<Transakcija> ifExsistsKorisnikAndCasopis(Korisnik korisnik, Casopis casopis) {
 		
-		return transakcijaRepository.findByVrsiPlacanjeAndCasopis(korisnik, casopis);
+		
+		
+		return transakcijaRepository.findByVrsiPlacanjeAndCasopisAndStatusIn(korisnik, casopis, buildStatusi());
 	}
 
 	@Override
-	public List<Transakcija> getAllForKorisnikAndIzdanje(Korisnik korisnik, Izdanje izdanje) {
+	public List<Transakcija> ifExsistsKorisnikAndIzdanje(Korisnik korisnik, Izdanje izdanje) {
 		
-		return transakcijaRepository.findByVrsiPlacanjeAndIzdanje(korisnik, izdanje);
+		return transakcijaRepository.findByVrsiPlacanjeAndIzdanjeAndStatusIn(korisnik, izdanje, buildStatusi());
 	}
 
 	@Override
-	public List<Transakcija> getAllForKorisnikAndRad(Korisnik korisnik, NaucniRad naucniRad) {
+	public List<Transakcija> ifExsistsKorisnikAndRad(Korisnik korisnik, NaucniRad naucniRad) {
 		
-		return transakcijaRepository.findByVrsiPlacanjeAndNaucniRad(korisnik, naucniRad);
+		return transakcijaRepository.findByVrsiPlacanjeAndNaucniRadAndStatusIn(korisnik, naucniRad, buildStatusi());
+	}
+	
+	private Collection<TransakcijaStatus> buildStatusi(){
+		Collection<TransakcijaStatus> statusi = new ArrayList<>();
+		statusi.add(TransakcijaStatus.U);
+		statusi.add(TransakcijaStatus.C);
+		return statusi;
 	}
 
 }
