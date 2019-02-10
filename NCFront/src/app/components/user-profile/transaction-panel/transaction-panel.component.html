@@ -20,7 +20,7 @@
       <th>{{transakcija.datumIzvrsenja | dateDisplay}}</th>
       <th>{{transakcija.iznos}}</th>
       <th>{{transakcija.status | transactionType}}</th>
-      <th><a href="{{transakcija.putanja}}">link</a></th>
+      <th><a *ngIf="transakcija.status === 'U'" href="{{transakcija.putanja}}">link</a></th>
     </tr>
   </tbody>
 </table>
