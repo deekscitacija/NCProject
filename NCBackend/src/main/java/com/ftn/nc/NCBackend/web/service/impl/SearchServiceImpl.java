@@ -13,6 +13,8 @@ import java.util.Set;
 import org.apache.lucene.search.join.ScoreMode;
 import org.elasticsearch.common.unit.DistanceUnit;
 import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.MoreLikeThisQueryBuilder;
+import org.elasticsearch.index.query.MoreLikeThisQueryBuilder.Item;
 import org.elasticsearch.index.query.NestedQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -137,18 +139,36 @@ public class SearchServiceImpl implements SearchService{
 	}
 	
 	@Override
-	public Page<IndexUnit> moreLikeThis(String documentId, int pageNum) {
+	public List<IndexUnit> moreLikeThis(String documentId, int pageNum) {
 		
-		MoreLikeThisQuery moreLikeThisQuery = new MoreLikeThisQuery();
-		moreLikeThisQuery.setIndexName("naucnacentrala");
-		moreLikeThisQuery.setType("rad");
-		moreLikeThisQuery.setId(documentId);
-		moreLikeThisQuery.addFields("tekst");
-		moreLikeThisQuery.setMinDocFreq(5);
-		moreLikeThisQuery.setMaxQueryTerms(5);
-		moreLikeThisQuery.setPageable(PageRequest.of(pageNum-1, 3));
+		String[] fields = new String[1];
+		String[] tekst = new String[1];
+		Item[] items = new Item[1];
 		
-		return elasticsearchTemplate.moreLikeThis(moreLikeThisQuery, IndexUnit.class);
+		IndexUnit indexUnit = null;
+		
+		try {
+			indexUnit = indexUnitRepository.findById(documentId).get();
+		}catch(Exception e) {
+			return null;
+		}
+		
+		fields[0] = "tekst";
+		tekst[0] = indexUnit.getTekst();
+		
+		Item searchIn = new Item("naucnacentrala", "rad", indexUnit.getId());
+		items[0] = searchIn;
+		
+		MoreLikeThisQueryBuilder moreLikeThisQuery = QueryBuilders.moreLikeThisQuery(fields, tekst, items)
+				.minDocFreq(5)
+				.maxDocFreq(25)
+				.minWordLength(5)
+				.minTermFreq(5)
+				.minimumShouldMatch("75%");
+		
+		SearchQuery theQuery = new NativeSearchQueryBuilder().withQuery(moreLikeThisQuery).build();
+		
+		return elasticsearchTemplate.queryForList(theQuery, IndexUnit.class);
 	}
 
 	@Override
@@ -161,7 +181,7 @@ public class SearchServiceImpl implements SearchService{
 		BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
 		boolQuery.mustNot(filter);
 		
-		SearchQuery theQuery =new NativeSearchQueryBuilder().withQuery(boolQuery).build();
+		SearchQuery theQuery = new NativeSearchQueryBuilder().withQuery(boolQuery).build();
 		
 		return elasticsearchTemplate.queryForList(theQuery, RecenzentInfo.class);
 	}

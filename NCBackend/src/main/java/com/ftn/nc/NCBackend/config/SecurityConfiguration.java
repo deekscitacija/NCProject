@@ -65,20 +65,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 	        .and()
 	        .authorizeRequests()
-	        .antMatchers("/rest/*")
+	        .antMatchers("/app/*")
 	        .permitAll();
-	        /*
-	        .antMatchers("/secured/*").authenticated()
-	        .antMatchers("/rest/secured/saveCert/*").access("hasAnyAuthority('KREIRAJ_SERT')")
-	        .antMatchers("/rest/secured/issuers/*").access("hasAuthority('CITAJ_KEYSTORE')")
-	        .antMatchers("/rest/secured/getCerts/*").access("hasAuthority('CITAJ_KEYSTORE')")
-	        .antMatchers("/rest/secured/withdrawCert/*").access("hasAuthority('POVUCI')")
-	        .antMatchers("/rest/secured/keystore/newKeystore").access("hasAuthority('KREIRAJ_KEYSTORE')")
-	        .antMatchers("/rest/secured/keystore/getKeystores").access("hasAuthority('CITAJ_KEYSTORE')")
-    		.antMatchers("/rest/secured/getCsrs").access("hasAuthority('UPRAVLJAJ_CSR')")
-    		.antMatchers("/rest/secured/denyCsr").access("hasAuthority('UPRAVLJAJ_CSR')")
-    		.antMatchers("/rest/secured/acceptCsr").access("hasAuthority('UPRAVLJAJ_CSR')");
-    		*/
+	        //.antMatchers("/secured/*").authenticated()
+	        //.antMatchers("/app/secured/getTransakcije*").access("hasAuthority('PREUZMI_TRANSAKCIJE')")
+	        //.antMatchers("/app/secured/pretplata*").access("hasAuthority('PRETPLATI_SE')")
+	        //.antMatchers("/app/secured/kupiIzdanje*").access("hasAuthority('KUPI')")
+	        //.antMatchers("/app/secured/kupiRad*").access("hasAuthority('KUPI')");
         
 		httpSecurity.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
 

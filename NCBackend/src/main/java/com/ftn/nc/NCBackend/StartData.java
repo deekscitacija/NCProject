@@ -13,6 +13,7 @@ import org.camunda.bpm.engine.IdentityService;
 import org.camunda.bpm.engine.identity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.geo.GeoPoint;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.ftn.nc.NCBackend.elastic.handler.PDFHandler;
@@ -118,6 +119,9 @@ public class StartData {
 	@Autowired
 	private RecenzentInfoRepository recenzentInfoRepository;
 	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 	public StartData() {
 		
 	}
@@ -125,17 +129,39 @@ public class StartData {
 	@PostConstruct
 	private void init() {
 		
-		Permisija p1 = new Permisija(null, "P1", "permisija 1");
-		
-		Set<Permisija> permisije = new HashSet<Permisija>();
-		permisije.add(p1);
+		Permisija p1 = new Permisija(null, "KUPI", "Kupovina");
+		Permisija p2 = new Permisija(null, "KREIRAJ_RAD", "Kreiranje rada");
+		Permisija p3 = new Permisija(null, "PRETPLATI_SE", "pretplata");
+		Permisija p4 = new Permisija(null, "PREUZMI_TRANSAKCIJE", "Preuzimaznje transakcija");
+		Permisija p5 = new Permisija(null, "RECENZIRAJ_RAD", "Recenziranje");
+		Permisija p6 = new Permisija(null, "IZABERI_RECENZENTE", "Odabir recenzenata");
 		
 		p1 = permisijaRepository.save(p1);
+		p2 = permisijaRepository.save(p2);
+		p3 = permisijaRepository.save(p3);
+		p4 = permisijaRepository.save(p4);
+		p5 = permisijaRepository.save(p5);
+		p6 = permisijaRepository.save(p6);
 		
-		TipKorisnika tk1 = new TipKorisnika(null, "AU", "Autor", permisije);
-		TipKorisnika tk2 = new TipKorisnika(null, "RK", "Registrovani Korisnik", permisije);
-		TipKorisnika tk3 = new TipKorisnika(null, "RE", "Recenzent", permisije);
-		TipKorisnika tk4 = new TipKorisnika(null, "UR", "Urednik", permisije);
+		Set<Permisija> permisije1 = new HashSet<Permisija>();
+		permisije1.add(p2);
+		permisije1.add(p3);
+		
+		Set<Permisija> permisije2 = new HashSet<Permisija>();
+		permisije2.add(p1);
+		permisije2.add(p3);
+		permisije2.add(p4);
+		
+		Set<Permisija> permisije3 = new HashSet<Permisija>();
+		permisije3.add(p5);
+		
+		Set<Permisija> permisije4 = new HashSet<Permisija>();
+		permisije4.add(p6);
+		
+		TipKorisnika tk1 = new TipKorisnika(null, "AU", "Autor", permisije1);
+		TipKorisnika tk2 = new TipKorisnika(null, "RK", "Registrovani Korisnik", permisije2);
+		TipKorisnika tk3 = new TipKorisnika(null, "RE", "Recenzent", permisije3);
+		TipKorisnika tk4 = new TipKorisnika(null, "UR", "Urednik", permisije4);
 		
 		tk1 = tipKorisnikaRepository.save(tk1);
 		tk2 = tipKorisnikaRepository.save(tk2);
@@ -254,29 +280,29 @@ public class StartData {
 		
 		// *** Korisnici *** //
 		
-		Korisnik k1 = new Korisnik(null, "korisnik1@email.com", "lozinka1", "Pera", "Peric", gr1, setAU, null, null, null, null);
-		Korisnik k2 = new Korisnik(null, "korisnik2@email.com", "lozinka2", "Zika", "Zikic", gr2, setRK, null, null, null, null);
-		Korisnik k3 = new Korisnik(null, "korisnik3@email.com", "lozinka3", "Sima", "Simic", gr3, setRE, null, null, null, null);
-		Korisnik k4 = new Korisnik(null, "korisnik4@email.com", "lozinka4", "Mika", "Mikic", gr4, setUR, null, null, null, null);
-		Korisnik k5 = new Korisnik(null, "korisnik5@email.com", "lozinka5", "Mila", "Milanovic", gr5, setRE, null, null, null, null);
-		Korisnik k6 = new Korisnik(null, "korisnik6@email.com", "lozinka6", "Sava", "Savic", gr6, setRE, null, null, null, null);
-		Korisnik k7 = new Korisnik(null, "korisnik7@email.com", "lozinka7", "Nikola", "Nikolic", gr1, setRE, null, null, null, null);
-		Korisnik k8 = new Korisnik(null, "korisnik8@email.com", "lozinka8", "Marko", "Markovic", gr2, setRE, null, null, null, null);
-		Korisnik k9 = new Korisnik(null, "korisnik9@email.com", "lozinka9", "Milica", "Milicic", gr3, setRE, null, null, null, null);
-		Korisnik k10 = new Korisnik(null, "korisnik10@email.com", "lozinka10", "Rada", "Radovanovic", gr5, setRE, null, null, null, null);
+		Korisnik k1 = new Korisnik(null, "korisnik1@email.com", passwordEncoder.encode("lozinka1"), "Pera", "Peric", gr1, setAU, null, null, null, null);
+		Korisnik k2 = new Korisnik(null, "korisnik2@email.com", passwordEncoder.encode("lozinka2"), "Zika", "Zikic", gr2, setRK, null, null, null, null);
+		Korisnik k3 = new Korisnik(null, "korisnik3@email.com", passwordEncoder.encode("lozinka3"), "Sima", "Simic", gr3, setRE, null, null, null, null);
+		Korisnik k4 = new Korisnik(null, "korisnik4@email.com", passwordEncoder.encode("lozinka4"), "Mika", "Mikic", gr4, setUR, null, null, null, null);
+		Korisnik k5 = new Korisnik(null, "korisnik5@email.com", passwordEncoder.encode("lozinka5"), "Mila", "Milanovic", gr5, setRE, null, null, null, null);
+		Korisnik k6 = new Korisnik(null, "korisnik6@email.com", passwordEncoder.encode("lozinka6"), "Sava", "Savic", gr6, setRE, null, null, null, null);
+		Korisnik k7 = new Korisnik(null, "korisnik7@email.com", passwordEncoder.encode("lozinka7"), "Nikola", "Nikolic", gr1, setRE, null, null, null, null);
+		Korisnik k8 = new Korisnik(null, "korisnik8@email.com", passwordEncoder.encode("lozinka8"), "Marko", "Markovic", gr2, setRE, null, null, null, null);
+		Korisnik k9 = new Korisnik(null, "korisnik9@email.com", passwordEncoder.encode("lozinka9"), "Milica", "Milicic", gr3, setRE, null, null, null, null);
+		Korisnik k10 = new Korisnik(null, "korisnik10@email.com", passwordEncoder.encode("lozinka10"), "Rada", "Radovanovic", gr5, setRE, null, null, null, null);
 		
 		// *** Autori *** //
-		Korisnik k11 = new Korisnik(null, "korisnik11@email.com", "lozinka11", "Sara", "Savic", gr1, setAU, null, null, null, null);
-		Korisnik k12 = new Korisnik(null, "korisnik12@email.com", "lozinka12", "Luka", "Lukic", gr3, setAU, null, null, null, null);
-		Korisnik k13 = new Korisnik(null, "korisnik13@email.com", "lozinka13", "Lazar", "Lazarevic", gr6, setAU, null, null, null, null);
+		Korisnik k11 = new Korisnik(null, "korisnik11@email.com", passwordEncoder.encode("lozinka11"), "Sara", "Savic", gr1, setAU, null, null, null, null);
+		Korisnik k12 = new Korisnik(null, "korisnik12@email.com", passwordEncoder.encode("lozinka12"), "Luka", "Lukic", gr3, setAU, null, null, null, null);
+		Korisnik k13 = new Korisnik(null, "korisnik13@email.com", passwordEncoder.encode("lozinka13"), "Lazar", "Lazarevic", gr6, setAU, null, null, null, null);
 		
 		// *** Urednici *** //
-		Korisnik k14 = new Korisnik(null, "korisnik14@email.com", "lozinka14", "Sara", "Lazarevic", gr3, setUR, null, null, null, null);
-		Korisnik k15 = new Korisnik(null, "korisnik15@email.com", "lozinka15", "Luka", "Savic", gr4, setUR, null, null, null, null);
-		Korisnik k16 = new Korisnik(null, "korisnik16@email.com", "lozinka16", "Marko", "Lazarevic", gr6, setUR, null, null, null, null);
-		Korisnik k17 = new Korisnik(null, "korisnik17@email.com", "lozinka17", "Sara", "Savic", gr5, setUR, null, null, null, null);
-		Korisnik k18 = new Korisnik(null, "korisnik18@email.com", "lozinka18", "Zika", "Mikic", gr5, setUR, null, null, null, null);
-		Korisnik k19 = new Korisnik(null, "korisnik19@email.com", "lozinka19", "Lazar", "Milicic", gr6, setUR, null, null, null, null);
+		Korisnik k14 = new Korisnik(null, "korisnik14@email.com", passwordEncoder.encode("lozinka14"), "Sara", "Lazarevic", gr3, setUR, null, null, null, null);
+		Korisnik k15 = new Korisnik(null, "korisnik15@email.com", passwordEncoder.encode("lozinka15"), "Luka", "Savic", gr4, setUR, null, null, null, null);
+		Korisnik k16 = new Korisnik(null, "korisnik16@email.com", passwordEncoder.encode("lozinka16"), "Marko", "Lazarevic", gr6, setUR, null, null, null, null);
+		Korisnik k17 = new Korisnik(null, "korisnik17@email.com", passwordEncoder.encode("lozinka17"), "Sara", "Savic", gr5, setUR, null, null, null, null);
+		Korisnik k18 = new Korisnik(null, "korisnik18@email.com", passwordEncoder.encode("lozinka18"), "Zika", "Mikic", gr5, setUR, null, null, null, null);
+		Korisnik k19 = new Korisnik(null, "korisnik19@email.com", passwordEncoder.encode("lozinka19"), "Lazar", "Milicic", gr6, setUR, null, null, null, null);
 		
 		k1 = korisnikRepository.save(k1);
 		k2 = korisnikRepository.save(k2);
@@ -548,8 +574,25 @@ public class StartData {
 				true, true, true, autor2, c1, naucneOblasti4, recenzenti3, null);
 		
 		RevizijaRada revizija7 = new RevizijaRada(null, "СМС спам", "Марко Марковић", 
-				"Анализа смс порука и предикција спама на основу претходне анализе", "предикција, анализа, смс, спам", LIBRARY_DIR_PATH+"\\2017 Predikcija SMS spama.pdf", 
+				"Анализа смс порука и предикција спама на основу претходне анализе.", "предикција, анализа, смс, спам", LIBRARY_DIR_PATH+"\\2017 Predikcija SMS spama.pdf", 
 				true, true, true, autor3, c3, naucneOblasti5, recenzenti1, null);
+		
+		RevizijaRada revizija8 = new RevizijaRada(null, "Modul za upravljanje sertifikatima u okviru informacionog sistema za rezervaciju smeštaja", "Marija Joksimović", 
+				"Tema ovog rada jeste jedna iz skupa prethodno navedenih aplikacija, čija je osnovna namena generisanje, distribucija i povlačenje digitalnih sertifikata. Upotreba digitalnih sertifikata je trenutno najčešći i najpouzdaniji mehanizam za autentifikaciju učesnika u komunikaciji i zaštitu sadržaja poruka koje se šalju od neovlašćenog čitanja ili izmene.", 
+				"sertifikat, digitalni, CSR, SSL, model pretnji", LIBRARY_DIR_PATH+"\\DIPL_Marija_Joksimovic_BSEP-finalno.pdf", 
+				true, true, true, autor4, c2, naucneOblasti1, recenzenti2, null);
+		
+		RevizijaRada revizija9 = new RevizijaRada(null, "Smernice za pisanje diplomskog rada", "Milana Ostojic, Nikola Nenadovic", 
+				"Smernice za pisanje diplomskog rada.", "diplomski, rad, smernica, smernice", LIBRARY_DIR_PATH+"\\Smernice za pisanje diplomskog rada.pdf", 
+				true, true, true, autor1, c1, naucneOblasti1, recenzenti3, null);
+		
+		RevizijaRada revizija10 = new RevizijaRada(null, "Upravljanje digitalnim dokumentima, kontrolna tačka 1", "Marija Joksimović", 
+				"Upravljanje digitalnim dokumentima.", "digitalni, dokument, kontrolna, tacka", LIBRARY_DIR_PATH+"\\UDD-2018-2019-KT1-Marija-Joksimović-E262-2018.pdf", 
+				true, true, true, autor2, c3, naucneOblasti4, recenzenti1, null);
+		
+		RevizijaRada revizija11 = new RevizijaRada(null, "Upravljanje digitalnim dokumentima, kontrolna tačka 2", "Marija Joksimović", 
+				"Upravljanje digitalnim dokumentima.", "digitalni, dokument, kontrolna, tacka", LIBRARY_DIR_PATH+"\\UDD-2018-2019-KT2-Marija-Joksimovic.pdf", 
+				true, true, true, autor3, c2, naucneOblasti3, recenzenti2, null);
 		
 		revizija1 = revizijaRadaRepository.save(revizija1);
 		revizija2 = revizijaRadaRepository.save(revizija2);
@@ -558,6 +601,10 @@ public class StartData {
 		revizija5 = revizijaRadaRepository.save(revizija5);
 		revizija6 = revizijaRadaRepository.save(revizija6);
 		revizija7 = revizijaRadaRepository.save(revizija7);
+		revizija8 = revizijaRadaRepository.save(revizija8);
+		revizija9 = revizijaRadaRepository.save(revizija9);
+		revizija10 = revizijaRadaRepository.save(revizija10);
+		revizija11 = revizijaRadaRepository.save(revizija11);
 		
 		NaucniRad rad1 = new NaucniRad(revizija1, null, "RAD#1#MARA");
 		NaucniRad rad2 = new NaucniRad(revizija2, 2.99, "RAD#2#MARA");
@@ -566,6 +613,10 @@ public class StartData {
 		NaucniRad rad5 = new NaucniRad(revizija5, null, "RAD#5#MARA");
 		NaucniRad rad6 = new NaucniRad(revizija6, null, "RAD#6#MARA");
 		NaucniRad rad7 = new NaucniRad(revizija7, null, "RAD#7#MARA");
+		NaucniRad rad8 = new NaucniRad(revizija8, null, "RAD#8#MARA");
+		NaucniRad rad9 = new NaucniRad(revizija9, null, "RAD#9#MARA");
+		NaucniRad rad10 = new NaucniRad(revizija10, null, "RAD10#MARA");
+		NaucniRad rad11 = new NaucniRad(revizija11, null, "RAD11#MARA");
 		
 		rad1 = naucniRadRepository.save(rad1);
 		rad2 = naucniRadRepository.save(rad2);
@@ -574,6 +625,10 @@ public class StartData {
 		rad5 = naucniRadRepository.save(rad5);
 		rad6 = naucniRadRepository.save(rad6);
 		rad7 = naucniRadRepository.save(rad7);
+		rad8 = naucniRadRepository.save(rad8);
+		rad9 = naucniRadRepository.save(rad9);
+		rad10 = naucniRadRepository.save(rad10);
+		rad11 = naucniRadRepository.save(rad11);
 		
 		Set<NaucniRad> radovi1 = new HashSet<>();
 		radovi1.add(rad1);
@@ -610,19 +665,33 @@ public class StartData {
 		
 		autor1.getRadovi().add(rad1);
 		autor1.getRadovi().add(rad5);
+		autor1.getRadovi().add(rad9);
+		
 		autor2.getRadovi().add(rad2);
 		autor2.getRadovi().add(rad6);
+		autor2.getRadovi().add(rad10);
+		
 		autor3.getRadovi().add(rad3);
 		autor3.getRadovi().add(rad7);
+		autor3.getRadovi().add(rad11);
+		
 		autor4.getRadovi().add(rad4);
+		autor4.getRadovi().add(rad8);
 		
 		autor1.getRevizije().add(revizija1);
 		autor1.getRevizije().add(revizija5);
+		autor1.getRevizije().add(revizija9);
+		
 		autor2.getRevizije().add(revizija2);
 		autor2.getRevizije().add(revizija6);
+		autor2.getRevizije().add(revizija10);
+		
 		autor3.getRevizije().add(revizija3);
 		autor3.getRevizije().add(revizija7);
+		autor3.getRevizije().add(revizija11);
+		
 		autor4.getRevizije().add(revizija4);
+		autor4.getRevizije().add(revizija8);
 		
 		autor1 = autorRepository.save(autor1);
 		autor2 = autorRepository.save(autor2);
@@ -637,6 +706,11 @@ public class StartData {
 		IndexUnit iu6 = new IndexUnit(rad6, k11.getIme()+" "+k11.getPrezime(), pdfHandler.getText(new File(rad6.getPutanja())), recenzentiI3, naucneOblastiI4);
 		IndexUnit iu7 = new IndexUnit(rad7, k12.getIme()+" "+k12.getPrezime(), pdfHandler.getText(new File(rad7.getPutanja())), recenzentiI1, naucneOblastiI5);
 		
+		IndexUnit iu8 = new IndexUnit(rad8, k13.getIme()+" "+k13.getPrezime(), pdfHandler.getText(new File(rad8.getPutanja())), recenzentiI2, naucneOblastiI1);
+		IndexUnit iu9 = new IndexUnit(rad9, k1.getIme()+" "+k1.getPrezime(), pdfHandler.getText(new File(rad9.getPutanja())), recenzentiI3, naucneOblastiI1);
+		IndexUnit iu10 = new IndexUnit(rad10, k11.getIme()+" "+k11.getPrezime(), pdfHandler.getText(new File(rad10.getPutanja())), recenzentiI1, naucneOblastiI4);
+		IndexUnit iu11 = new IndexUnit(rad11, k12.getIme()+" "+k12.getPrezime(), pdfHandler.getText(new File(rad11.getPutanja())), recenzentiI2, naucneOblastiI3);
+		
 		iu1 = indexUnitRepository.index(iu1);
 		iu2 = indexUnitRepository.index(iu2);
 		iu3 = indexUnitRepository.index(iu3);
@@ -644,6 +718,10 @@ public class StartData {
 		iu5 = indexUnitRepository.index(iu5);
 		iu6 = indexUnitRepository.index(iu6);
 		iu7 = indexUnitRepository.index(iu7);
+		iu8 = indexUnitRepository.index(iu8);
+		iu9 = indexUnitRepository.index(iu9);
+		iu10 = indexUnitRepository.index(iu10);
+		iu11 = indexUnitRepository.index(iu11);
 	
 	}
 }

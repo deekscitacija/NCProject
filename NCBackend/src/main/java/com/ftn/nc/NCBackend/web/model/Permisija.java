@@ -13,7 +13,7 @@ public class Permisija {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@Column(nullable = false, length = 2)
+	@Column(nullable = false, length = 120)
 	private String kod;
 	
 	@Column(nullable = false, length = 120)

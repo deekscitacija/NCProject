@@ -74,14 +74,14 @@ public class SearchController {
 	}
 	
 	@RequestMapping(value = "moreLikeThis", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Page<IndexUnit>> moreLikeThis(@RequestParam(value = "pageNum", required = true) int pageNum,
+	public ResponseEntity<List<IndexUnit>> moreLikeThis(@RequestParam(value = "pageNum", required = true) int pageNum,
 			@RequestParam(value = "documentId", required = true) String documentId){
 		
 		if(pageNum < 0 || documentId.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	
-		return new ResponseEntity<Page<IndexUnit>>(searchService.moreLikeThis(documentId, pageNum), HttpStatus.OK);
+		return new ResponseEntity<List<IndexUnit>>(searchService.moreLikeThis(documentId, pageNum), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "geoSearch", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

@@ -17,7 +17,7 @@ public interface SearchService {
 	
 	public Page<IndexUnit> executeSearchAll(QueryDTO searchParams);
 	
-	public Page<IndexUnit> moreLikeThis(String documentId, int pageNum);
+	public List<IndexUnit> moreLikeThis(String documentId, int pageNum);
 	
 	public List<RecenzentInfo> geoSearch(double lat, double lon);
 	
