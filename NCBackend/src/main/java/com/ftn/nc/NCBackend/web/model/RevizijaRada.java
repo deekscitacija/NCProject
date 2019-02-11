@@ -18,7 +18,7 @@ import javax.persistence.OneToOne;
 public class RevizijaRada {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@Column(nullable = false, length = 120)

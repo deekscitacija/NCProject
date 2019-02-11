@@ -15,7 +15,7 @@ import com.ftn.nc.NCBackend.web.enums.KomentarVidljivost;
 public class Komentar {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@ManyToOne(optional = false)

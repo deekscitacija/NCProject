@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class Izdanje {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@Temporal(TemporalType.TIMESTAMP)
