@@ -1,5 +1,6 @@
 package com.ftn.nc.NCBackend.web.model;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -24,8 +25,8 @@ public class RevizijaRada {
 	@Column(nullable = false, length = 120)
 	private String naslov;
 	
-	@Column(nullable = true, length = 1024)
-	private String koAutori;
+	@ManyToMany
+	private List<Koautor> koAutori;
 	
 	@Column(nullable = true, length = 1024)
 	private String apstrakt;
@@ -54,8 +55,8 @@ public class RevizijaRada {
 	@ManyToOne(optional = false)
 	private Casopis casopis;
 	
-	@ManyToMany
-	private Set<NaucnaOblast> naucneOblasti;
+	@ManyToOne
+	private NaucnaOblast naucnaOblast;
 	
 	@ManyToMany
 	private Set<Recenzent> recenzenti;
@@ -67,9 +68,9 @@ public class RevizijaRada {
 		super();
 	}
 	
-	public RevizijaRada(Long id, String naslov, String koAutori, String apstrakt, String kljucneReci, String putanja,
+	public RevizijaRada(Long id, String naslov, List<Koautor> koAutori, String apstrakt, String kljucneReci, String putanja,
 			boolean temaOk, boolean formatOk, boolean prihvacen, Autor autor, Casopis casopis,
-			Set<NaucnaOblast> naucneOblasti, Set<Recenzent> recenzenti, Set<Komentar> komentari) {
+			NaucnaOblast naucnaOblast, Set<Recenzent> recenzenti, Set<Komentar> komentari) {
 		super();
 		this.id = id;
 		this.naslov = naslov;
@@ -82,7 +83,7 @@ public class RevizijaRada {
 		this.prihvacen = prihvacen;
 		this.autor = autor;
 		this.casopis = casopis;
-		this.naucneOblasti = naucneOblasti;
+		this.naucnaOblast = naucnaOblast;
 		this.recenzenti = recenzenti;
 		this.komentari = komentari;
 	}
@@ -103,11 +104,11 @@ public class RevizijaRada {
 		this.naslov = naslov;
 	}
 
-	public String getKoAutori() {
+	public List<Koautor> getKoAutori() {
 		return koAutori;
 	}
 
-	public void setKoAutori(String koAutori) {
+	public void setKoAutori(List<Koautor> koAutori) {
 		this.koAutori = koAutori;
 	}
 
@@ -175,14 +176,6 @@ public class RevizijaRada {
 		this.komentari = komentari;
 	}
 
-	public Set<NaucnaOblast> getNaucneOblasti() {
-		return naucneOblasti;
-	}
-
-	public void setNaucneOblasti(Set<NaucnaOblast> naucneOblasti) {
-		this.naucneOblasti = naucneOblasti;
-	}
-
 	public String getPutanja() {
 		return putanja;
 	}
@@ -197,6 +190,14 @@ public class RevizijaRada {
 
 	public void setCasopis(Casopis casopis) {
 		this.casopis = casopis;
+	}
+
+	public NaucnaOblast getNaucnaOblast() {
+		return naucnaOblast;
+	}
+
+	public void setNaucnaOblast(NaucnaOblast naucnaOblast) {
+		this.naucnaOblast = naucnaOblast;
 	}
 
 }

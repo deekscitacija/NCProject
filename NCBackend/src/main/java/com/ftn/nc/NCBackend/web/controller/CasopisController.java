@@ -2,6 +2,7 @@ package com.ftn.nc.NCBackend.web.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -78,6 +79,18 @@ public class CasopisController {
 	public ResponseEntity<List<NaucnaOblast>> getNaucneOblasti(){
 		
 		return new ResponseEntity<List<NaucnaOblast>>(naucneOblastiService.getAll(), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "getNaucneOblastiCasopis", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Set<NaucnaOblast>> getNaucneOblastiCasopis(@RequestParam(value = "magazineId", required = true) Long magazineId){
+		
+		Casopis casopis = casopisService.getById(magazineId);
+		
+		if(casopis == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return new ResponseEntity<Set<NaucnaOblast>>(casopis.getNaucneOblasti(), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "getRecenzenti", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

@@ -12,6 +12,7 @@ import org.springframework.data.elasticsearch.core.aggregation.impl.AggregatedPa
 
 import com.ftn.nc.NCBackend.elastic.model.IndexUnit;
 import com.ftn.nc.NCBackend.elastic.model.NaucnaOblastInfo;
+import com.google.gson.Gson;
 
 public class ContentResultMapper implements SearchResultMapper{
 	
@@ -28,6 +29,7 @@ public class ContentResultMapper implements SearchResultMapper{
             if (response.getHits().getHits().length <= 0) {
                 return null;
             }
+            Gson gson=new Gson();
             Map<String, Object> source = searchHit.getSource();
             IndexUnit indexUnit = new IndexUnit();
             
@@ -36,8 +38,8 @@ public class ContentResultMapper implements SearchResultMapper{
             indexUnit.setApstrakt((String) source.get("apstrakt"));
             indexUnit.setKljucne((String) source.get("kljucne"));
             indexUnit.setKoautori((String) source.get("koautori"));
-            indexUnit.setNaslov((String) source.get("naslov"));
-            indexUnit.setNaucneOblasti((List<NaucnaOblastInfo>) source.get("naucneOblasti"));
+            indexUnit.setNaslov((String) source.get("naslov"));            
+            indexUnit.setNaucnaOblast(gson.fromJson(source.get("naucnaOblast").toString(), NaucnaOblastInfo.class));
             indexUnit.setCasopis((String) source.get("casopis"));
             indexUnit.setOpenAccess((boolean) source.get("openAccess"));
             

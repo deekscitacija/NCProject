@@ -28,6 +28,7 @@ import com.ftn.nc.NCBackend.web.model.Casopis;
 import com.ftn.nc.NCBackend.web.model.Drzava;
 import com.ftn.nc.NCBackend.web.model.Grad;
 import com.ftn.nc.NCBackend.web.model.Izdanje;
+import com.ftn.nc.NCBackend.web.model.Koautor;
 import com.ftn.nc.NCBackend.web.model.Korisnik;
 import com.ftn.nc.NCBackend.web.model.NaucnaOblast;
 import com.ftn.nc.NCBackend.web.model.NaucniRad;
@@ -42,6 +43,7 @@ import com.ftn.nc.NCBackend.web.repository.CasopisRepository;
 import com.ftn.nc.NCBackend.web.repository.DrzavaRepository;
 import com.ftn.nc.NCBackend.web.repository.GradRepository;
 import com.ftn.nc.NCBackend.web.repository.IzdanjeRepository;
+import com.ftn.nc.NCBackend.web.repository.KoautorRepository;
 import com.ftn.nc.NCBackend.web.repository.KomentarRepository;
 import com.ftn.nc.NCBackend.web.repository.KorisnikRepository;
 import com.ftn.nc.NCBackend.web.repository.NaucnaOblastRepository;
@@ -102,6 +104,9 @@ public class StartData {
 	
 	@Autowired
 	private UrednikRepository urednikRepository;
+	
+	@Autowired
+	private KoautorRepository koautorRepository;
 	
 	// *** Camunda *** //
 	
@@ -441,41 +446,52 @@ public class StartData {
 		
 		// *** Camunda Korisnici *** //
 		
-		User u1 = identityService.newUser(k1.getId().toString());
-		u1.setFirstName(k1.getIme());
-		u1.setLastName(k1.getPrezime());
-		u1.setEmail(k1.getEmail());
-		u1.setPassword(k1.getLozinka());
+		User u = identityService.newUser("undefinedUser");
+		u.setFirstName("Jonh");
+		u.setLastName("Doe");
+		u.setEmail("undefined@email.com");
+		u.setPassword("undefinedpass");
 		
-		User u2 = identityService.newUser(k2.getId().toString());
-		u2.setFirstName(k2.getIme());
-		u2.setLastName(k2.getPrezime());
-		u2.setEmail(k2.getEmail());
-		u2.setPassword(k2.getLozinka());
+		User u1 = createCamundaUser(k1);
+		User u2 = createCamundaUser(k2);
+		User u3 =createCamundaUser(k3);
+		User u4 = createCamundaUser(k4);
+		User u5 = createCamundaUser(k5);
+		User u6 = createCamundaUser(k6);
+		User u7 = createCamundaUser(k7);
+		User u8 = createCamundaUser(k8);
+		User u9 = createCamundaUser(k9);
+		User u10 = createCamundaUser(k10);
+		User u11 = createCamundaUser(k11);
+		User u12 = createCamundaUser(k12);
+		User u13 = createCamundaUser(k13);
+		User u14 = createCamundaUser(k14);
+		User u15 = createCamundaUser(k15);
+		User u16 = createCamundaUser(k16);
+		User u17 = createCamundaUser(k17);
+		User u18 = createCamundaUser(k18);
+		User u19 = createCamundaUser(k19);
 		
-		User u3 = identityService.newUser(k3.getId().toString());
-		u3.setFirstName(k3.getIme());
-		u3.setLastName(k3.getPrezime());
-		u3.setEmail(k3.getEmail());
-		u3.setPassword(k3.getLozinka());
-		
-		User u4 = identityService.newUser(k4.getId().toString());
-		u4.setEmail(k4.getEmail());
-		u4.setFirstName(k4.getIme());
-		u4.setLastName(k4.getPrezime());
-		u4.setPassword(k4.getLozinka());
-		
-		User u5 = identityService.newUser("undefinedUser");
-		u5.setFirstName("Jonh");
-		u5.setLastName("Doe");
-		u5.setEmail("undefined@email.com");
-		u5.setPassword("undefinedpass");
-		
+		identityService.saveUser(u);
 		identityService.saveUser(u1);
 		identityService.saveUser(u2);
 		identityService.saveUser(u3);
 		identityService.saveUser(u4);
 		identityService.saveUser(u5);
+		identityService.saveUser(u6);
+		identityService.saveUser(u7);
+		identityService.saveUser(u8);
+		identityService.saveUser(u9);
+		identityService.saveUser(u10);
+		identityService.saveUser(u11);
+		identityService.saveUser(u12);
+		identityService.saveUser(u13);
+		identityService.saveUser(u14);
+		identityService.saveUser(u15);
+		identityService.saveUser(u16);
+		identityService.saveUser(u17);
+		identityService.saveUser(u18);
+		identityService.saveUser(u19);
 		
 		Set<Recenzent> recenzenti1 = new HashSet<Recenzent>();
 		recenzenti1.add(rec1);
@@ -549,50 +565,79 @@ public class StartData {
 		c11 = casopisRepository.save(c11);
 		c12 = casopisRepository.save(c12);
 		
-		RevizijaRada revizija1 = new RevizijaRada(null, "Predikcija ishoda teniskih meceva", "Milan Milanovic, Predrag Preradovic", 
+		Koautor koautor1 = new Koautor(null, "Milan", "Milanovic", "milanmilanovic@email.com", "Novi Sad, Srbija");
+		Koautor koautor2 = new Koautor(null, "Sonja", "Simic", "sonjasimic@email.com", "Beograd, Srbija");
+		Koautor koautor3 = new Koautor(null, "Milica", "Milovanovic", "milica89@email.com", "Valjevo, Srbija");
+		Koautor koautor4 = new Koautor(null, "Dragan", "Dragic", "dragance@email.com", "Nis, Srbija");
+		Koautor koautor5 = new Koautor(null, "Luka", "Lukic", "lukalukic@email.com", "Novi Sad, Srbija");
+		Koautor koautor6 = new Koautor(null, "Ostoja", "Ostojic", "the.ostoja@email.com", "Sremska Mitrovica, Srbija");
+		Koautor koautor7 = new Koautor(null, "Predrag", "Preradovic", "preradovic@email.com", "Uzice, Srbija");
+		
+		koautor1 = koautorRepository.save(koautor1);
+		koautor2 = koautorRepository.save(koautor2);
+		koautor3 = koautorRepository.save(koautor3);
+		koautor4 = koautorRepository.save(koautor4);
+		koautor5 = koautorRepository.save(koautor5);
+		koautor6 = koautorRepository.save(koautor6);
+		koautor7 = koautorRepository.save(koautor7);
+		
+		List<Koautor> koautori1 = new ArrayList<>();
+		koautori1.add(koautor1);
+		koautori1.add(koautor3);
+		koautori1.add(koautor5);
+		
+		List<Koautor> koautori2 = new ArrayList<>();
+		koautori2.add(koautor2);
+		koautori2.add(koautor4);
+		
+		List<Koautor> koautori3 = new ArrayList<>();
+		koautori3.add(koautor6);
+		koautori3.add(koautor7);
+		
+		RevizijaRada revizija1 = new RevizijaRada(null, "Predikcija ishoda teniskih meceva", koautori1, 
 				"U radu je opisana predkcija ishoda teniskih meceva.", "predikcija, tenis, mec, loptica, Naive Bayes", LIBRARY_DIR_PATH+"\\2015 Predikcija ishoda teniskih meceva.pdf", 
-				true, true, true, autor1, c1, naucneOblasti1, recenzenti1, null);
+				true, true, true, autor1, c1, no1, recenzenti1, null);
 		
-		RevizijaRada revizija2 = new RevizijaRada(null, "Цене некретнина", "Соња Петровић, Бранка Радовановић", 
+		RevizijaRada revizija2 = new RevizijaRada(null, "Цене некретнина", koautori2, 
 				"Кретање цена некретнина, опширно и детаљно,", "предикција, некретнине, некретнина, кластернованје, кластер, цена, новац, стан, кућа", LIBRARY_DIR_PATH+"\\2016 Predikcija cene nekretnina.pdf", 
-				true, true, true, autor2, c2, naucneOblasti2, recenzenti2, null);
+				true, true, true, autor2, c2, no2, recenzenti2, null);
 		
-		RevizijaRada revizija3 = new RevizijaRada(null, "Predikcija musterija koje ce napustiti kompaniju", "Darko Jovanovic, Nikola Nikolic, Jovana Jovanovic", 
+		RevizijaRada revizija3 = new RevizijaRada(null, "Predikcija musterija koje ce napustiti kompaniju", koautori3, 
 				"Postoji li rizik da vasi zaposleni napuste kompaniju?", "predikcija, kompanija, zaposleni, nezadovoljstvo, klaster, klasterovanje", LIBRARY_DIR_PATH+"\\2016 Predikcija Churn (musterije koje ce napustiti kompaniju).pdf", 
-				true, true, true, autor3, c2, naucneOblasti3, recenzenti3, null);
+				true, true, true, autor3, c2, no3, recenzenti3, null);
 		
-		RevizijaRada revizija4 = new RevizijaRada(null, "IMDB, predikcija ranka filmova", "Ostoja Ostojic, Nenad Nenadovic", 
+		RevizijaRada revizija4 = new RevizijaRada(null, "IMDB, predikcija ranka filmova", koautori1, 
 				"Metode koriscenje kako bi se izvrsila predikcija ranka filma na IMDB sajtu.", "predikcija, film, uspeh, rank, zanr, faktori", LIBRARY_DIR_PATH+"\\2016 Predikcija ranka filmova na IMDB.pdf", 
-				true, true, true, autor4, c3, naucneOblasti1, recenzenti1, null);
+				true, true, true, autor4, c3, no4, recenzenti1, null);
 		
-		RevizijaRada revizija5 = new RevizijaRada(null, "Анализа кашњења авионских летова", "Драгана Драгић", 
+		RevizijaRada revizija5 = new RevizijaRada(null, "Анализа кашњења авионских летова", koautori2, 
 				"Анализа и прикз доминантних разлога кашњења авионских летова на свим рутама.", "анализа, кашњење, касни, авион, лет, писта", LIBRARY_DIR_PATH+"\\2017 Analiza kasnjenja avionskih letova.pdf", 
-				true, true, true, autor1, c1, naucneOblasti2, recenzenti2, null);
+				true, true, true, autor1, c1, no5, recenzenti2, null);
 		
-		RevizijaRada revizija6 = new RevizijaRada(null, "Hronicne bubrezne bolesti", "Aleksandar Stankovic, Luka Lukic, Ana Petrovic", 
+		RevizijaRada revizija6 = new RevizijaRada(null, "Hronicne bubrezne bolesti", koautori3, 
 				"Predikcija hronicnih bubreznih bolesti iz prethodnih anamneza nekog pacijenta i procena rizika razvijanja.", "predikcija, bubreg, bubrezi, bolest, anamneza, hronicno", LIBRARY_DIR_PATH+"\\2017 Chronic kidney disease.pdf", 
-				true, true, true, autor2, c1, naucneOblasti4, recenzenti3, null);
+				true, true, true, autor2, c1, no6, recenzenti3, null);
 		
-		RevizijaRada revizija7 = new RevizijaRada(null, "СМС спам", "Марко Марковић", 
+		RevizijaRada revizija7 = new RevizijaRada(null, "СМС спам", koautori1, 
 				"Анализа смс порука и предикција спама на основу претходне анализе.", "предикција, анализа, смс, спам", LIBRARY_DIR_PATH+"\\2017 Predikcija SMS spama.pdf", 
-				true, true, true, autor3, c3, naucneOblasti5, recenzenti1, null);
+				true, true, true, autor3, c3, no1, recenzenti1, null);
 		
-		RevizijaRada revizija8 = new RevizijaRada(null, "Modul za upravljanje sertifikatima u okviru informacionog sistema za rezervaciju smeštaja", "Marija Joksimović", 
+		RevizijaRada revizija8 = new RevizijaRada(null, "Modul za upravljanje sertifikatima u okviru informacionog sistema za rezervaciju smeštaja", koautori2, 
 				"Tema ovog rada jeste jedna iz skupa prethodno navedenih aplikacija, čija je osnovna namena generisanje, distribucija i povlačenje digitalnih sertifikata. Upotreba digitalnih sertifikata je trenutno najčešći i najpouzdaniji mehanizam za autentifikaciju učesnika u komunikaciji i zaštitu sadržaja poruka koje se šalju od neovlašćenog čitanja ili izmene.", 
 				"sertifikat, digitalni, CSR, SSL, model pretnji", LIBRARY_DIR_PATH+"\\DIPL_Marija_Joksimovic_BSEP-finalno.pdf", 
-				true, true, true, autor4, c2, naucneOblasti1, recenzenti2, null);
+				true, true, true, autor4, c2, no2, recenzenti2, null);
 		
-		RevizijaRada revizija9 = new RevizijaRada(null, "Smernice za pisanje diplomskog rada", "Milana Ostojic, Nikola Nenadovic", 
+		RevizijaRada revizija9 = new RevizijaRada(null, "Smernice za pisanje diplomskog rada", koautori3, 
 				"Smernice za pisanje diplomskog rada.", "diplomski, rad, smernica, smernice", LIBRARY_DIR_PATH+"\\Smernice za pisanje diplomskog rada.pdf", 
-				true, true, true, autor1, c1, naucneOblasti1, recenzenti3, null);
+				true, true, true, autor1, c1, no3, recenzenti3, null);
 		
-		RevizijaRada revizija10 = new RevizijaRada(null, "Upravljanje digitalnim dokumentima, kontrolna tačka 1", "Marija Joksimović", 
+		RevizijaRada revizija10 = new RevizijaRada(null, "Upravljanje digitalnim dokumentima, kontrolna tačka 1", koautori1, 
 				"Upravljanje digitalnim dokumentima.", "digitalni, dokument, kontrolna, tacka", LIBRARY_DIR_PATH+"\\UDD-2018-2019-KT1-Marija-Joksimović-E262-2018.pdf", 
-				true, true, true, autor2, c3, naucneOblasti4, recenzenti1, null);
+				true, true, true, autor2, c3, no4, recenzenti1, null);
 		
-		RevizijaRada revizija11 = new RevizijaRada(null, "Upravljanje digitalnim dokumentima, kontrolna tačka 2", "Marija Joksimović", 
+		RevizijaRada revizija11 = new RevizijaRada(null, "Upravljanje digitalnim dokumentima, kontrolna tačka 2", koautori2, 
 				"Upravljanje digitalnim dokumentima.", "digitalni, dokument, kontrolna, tacka", LIBRARY_DIR_PATH+"\\UDD-2018-2019-KT2-Marija-Joksimovic.pdf", 
-				true, true, true, autor3, c2, naucneOblasti3, recenzenti2, null);
+				true, true, true, autor3, c2, no5, recenzenti2, null);
 		
 		revizija1 = revizijaRadaRepository.save(revizija1);
 		revizija2 = revizijaRadaRepository.save(revizija2);
@@ -698,18 +743,17 @@ public class StartData {
 		autor3 = autorRepository.save(autor3);
 		autor4 = autorRepository.save(autor4);
 		
-		IndexUnit iu1 = new IndexUnit(rad1, k1.getIme()+" "+k1.getPrezime(), pdfHandler.getText(new File(rad1.getPutanja())), recenzentiI1, naucneOblastiI1);
-		IndexUnit iu2 = new IndexUnit(rad2, k11.getIme()+" "+k11.getPrezime(), pdfHandler.getText(new File(rad2.getPutanja())), recenzentiI2, naucneOblastiI2);
-		IndexUnit iu3 = new IndexUnit(rad3, k12.getIme()+" "+k12.getPrezime(), pdfHandler.getText(new File(rad3.getPutanja())), recenzentiI3, naucneOblastiI3);
-		IndexUnit iu4 = new IndexUnit(rad4, k13.getIme()+" "+k13.getPrezime(), pdfHandler.getText(new File(rad4.getPutanja())), recenzentiI1, naucneOblastiI1);
-		IndexUnit iu5 = new IndexUnit(rad5, k1.getIme()+" "+k1.getPrezime(), pdfHandler.getText(new File(rad5.getPutanja())), recenzentiI2, naucneOblastiI2);
-		IndexUnit iu6 = new IndexUnit(rad6, k11.getIme()+" "+k11.getPrezime(), pdfHandler.getText(new File(rad6.getPutanja())), recenzentiI3, naucneOblastiI4);
-		IndexUnit iu7 = new IndexUnit(rad7, k12.getIme()+" "+k12.getPrezime(), pdfHandler.getText(new File(rad7.getPutanja())), recenzentiI1, naucneOblastiI5);
-		
-		IndexUnit iu8 = new IndexUnit(rad8, k13.getIme()+" "+k13.getPrezime(), pdfHandler.getText(new File(rad8.getPutanja())), recenzentiI2, naucneOblastiI1);
-		IndexUnit iu9 = new IndexUnit(rad9, k1.getIme()+" "+k1.getPrezime(), pdfHandler.getText(new File(rad9.getPutanja())), recenzentiI3, naucneOblastiI1);
-		IndexUnit iu10 = new IndexUnit(rad10, k11.getIme()+" "+k11.getPrezime(), pdfHandler.getText(new File(rad10.getPutanja())), recenzentiI1, naucneOblastiI4);
-		IndexUnit iu11 = new IndexUnit(rad11, k12.getIme()+" "+k12.getPrezime(), pdfHandler.getText(new File(rad11.getPutanja())), recenzentiI2, naucneOblastiI3);
+		IndexUnit iu1 = new IndexUnit(rad1, k1.getIme()+" "+k1.getPrezime(), pdfHandler.getText(new File(rad1.getPutanja())), recenzentiI1, noi1);
+		IndexUnit iu2 = new IndexUnit(rad2, k11.getIme()+" "+k11.getPrezime(), pdfHandler.getText(new File(rad2.getPutanja())), recenzentiI2, noi2);
+		IndexUnit iu3 = new IndexUnit(rad3, k12.getIme()+" "+k12.getPrezime(), pdfHandler.getText(new File(rad3.getPutanja())), recenzentiI3, noi3);
+		IndexUnit iu4 = new IndexUnit(rad4, k13.getIme()+" "+k13.getPrezime(), pdfHandler.getText(new File(rad4.getPutanja())), recenzentiI1, noi4);
+		IndexUnit iu5 = new IndexUnit(rad5, k1.getIme()+" "+k1.getPrezime(), pdfHandler.getText(new File(rad5.getPutanja())), recenzentiI2, noi5);
+		IndexUnit iu6 = new IndexUnit(rad6, k11.getIme()+" "+k11.getPrezime(), pdfHandler.getText(new File(rad6.getPutanja())), recenzentiI3, noi6);
+		IndexUnit iu7 = new IndexUnit(rad7, k12.getIme()+" "+k12.getPrezime(), pdfHandler.getText(new File(rad7.getPutanja())), recenzentiI1, noi1);
+		IndexUnit iu8 = new IndexUnit(rad8, k13.getIme()+" "+k13.getPrezime(), pdfHandler.getText(new File(rad8.getPutanja())), recenzentiI2, noi2);
+		IndexUnit iu9 = new IndexUnit(rad9, k1.getIme()+" "+k1.getPrezime(), pdfHandler.getText(new File(rad9.getPutanja())), recenzentiI3, noi3);
+		IndexUnit iu10 = new IndexUnit(rad10, k11.getIme()+" "+k11.getPrezime(), pdfHandler.getText(new File(rad10.getPutanja())), recenzentiI1, noi4);
+		IndexUnit iu11 = new IndexUnit(rad11, k12.getIme()+" "+k12.getPrezime(), pdfHandler.getText(new File(rad11.getPutanja())), recenzentiI2, noi5);
 		
 		iu1 = indexUnitRepository.index(iu1);
 		iu2 = indexUnitRepository.index(iu2);
@@ -723,5 +767,14 @@ public class StartData {
 		iu10 = indexUnitRepository.index(iu10);
 		iu11 = indexUnitRepository.index(iu11);
 	
+	}
+	
+	private User createCamundaUser(Korisnik k) {
+		User retVal = identityService.newUser(k.getId().toString());
+		retVal.setEmail(k.getEmail());
+		retVal.setFirstName(k.getIme());
+		retVal.setLastName(k.getPrezime());
+		retVal.setPassword(k.getLozinka());
+		return retVal;
 	}
 }

@@ -21,7 +21,7 @@
     <bpmn:sequenceFlow id="SequenceFlow_0tri35z" sourceRef="StartEvent_1" targetRef="UserTask_1641u7o" />
     <bpmn:boundaryEvent id="BoundaryEvent_1m9261o" attachedToRef="UserTask_1641u7o">
       <bpmn:outgoing>SequenceFlow_0db5izv</bpmn:outgoing>
-      <bpmn:errorEventDefinition />
+      <bpmn:errorEventDefinition errorRef="Error_046e9v6" />
     </bpmn:boundaryEvent>
     <bpmn:exclusiveGateway id="ExclusiveGateway_1cj09ql" default="SequenceFlow_0r9qb5c">
       <bpmn:incoming>SequenceFlow_1w8dnnl</bpmn:incoming>
@@ -57,7 +57,7 @@
       <bpmn:outgoing>SequenceFlow_1w8dnnl</bpmn:outgoing>
     </bpmn:userTask>
   </bpmn:process>
-  <bpmn:error id="Error_046e9v6" name="Error_3i05kva" errorCode="greska_unos_podataka" />
+  <bpmn:error id="Error_046e9v6" name="greska_unos_podataka" errorCode="greska_unos_podataka" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="RegistracijaProcess">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">

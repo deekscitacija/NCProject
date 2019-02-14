@@ -9,6 +9,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import com.ftn.nc.NCBackend.elastic.dto.IndexUnitDTO;
 import com.ftn.nc.NCBackend.web.model.Casopis;
+import com.ftn.nc.NCBackend.web.model.Koautor;
 import com.ftn.nc.NCBackend.web.model.Korisnik;
 import com.ftn.nc.NCBackend.web.model.NaucniRad;
 
@@ -47,7 +48,7 @@ public class IndexUnit {
 	private List<RecenzentInfo> recenzenti;
 	
 	@Field(type = FieldType.Nested)
-	private List<NaucnaOblastInfo> naucneOblasti;
+	private NaucnaOblastInfo naucnaOblast;
 
 	public IndexUnit() {
 		super();
@@ -55,7 +56,7 @@ public class IndexUnit {
 
 	public IndexUnit(String id, String naslov, String koautori, String kljucne, String apstrakt, String autor,
 			String casopis, String tekst, boolean openAccess, List<RecenzentInfo> recenzenti,
-			List<NaucnaOblastInfo> naucneOblasti) {
+			NaucnaOblastInfo naucnaOblast) {
 		super();
 		this.id = id;
 		this.naslov = naslov;
@@ -67,11 +68,11 @@ public class IndexUnit {
 		this.tekst = tekst;
 		this.openAccess = openAccess;
 		this.recenzenti = recenzenti;
-		this.naucneOblasti = naucneOblasti;
+		this.naucnaOblast = naucnaOblast;
 	}
 	
 	public IndexUnit(String id, IndexUnitDTO paperData, String textContent, Korisnik korisnik, Casopis casopis, 
-			List<RecenzentInfo> recenzenti, List<NaucnaOblastInfo> naucneOblasti) {
+			List<RecenzentInfo> recenzenti, NaucnaOblastInfo naucnaOblast) {
 		super();
 		this.id = id;
 		this.naslov = paperData.getNaslov();
@@ -83,15 +84,19 @@ public class IndexUnit {
 		this.tekst = textContent;
 		this.openAccess = casopis.isOpenAccess();
 		this.recenzenti = recenzenti;
-		this.naucneOblasti = naucneOblasti;
+		this.naucnaOblast = naucnaOblast;
 	}
 	
 	public IndexUnit(NaucniRad rad, String autor, String tekst, 
-			List<RecenzentInfo> recenzenti, List<NaucnaOblastInfo> naucneOblasti) {
+			List<RecenzentInfo> recenzenti, NaucnaOblastInfo naucnaOblast) {
 		super();
 		this.id = rad.getId().toString();
 		this.naslov = rad.getNaslov();
-		this.koautori = rad.getKoAutori();
+		String koautori = "";
+		for(Koautor koautor : rad.getKoAutori()) {
+			koautori+=koautor.getIme()+" "+koautor.getPrezime()+", "+koautor.getAdresa()+", "+koautor.getEmail();
+		}
+		this.koautori = koautori;
 		this.kljucne = rad.getKljucneReci();
 		this.apstrakt = rad.getApstrakt();
 		this.autor = autor;
@@ -99,7 +104,7 @@ public class IndexUnit {
 		this.tekst = tekst;
 		this.openAccess = rad.getRevizija().getCasopis().isOpenAccess();
 		this.recenzenti = recenzenti;
-		this.naucneOblasti = naucneOblasti;	
+		this.naucnaOblast = naucnaOblast;
 	}
 
 	public String getId() {
@@ -182,12 +187,12 @@ public class IndexUnit {
 		this.recenzenti = recenzenti;
 	}
 
-	public List<NaucnaOblastInfo> getNaucneOblasti() {
-		return naucneOblasti;
+	public NaucnaOblastInfo getNaucnaOblast() {
+		return naucnaOblast;
 	}
 
-	public void setNaucneOblasti(List<NaucnaOblastInfo> naucneOblasti) {
-		this.naucneOblasti = naucneOblasti;
+	public void setNaucnaOblast(NaucnaOblastInfo naucnaOblast) {
+		this.naucnaOblast = naucnaOblast;
 	}
 
 }

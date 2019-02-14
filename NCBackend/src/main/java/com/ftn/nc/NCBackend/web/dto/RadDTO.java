@@ -1,7 +1,5 @@
 package com.ftn.nc.NCBackend.web.dto;
 
-import java.util.Set;
-
 import com.ftn.nc.NCBackend.web.model.Korisnik;
 import com.ftn.nc.NCBackend.web.model.NaucnaOblast;
 import com.ftn.nc.NCBackend.web.model.NaucniRad;
@@ -16,7 +14,7 @@ public class RadDTO {
 	
 	private Double cena;
 	
-	private Set<NaucnaOblast> naucneOblasti;
+	private NaucnaOblast naucnaOblast;
 	
 	private String autor;
 	
@@ -26,14 +24,16 @@ public class RadDTO {
 		super();
 	}
 
-	public RadDTO(Long id, String naslov, String apstrakt, double cena, Set<NaucnaOblast> naucneOblasti, String autor) {
+	public RadDTO(Long id, String naslov, String apstrakt, Double cena, NaucnaOblast naucnaOblast, String autor,
+			boolean openAccess) {
 		super();
 		this.id = id;
 		this.naslov = naslov;
 		this.apstrakt = apstrakt;
 		this.cena = cena;
-		this.naucneOblasti = naucneOblasti;
+		this.naucnaOblast = naucnaOblast;
 		this.autor = autor;
+		this.openAccess = openAccess;
 	}
 
 	public RadDTO(NaucniRad rad, Korisnik autor) {
@@ -42,7 +42,7 @@ public class RadDTO {
 		this.naslov = rad.getNaslov();
 		this.apstrakt = rad.getApstrakt();
 		this.cena = rad.getCena();
-		this.naucneOblasti = rad.getNaucneOblasti();
+		this.naucnaOblast = rad.getNaucnaOblast();
 		this.autor = autor.getIme()+" "+autor.getPrezime();
 		this.openAccess = rad.getRevizija().getCasopis().isOpenAccess();
 	}
@@ -79,12 +79,12 @@ public class RadDTO {
 		this.cena = cena;
 	}
 
-	public Set<NaucnaOblast> getNaucneOblasti() {
-		return naucneOblasti;
+	public NaucnaOblast getNaucnaOblast() {
+		return naucnaOblast;
 	}
 
-	public void setNaucneOblasti(Set<NaucnaOblast> naucneOblasti) {
-		this.naucneOblasti = naucneOblasti;
+	public void setNaucnaOblast(NaucnaOblast naucnaOblast) {
+		this.naucnaOblast = naucnaOblast;
 	}
 
 	public String getAutor() {

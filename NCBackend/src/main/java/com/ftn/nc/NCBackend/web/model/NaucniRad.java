@@ -1,5 +1,6 @@
 package com.ftn.nc.NCBackend.web.model;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -8,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -22,8 +25,8 @@ public class NaucniRad {
 	@Column(nullable = false, length = 120)
 	private String naslov;
 	
-	@Column(nullable = true, length = 1024)
-	private String koAutori;
+	@ManyToMany
+	private List<Koautor> koAutori;
 	
 	@Column(nullable = true, length = 1024)
 	private String apstrakt;
@@ -40,8 +43,8 @@ public class NaucniRad {
 	@Column(nullable = true, length = 10, unique = true)
 	private String koncentratorKod;
 	
-	@ManyToMany
-	private Set<NaucnaOblast> naucneOblasti;
+	@ManyToOne
+	private NaucnaOblast naucnaOblast;
 	
 	@OneToOne(optional = true)
 	@JsonBackReference
@@ -51,8 +54,8 @@ public class NaucniRad {
 		super();
 	}
 	
-	public NaucniRad(Long id, String naslov, String koAutori, String apstrakt, String kljucneReci, String putanja,
-			Double cena, String koncentratorKod, Set<NaucnaOblast> naucneOblasti, RevizijaRada revizija) {
+	public NaucniRad(Long id, String naslov, List<Koautor> koAutori, String apstrakt, String kljucneReci, String putanja,
+			Double cena, String koncentratorKod, NaucnaOblast naucnaOblast, RevizijaRada revizija) {
 		super();
 		this.id = id;
 		this.naslov = naslov;
@@ -62,7 +65,7 @@ public class NaucniRad {
 		this.putanja = putanja;
 		this.cena = cena;
 		this.koncentratorKod = koncentratorKod;
-		this.naucneOblasti = naucneOblasti;
+		this.naucnaOblast = naucnaOblast;
 		this.revizija = revizija;
 	}
 
@@ -74,7 +77,7 @@ public class NaucniRad {
 		this.apstrakt = revizija.getApstrakt();
 		this.kljucneReci = revizija.getApstrakt();
 		this.putanja = revizija.getPutanja();
-		this.naucneOblasti = revizija.getNaucneOblasti();
+		this.naucnaOblast = revizija.getNaucnaOblast();
 		this.revizija = revizija;
 		this.cena = cena;
 		this.koncentratorKod = koncentratorKod;
@@ -96,11 +99,11 @@ public class NaucniRad {
 		this.naslov = naslov;
 	}
 
-	public String getKoAutori() {
+	public List<Koautor> getKoAutori() {
 		return koAutori;
 	}
 
-	public void setKoAutori(String koAutori) {
+	public void setKoAutori(List<Koautor> koAutori) {
 		this.koAutori = koAutori;
 	}
 
@@ -136,12 +139,12 @@ public class NaucniRad {
 		this.revizija = revizija;
 	}
 
-	public Set<NaucnaOblast> getNaucneOblasti() {
-		return naucneOblasti;
+	public NaucnaOblast getNaucnaOblast() {
+		return naucnaOblast;
 	}
 
-	public void setNaucneOblasti(Set<NaucnaOblast> naucneOblasti) {
-		this.naucneOblasti = naucneOblasti;
+	public void setNaucnaOblast(NaucnaOblast naucnaOblast) {
+		this.naucnaOblast = naucnaOblast;
 	}
 
 	public String getPutanja() {

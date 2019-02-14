@@ -23,7 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
-import org.springframework.data.elasticsearch.core.query.MoreLikeThisQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Service;
@@ -40,9 +39,11 @@ import com.ftn.nc.NCBackend.elastic.repository.IndexUnitRepository;
 import com.ftn.nc.NCBackend.elastic.repository.NaucnaOblastInfoRepository;
 import com.ftn.nc.NCBackend.elastic.repository.RecenzentInfoRepository;
 import com.ftn.nc.NCBackend.elastic.resultMappers.ContentResultMapper;
+import com.ftn.nc.NCBackend.helpClasses.PDFUtils;
 import com.ftn.nc.NCBackend.web.dto.KorisnikDTO;
 import com.ftn.nc.NCBackend.web.enums.SearchParamType;
 import com.ftn.nc.NCBackend.web.model.Casopis;
+import com.ftn.nc.NCBackend.web.model.Koautor;
 import com.ftn.nc.NCBackend.web.model.Korisnik;
 import com.ftn.nc.NCBackend.web.model.NaucnaOblast;
 import com.ftn.nc.NCBackend.web.model.NaucniRad;
@@ -58,7 +59,6 @@ import com.ftn.nc.NCBackend.web.service.SearchService;
 @Service
 public class SearchServiceImpl implements SearchService{
 	
-	public static final String LIBRARY_DIR_PATH = "D:\\TheMara\\Master PRNiI\\Naucna Centrala\\Biblioteka"; 
 	
 	@Autowired
 	private ElasticsearchTemplate elasticsearchTemplate;
@@ -130,8 +130,8 @@ public class SearchServiceImpl implements SearchService{
 		queryParams.should(QueryBuilders.commonTermsQuery("apstrakt", queryString));
 		
 		BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
-		NestedQueryBuilder nestedQuery = QueryBuilders.nestedQuery("naucneOblasti", boolQuery.should(
-				QueryBuilders.commonTermsQuery("naucneOblasti.naziv", queryString)), ScoreMode.Total);
+		NestedQueryBuilder nestedQuery = QueryBuilders.nestedQuery("naucnaOblast", boolQuery.should(
+				QueryBuilders.commonTermsQuery("naucnaOblast.naziv", queryString)), ScoreMode.Total);
 		
 		queryParams.should(nestedQuery);
 		
@@ -162,7 +162,6 @@ public class SearchServiceImpl implements SearchService{
 		MoreLikeThisQueryBuilder moreLikeThisQuery = QueryBuilders.moreLikeThisQuery(fields, tekst, items)
 				.minDocFreq(5)
 				.maxDocFreq(25)
-				.minWordLength(5)
 				.minTermFreq(5)
 				.minimumShouldMatch("75%");
 		
@@ -239,25 +238,25 @@ public class SearchServiceImpl implements SearchService{
 		
 		if(paramType.equals(SearchParamType.OR)) {
 			if(isPhraseQuery) {
-				nestedQuery = QueryBuilders.nestedQuery("naucneOblasti", boolQuery.should(QueryBuilders.matchPhraseQuery("naucneOblasti.naziv", value)), ScoreMode.None);
+				nestedQuery = QueryBuilders.nestedQuery("naucnaOblast", boolQuery.should(QueryBuilders.matchPhraseQuery("naucnaOblast.naziv", value)), ScoreMode.None);
 			}else {
-				nestedQuery = QueryBuilders.nestedQuery("naucneOblasti", boolQuery.should(QueryBuilders.commonTermsQuery("naucneOblasti.naziv", value)), ScoreMode.None);
+				nestedQuery = QueryBuilders.nestedQuery("naucnaOblast", boolQuery.should(QueryBuilders.commonTermsQuery("naucnaOblast.naziv", value)), ScoreMode.None);
 			}
 			queryParams.should(nestedQuery);
 			
 		}else if(paramType.equals(SearchParamType.AND)){
 			if(isPhraseQuery) {
-				nestedQuery = QueryBuilders.nestedQuery("naucneOblasti", boolQuery.must(QueryBuilders.matchPhraseQuery("naucneOblasti.naziv", value)), ScoreMode.None);
+				nestedQuery = QueryBuilders.nestedQuery("naucnaOblast", boolQuery.must(QueryBuilders.matchPhraseQuery("naucnaOblast.naziv", value)), ScoreMode.None);
 			}else {
-				nestedQuery = QueryBuilders.nestedQuery("naucneOblasti", boolQuery.must(QueryBuilders.commonTermsQuery("naucneOblasti.naziv", value)), ScoreMode.None);
+				nestedQuery = QueryBuilders.nestedQuery("naucnaOblast", boolQuery.must(QueryBuilders.commonTermsQuery("naucnaOblast.naziv", value)), ScoreMode.None);
 			}
 			queryParams.must(nestedQuery);
 		
 		}else if(paramType.equals(SearchParamType.MUST_NOT)){
 			if(isPhraseQuery) {
-				nestedQuery = QueryBuilders.nestedQuery("naucneOblasti", boolQuery.mustNot(QueryBuilders.matchPhraseQuery("naucneOblasti.naziv", value)), ScoreMode.None);
+				nestedQuery = QueryBuilders.nestedQuery("naucnaOblast", boolQuery.mustNot(QueryBuilders.matchPhraseQuery("naucnaOblast.naziv", value)), ScoreMode.None);
 			}else {
-				nestedQuery = QueryBuilders.nestedQuery("naucneOblasti", boolQuery.mustNot(QueryBuilders.commonTermsQuery("naucneOblasti.naziv", value)), ScoreMode.None);
+				nestedQuery = QueryBuilders.nestedQuery("naucnaOblast", boolQuery.mustNot(QueryBuilders.commonTermsQuery("naucnaOblast.naziv", value)), ScoreMode.None);
 			}
 			queryParams.mustNot(nestedQuery);
 		}
@@ -283,10 +282,10 @@ public class SearchServiceImpl implements SearchService{
                 continue;
             }
             
-            String filePath = saveUploadedFile(file);
+            String filePath = PDFUtils.saveUploadedFile(file, PDFUtils.LIBRARY_DIR_PATH);
             if(filePath != null){
             	PDFHandler pdfHandler = new PDFHandler();
-            	String tekst = pdfHandler.getText(getResourceFilePath(filePath));
+            	String tekst = pdfHandler.getText(PDFUtils.getResourceFilePath(filePath));
             	
             	List<NaucnaOblastInfo> naucneOblasti = new ArrayList<NaucnaOblastInfo>();
             	List<RecenzentInfo> recenzentiInfo = new ArrayList<RecenzentInfo>();
@@ -307,46 +306,27 @@ public class SearchServiceImpl implements SearchService{
             	
             	RevizijaRada revizija = new RevizijaRada(null, 
             			paperInfo.getNaslov(), 
-            			paperInfo.getKoautori(), 
+            			new ArrayList<Koautor>(), 
             			paperInfo.getApstrakt(),
             			paperInfo.getKljucne(), 
             			filePath, 
             			true, true, true, 
             			autorRepository.findById(autor.getId()).get(), 
             			casopis, 
-            			new HashSet<NaucnaOblast>(paperInfo.getNaucneOblasti()), 
+            			paperInfo.getNaucneOblasti().get(0),
             			new HashSet<Recenzent>(recenzenti), null);
             	
             	
             	revizija = revizijaRadaRepository.save(revizija);
             	
-            	Set<NaucnaOblast> naucneOblasti1 = new HashSet<NaucnaOblast>();
-            	naucneOblasti1.addAll(revizija.getNaucneOblasti());
-            	
             	NaucniRad naucniRad = new NaucniRad(revizija, null, "");
-            	naucniRad.setNaucneOblasti(naucneOblasti1);
+            	naucniRad.setNaucnaOblast(revizija.getNaucnaOblast());
             	naucniRad = naucniRadRepository.save(naucniRad);
             	
-            	IndexUnit newPaper = new IndexUnit(naucniRad.getId().toString(), paperInfo, tekst, autor, casopis, recenzentiInfo, naucneOblasti);
+            	IndexUnit newPaper = new IndexUnit(naucniRad.getId().toString(), paperInfo, tekst, autor, casopis, recenzentiInfo, naucneOblasti.get(0));
             	indexUnitRepository.index(newPaper);
             }
     	}
     }
-	
-	private String saveUploadedFile(MultipartFile file) throws IOException {
-	   	String retVal = null;
-        if (! file.isEmpty()) {
-	           byte[] bytes = file.getBytes();
-	           Path path = Paths.get(getResourceFilePath(LIBRARY_DIR_PATH).getAbsolutePath() + File.separator + file.getOriginalFilename());
-	           Files.write(path, bytes);
-	           retVal = path.toString();
-        }
-        return retVal;
-    }
-	
-	private File getResourceFilePath(String path) {
-		
-	    return new File(path);
-	}
 	
 }
