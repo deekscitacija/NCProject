@@ -151,6 +151,10 @@ body {
     border: .2em solid #c2dd67;
 }
 
+.row-hilighted{
+    background: #ffec3d;
+}
+
 .right-items{
     float:right;
 }

@@ -87,6 +87,7 @@ export class SearchPanelComponent implements OnInit {
         this.advancedSearchParams = result.params;
         this.isAllFields = false;
         this.searchInput = "";
+        this.pageNum = 1;
         this.executeSearch();
       }
     })

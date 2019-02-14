@@ -39,12 +39,17 @@
         </div>
 
         <div class="form-group row">
-            <div class="col-md-10 mx-auto">
-              <textarea class="form-control" rows="2" id="koautori" name="koautori" placeholder="Koautori..." [(ngModel)]="paperForm.koautori" maxlength="1024" #koautori="ngModel"></textarea>
-              <div *ngIf="koautori.invalid && (koautori.dirty || koautori.touched)">              
-                <span class = "error-message" *ngIf="koautori.errors.maxlength">Polje koautori je previse dugacko</span>
-              </div>
-            </div>
+          <div class="col-md-10 mx-auto">
+            <button type="button" class="btn yellow-button btn-md" (click)="dodajKoautora()">Dodaj koautora</button>
+          </div>
+          
+          <div class="col-md-10 row mx-auto gap-top-sm" *ngFor="let koautor of paperForm.koautori; let idx = index">
+              <input type="text" class="col-md-2 form-control" [(ngModel)]="koautor.ime" placeholder="Ime..." name="{{'koautorIme'+idx}}"/>
+              <input type="text" class="col-md-2 form-control gap-left-xxs" [(ngModel)]="koautor.prezime" placeholder="Prezime..." name="{{'koautorPrz'+idx}}"/>
+              <input type="text" class="col-md-3 form-control gap-left-xxs" [(ngModel)]="koautor.adresa" placeholder="Adresa..." name="{{'koautorAdr'+idx}}"/>
+              <input type="text" class="col-md-3 form-control gap-left-xxs" [(ngModel)]="koautor.email" placeholder="Email..." name="{{'koautorEmail'+idx}}"/>
+              <button class="btn btn-danger btn-circle-md gap-left-xxs" (click)="removeKoautor(idx)"><i class="fas fa-minus"></i></button>
+          </div>
         </div>
 
         <div class="form-group row">
@@ -60,28 +65,11 @@
             <div class="mx-auto col-lg-10">
                 <label><b>Izaberite naucne oblasti:</b></label>
                 <div class="scroll form-control">
-                    <div *ngFor="let naucnaOblast of naucneOblasti">
-                      <div class="row">
-                          <input type="checkbox" class="col-lg-2 gap-top-xxs" (change)="bindNaucnaOblast(naucnaOblast)" [checked]="containsElement('N', naucnaOblast)!=-1" />
-                          <p class="col-lg-10">{{naucnaOblast.naziv}}</p>
-                      </div> 
+                    <div *ngFor="let naucnaOblast of naucneOblasti; let idx = index;" [ngClass]="{'row-hilighted': paperForm.naucnaOblast.id === naucnaOblast.id}" (click)="selektujNO(idx)">
+                      <p class="col-lg-10">{{naucnaOblast.naziv}}, {{naucnaOblast.kod}}</p>
                   </div>
                 </div>
             </div>
-        </div>
-
-        <div class="form-group row">
-          <div class="mx-auto col-lg-10">
-              <label><b>Izaberite recenzante:</b></label>
-              <div class="scroll form-control">
-                  <div *ngFor="let recenzent of recenzenti">
-                    <div class="row">
-                        <input type="checkbox" class="col-lg-2 gap-top-xxs" (change)="bindRecenzent(recenzent)" [checked]="containsElement('R', recenzent)!=-1" />
-                        <p class="col-lg-10">{{recenzent.ime}} {{recenzent.prezime}}</p>
-                    </div> 
-                </div>
-              </div>
-          </div>
         </div>
 
         <div class="form-group row">

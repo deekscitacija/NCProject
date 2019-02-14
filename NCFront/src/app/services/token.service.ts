@@ -10,7 +10,9 @@ export class TokenService {
   public headerSetup(): HttpHeaders{
 
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
-    headers = headers.set('token', localStorage.getItem('token'));
+    if(localStorage.getItem('token')){
+      headers = headers.set('token', localStorage.getItem('token'));
+    }
     return headers;
   }
 

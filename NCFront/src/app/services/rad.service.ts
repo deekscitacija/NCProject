@@ -23,6 +23,11 @@ export class RadService {
 
     return this.http.get("/app/download", {params : params, responseType: 'blob'});
   }
+
+  public posaljiRad(val: any, options: any){
+
+    return this.http.post("/app/posaljiRad", val, options);
+  }
   
 
 }

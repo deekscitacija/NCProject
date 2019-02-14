@@ -15,6 +15,7 @@ import { TokenService } from './services/token.service';
 import { RadService } from './services/rad.service';
 import { TransakcijaService } from './services/transakcija.service';
 import { PaymentService } from './services/payment.service';
+import { ProcessEngineService } from './services/process-engine.service';
 
 import { ListToStringPipe } from './pipes/list-to-string.pipe';
 import { YesNoPipe } from './pipes/yes-no.pipe';
@@ -38,6 +39,7 @@ import { TransactionTypePipe } from './pipes/transaction-type.pipe';
 import { SuccessComponent } from './components/success/success.component';
 import { FailComponent } from './components/fail/fail.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { RegisterComponent } from './components/register/register.component';
 
 
 
@@ -64,7 +66,8 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     TransactionTypePipe,
     SuccessComponent,
     FailComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -82,6 +85,10 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
       {
         path : 'naucna-centrala.com',
         component : WelcomeComponent
+      },
+      {
+        path : 'naucna-centrala.com/registracija',
+        component : RegisterComponent
       },
       {
         path : 'naucna-centrala.com/pretraga',
@@ -132,7 +139,8 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     TokenService,
     RadService,
     TransakcijaService,
-    PaymentService
+    PaymentService,
+    ProcessEngineService
   ],
   entryComponents: [SearchDialogComponent],
   bootstrap: [AppComponent]

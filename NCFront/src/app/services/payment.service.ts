@@ -11,7 +11,7 @@ export class PaymentService {
   kupiIzdanje(izdanjeId: number){
 
     var params = new HttpParams();
-    params = params.append('izdanjeId', String(izdanjeId));
+    params.append('izdanjeId', String(izdanjeId));
 
     return this.http.get("/app/kupiIzdanje", {params : params, headers : this.tokenService.headerSetup(), observe: 'response'});
   }

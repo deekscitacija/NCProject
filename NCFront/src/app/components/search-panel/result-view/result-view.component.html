@@ -6,7 +6,7 @@
       <label class="col-lg-5 right-items">Autor: {{theResult.autor}}</label> 
       <br/>
       <div class="row">
-        <p class="col-lg-9">{{theResult.naucneOblasti | listToString}}</p>
+        <p class="col-lg-9">{{theResult.naucnaOblast.naziv}}</p>
         <div align="center" class="col-lg-2">
           <button class="btn btn-light btn-sm moreLikeThis" (click)="moreLikeThis(theResult.id)">Slicno?</button>
         </div>

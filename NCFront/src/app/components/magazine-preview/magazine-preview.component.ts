@@ -4,6 +4,7 @@ import { CasopisService } from '../../services/casopis.service';
 import { RadService } from '../../services/rad.service';
 import { TokenService } from '../../services/token.service';
 import { PaymentService } from '../../services/payment.service';
+import { ProcessEngineService } from '../../services/process-engine.service';
 
 @Component({
   selector: 'app-magazine-preview',
@@ -19,7 +20,7 @@ export class MagazinePreviewComponent implements OnInit {
   private isLast: boolean = false;
 
   constructor(private casopisService: CasopisService, private radService: RadService, private tokenService: TokenService, 
-    private router: Router, private route: ActivatedRoute, private paymentService: PaymentService) { }
+    private router: Router, private route: ActivatedRoute, private paymentService: PaymentService, private processEngineService: ProcessEngineService) { }
 
   ngOnInit() {
 
@@ -56,10 +57,17 @@ export class MagazinePreviewComponent implements OnInit {
 
   objaviRad = function(){
     var queryParams: Params = {};
-  
     queryParams['casopis'] = this.casopis.id;
-      
-    this.router.navigate(['naucna-centrala.com/novi-rad'], {queryParams : queryParams});
+    
+    this.processEngineService.pokreniObjavu(this.casopis.id).subscribe(
+      (res: any) => {
+        queryParams['processId'] = res.id;
+        this.router.navigate(['naucna-centrala.com/novi-rad'], {queryParams : queryParams});
+      },
+      (error: any) => {
+        alert('Greska!')
+      }
+    );
   }
 
   getIzdanja = function(){

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import { SearchService } from '../../services/search.service';
+import { RadService } from '../../services/rad.service';
 import { CasopisService } from '../../services/casopis.service';
 import { TokenService } from '../../services/token.service';
 
@@ -11,13 +11,12 @@ import { TokenService } from '../../services/token.service';
 })
 export class NewPaperComponent implements OnInit {
 
-  private paperForm: any = {naslov : "", apstrakt : "", kljucne : "", koautori : "", fajlovi : null, naucneOblasti : [], recenzenti : []};
+  private paperForm: any = {naslov : "", apstrakt : "", kljucne : "", koautori : [{ime: "", prezime: "", adresa: "", email: ""}], fajlovi : null, naucnaOblast : {id: -1, kod: "", naziv: ""}};
   private casopisId: number;
+  private processId: string;
   private naucneOblasti: any[] = [];
-  private recenzenti: any[] = [];
 
-
-  constructor(private searchService: SearchService, private router: Router, private route: ActivatedRoute, 
+  constructor(private radService: RadService, private router: Router, private route: ActivatedRoute, 
     private tokenService: TokenService, private casopisService : CasopisService) { }
 
   ngOnInit() {
@@ -28,20 +27,12 @@ export class NewPaperComponent implements OnInit {
 
     this.route.queryParamMap.subscribe((queryParams)=>{
       this.casopisId = +queryParams.get("casopis");
+      this.processId = queryParams.get("processId");
     });
 
-    this.casopisService.getNaucneOblasti().subscribe(
+    this.casopisService.getNaucneOblastiCasopis(this.casopisId).subscribe(
       (res: any) => {
         this.naucneOblasti = res;
-      },
-      (error: any) => {
-        alert('Greska')
-      }
-    );
-
-    this.casopisService.getRecenzenti(this.casopisId).subscribe(
-      (res: any) => {
-        this.recenzenti = res;
       },
       (error: any) => {
         alert('Greska')
@@ -59,94 +50,55 @@ export class NewPaperComponent implements OnInit {
     uploadData.append('naslov', this.paperForm.naslov);
     uploadData.append('apstrakt', this.paperForm.apstrakt);
     uploadData.append('kljucne', this.paperForm.kljucne);
-    uploadData.append('koautori', this.paperForm.koautori);
     uploadData.append('casopisId', this.casopisId);
-    this.stringifyNaucneOblasti(uploadData);
-    this.stringifyRecenzenti(uploadData);
+    this.stringifyKoautori(uploadData);
+    this.stringifyNaucnaOblast(uploadData);
     uploadData.append('fajlovi', this.paperForm.fajlovi, this.paperForm.fajlovi.name);
+    uploadData.append('procesId', this.processId);
     var options = { content: uploadData, headers : this.tokenService.headerSetupMultipart()};
     
     console.log(this.paperForm)
 
-    this.searchService.uploadPaper(uploadData, options).subscribe( 
+    this.radService.posaljiRad(uploadData, options).subscribe( 
       (res: any) => {
-        if(res){
-          this.router.navigate([""]);
-        }
+        console.log(res)
+        this.router.navigate([""]);
       },
       (error: any) =>{
         alert('Greska!')
       }
     );
+    
   
   }
 
-  stringifyNaucneOblasti = function(uploadData: FormData){
+  dodajKoautora = function(){
+    this.paperForm.koautori.push({ime: "", prezime: "", adresa: "", email: ""});
+  }
+
+  removeKoautor = function(idx: number){
+    this.paperForm.koautori.splice(idx, 1);
+  }
+
+  stringifyKoautori = function(uploadData: FormData){
     let idx = 0;
-    for(let naucna of this.paperForm.naucneOblasti){
-      uploadData.append("naucneOblasti["+idx+"].id", naucna.id);
-      uploadData.append("naucneOblasti["+idx+"].kod", naucna.kod);
-      uploadData.append("naucneOblasti["+idx+"].naziv", naucna.naziv);
+    for(let koautor of this.paperForm.koautori){
+      uploadData.append("koautori["+idx+"].ime", koautor.ime);
+      uploadData.append("koautori["+idx+"].prezime", koautor.prezime);
+      uploadData.append("koautori["+idx+"].adresa", koautor.adresa);
+      uploadData.append("koautori["+idx+"].email", koautor.email);
       idx++;
     }
   }
-  
-  stringifyRecenzenti = function(uploadData: FormData){
-    let idx = 0;
-    for(let recenzent of this.paperForm.recenzenti){
-      uploadData.append("recenzenti["+idx+"].email", recenzent.email);
-      uploadData.append("recenzenti["+idx+"].ime", recenzent.ime);
-      uploadData.append("recenzenti["+idx+"].prezime", recenzent.prezime);
-      idx++;
-    }
+
+  stringifyNaucnaOblast = function(uploadData: FormData){
+    uploadData.append("naucnaOblast.id", this.paperForm.naucnaOblast.id);
+    uploadData.append("naucneOblasti.kod", this.paperForm.naucnaOblast.kod);
+    uploadData.append("naucneOblasti.naziv", this.paperForm.naucnaOblast.naziv);
   }
 
-  bindNaucnaOblast = function(val: any){
-    let idx = this.containsElement('N', val);
-    if(idx === -1){
-      this.paperForm.naucneOblasti.push(val);
-      return;
-    }
-
-    this.paperForm.naucneOblasti.splice(idx, 1);
-  }
-
-  bindRecenzent = function(val: any){
-    let idx = this.containsElement('R', val);
-    if(idx === -1){
-      this.paperForm.recenzenti.push(val);
-      return;
-    }
-
-    this.paperForm.recenzenti.splice(idx, 1);
-  }
-
-  containsElement = function(mode: string, item: any) : number{
-    let theList = [];
-    let idx = 0;
-
-    if(mode === 'N'){
-      theList = this.paperForm.naucneOblasti;
-
-      for(let temp of theList){
-        if(temp.id === item.id){
-          return idx;
-        }
-        idx++;
-      }
-
-    }else if(mode === 'R'){
-      theList = this.paperForm.recenzenti;
-
-      for(let temp of theList){
-        if(temp.email === item.email){
-          return idx;
-        }
-      }
-      idx++;
-    }
-      
-    return -1;
+  selektujNO = function(idx: number){
+    this.paperForm.naucnaOblast = this.naucneOblasti[idx];
   }
 
 }
