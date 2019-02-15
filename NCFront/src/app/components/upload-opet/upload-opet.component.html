@@ -1,0 +1,27 @@
+<div class="row gap-top-md">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8 row card blue-bg1">
+        <h4 align="center" class="title-text-md">Objavite novu verziju rada</h4>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8 row info-view">
+      <div class="set-center">
+        <input type="file" accept=".pdf" style="display:none" (change)="onFileChanged($event)" #fileInput />
+        <button type="button" class="btn yellow-button btn-md" (click)="fileInput.click()">Izaberite datoteku</button>
+        <label *ngIf="fajlovi"> {{fajlovi.name}}</label>
+        <label *ngIf="!fajlovi"> &lt; vasa_datoteka.pdf &gt;</label>
+      </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8 row info-view">
+        <div class="form-group row col-md-6 mx-auto button-view">
+          <button class="btn btn-light btn-md btn-block yellow-button" (click)="potvrdi()">Potvrdi</button>
+        </div>
+    </div>
+</div>

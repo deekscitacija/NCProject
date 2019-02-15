@@ -23,4 +23,17 @@ export class ProcessEngineService {
     return this.http.get("/app/pokreniObjavu", {params : params, headers : this.tokenService.headerSetup()})
   }
 
+  getTaskList(){
+
+    return this.http.get("/app/getTaskForAssignee", {headers : this.tokenService.headerSetup()})
+  }
+
+  getVariableList(processInstanceId: string){
+
+    var params = new HttpParams();
+    params = params.append('processInstanceId', processInstanceId);
+    
+    return this.http.get("/app/getProcessVariables", {params : params})
+  }
+
 }

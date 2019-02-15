@@ -24,10 +24,39 @@ export class RadService {
     return this.http.get("/app/download", {params : params, responseType: 'blob'});
   }
 
-  public posaljiRad(val: any, options: any){
+  posaljiRad(val: any, options: any){
 
     return this.http.post("/app/posaljiRad", val, options);
   }
   
+  getRevizija(revizijaId: number){
+
+    var params = new HttpParams();
+    params = params.append('revizijaId', String(revizijaId));
+
+    return this.http.get("/app/getRevizija", {params : params});
+  }
+
+  downloadRevizija(revizijaId: number){
+
+    var params = new HttpParams();
+    params = params.append('revizijaId', String(revizijaId));
+
+    return this.http.get("/app/downloadRevizija", {params : params, responseType: 'blob'});
+  }
+
+  inicijalniOdgovorRevizija(revizija: any, processId: string, taskId: string){
+
+    var params = new HttpParams();
+    params = params.append('processId', String(processId));
+    params = params.append('taskId', String(taskId));
+
+    return this.http.post("/app/inicijalniOdgovorRevizija", revizija, {params : params});
+  }
+
+  uploadPonovo(val: any, options: any){
+
+    return this.http.post("/app/uploadPonovo", val, options);
+  }
 
 }

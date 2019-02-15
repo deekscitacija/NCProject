@@ -34,8 +34,9 @@
         <ul class="nav nav-pills div-margin-sm" id="pills-tab" role="tablist">
           <li class="nav-item"><a class="nav-link active" id="tab1" data-toggle="pill" href="#transakcije" role="tab" aria-controls="tab1aria" aria-selected="true">Moje transakcije</a></li>
           <li class="nav-item"><a class="nav-link" id="tab2" data-toggle="pill" href="#casopisi" role="tab" aria-controls="tab2aria" aria-selected="false">Pretplate</a></li>
-          <li class="nav-item" *ngIf="regUser.tip[0].kod === 'RK'"><a class="nav-link" id="tab3" data-toggle="pill" href="#izdanja" role="tab" aria-controls="tab3aria" aria-selected="false">Izdanja</a></li>
+          <li class="nav-item" *ngIf="regUser.tip[0].kod === 'RK' || regUser.tip[0].kod === 'AU'"><a class="nav-link" id="tab3" data-toggle="pill" href="#izdanja" role="tab" aria-controls="tab3aria" aria-selected="false">Izdanja</a></li>
           <li class="nav-item" *ngIf="regUser.tip[0].kod === 'RK'"><a class="nav-link" id="tab4" data-toggle="pill" href="#radovi" role="tab" aria-controls="tab4aria" aria-selected="false">Radovi</a></li>
+          <li class="nav-item"><a class="nav-link" id="tab5" data-toggle="pill" href="#zadaci" role="tab" aria-controls="tab5aria" aria-selected="false">Zadaci</a></li>
         </ul>
       </div>
   
@@ -44,7 +45,7 @@
             <app-transaction-panel [mode]="'A'" ></app-transaction-panel>
           </div>
   
-          <div class="tab-pane" id="casopisi" role="tabpanel" aria-labelledby="tab2aria">
+          <div class="tab-pane" id="casopisi" role="tabpanel" aria-labelledby="tab2aria" *ngIf="regUser.tip[0].kod === 'RK' || regUser.tip[0].kod === 'AU'">
             <app-transaction-panel [mode]="'C'" ></app-transaction-panel>
           </div>
   
@@ -54,6 +55,10 @@
 
           <div class="tab-pane" id="radovi" role="tabpanel" aria-labelledby="tab4aria" *ngIf="regUser.tip[0].kod === 'RK'">
             <app-transaction-panel [mode]="'R'" ></app-transaction-panel>
+          </div>
+
+          <div class="tab-pane" id="zadaci" role="tabpanel" aria-labelledby="tab5aria">
+            <app-task-view></app-task-view>
           </div>
   </div>
 </div>

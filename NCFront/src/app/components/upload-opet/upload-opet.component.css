@@ -1,0 +1,19 @@
+.info-view {
+    background: #f3f6f7;
+}
+
+label, p {
+    color: #3c425c;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.set-center{
+    margin-top: 10%;
+    margin-left: 27%;
+    margin-bottom: 2%;
+}
+
+.button-view{
+    margin-top: 10%;
+}

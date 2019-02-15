@@ -3,6 +3,7 @@ import { ActivatedRoute, Router, Params } from '@angular/router';
 import { RadService } from '../../services/rad.service';
 import { CasopisService } from '../../services/casopis.service';
 import { TokenService } from '../../services/token.service';
+import { SocketService } from '../../services/socket.service';
 
 @Component({
   selector: 'app-new-paper',
@@ -17,7 +18,7 @@ export class NewPaperComponent implements OnInit {
   private naucneOblasti: any[] = [];
 
   constructor(private radService: RadService, private router: Router, private route: ActivatedRoute, 
-    private tokenService: TokenService, private casopisService : CasopisService) { }
+    private tokenService: TokenService, private casopisService : CasopisService, private socketService : SocketService) { }
 
   ngOnInit() {
 
@@ -38,6 +39,8 @@ export class NewPaperComponent implements OnInit {
         alert('Greska')
       }
     );
+
+    //this.socketService.initSocket();
 
   }
 

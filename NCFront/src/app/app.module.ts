@@ -16,6 +16,7 @@ import { RadService } from './services/rad.service';
 import { TransakcijaService } from './services/transakcija.service';
 import { PaymentService } from './services/payment.service';
 import { ProcessEngineService } from './services/process-engine.service';
+import { SocketService } from './services/socket.service';
 
 import { ListToStringPipe } from './pipes/list-to-string.pipe';
 import { YesNoPipe } from './pipes/yes-no.pipe';
@@ -40,6 +41,9 @@ import { SuccessComponent } from './components/success/success.component';
 import { FailComponent } from './components/fail/fail.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { RegisterComponent } from './components/register/register.component';
+import { TaskViewComponent } from './components/user-profile/task-view/task-view.component';
+import { PaperInitialApprovalComponent } from './components/paper-initial-approval/paper-initial-approval.component';
+import { UploadOpetComponent } from './components/upload-opet/upload-opet.component';
 
 
 
@@ -67,7 +71,10 @@ import { RegisterComponent } from './components/register/register.component';
     SuccessComponent,
     FailComponent,
     NotFoundComponent,
-    RegisterComponent
+    RegisterComponent,
+    TaskViewComponent,
+    PaperInitialApprovalComponent,
+    UploadOpetComponent
   ],
   imports: [
     BrowserModule,
@@ -111,6 +118,14 @@ import { RegisterComponent } from './components/register/register.component';
         component : NewPaperComponent
       },
       {
+        path : 'naucna-centrala.com/pregledaj-rad',
+        component : PaperInitialApprovalComponent
+      },
+      {
+        path : 'naucna-centrala.com/upload-revizija',
+        component : UploadOpetComponent
+      },
+      {
         path : 'naucna-centrala.com/profil',
         component : UserProfileComponent
       },
@@ -140,7 +155,8 @@ import { RegisterComponent } from './components/register/register.component';
     RadService,
     TransakcijaService,
     PaymentService,
-    ProcessEngineService
+    ProcessEngineService,
+    SocketService
   ],
   entryComponents: [SearchDialogComponent],
   bootstrap: [AppComponent]

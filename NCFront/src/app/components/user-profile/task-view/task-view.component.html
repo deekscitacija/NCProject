@@ -1,0 +1,16 @@
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">rbr</th>
+        <th scope="col">Naziv</th>
+        <th scope="col">Idi na zadatak</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let taskInfo of taskList; let idx = index">
+        <th>{{idx+1}}</th>
+        <th>{{taskInfo.taskName}}</th>
+        <th><button class="btn btn-md btn-link" (click)="idiNaTask(taskInfo)"><b>link</b></button></th>
+      </tr>
+    </tbody>
+  </table>

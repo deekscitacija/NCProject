@@ -187,3 +187,8 @@ body {
     position: relative;
     display:block;
 }
+
+.yellow-button{
+    background-color: #ffec3d;
+    border-color: #ecd929;
+}

@@ -1,0 +1,76 @@
+<div class="row gap-top-md">
+  <div class="col-lg-2"></div>
+  <div class="col-lg-8 row card blue-bg1">
+      <h4 align="center" class="title-text-md">Pregled recenzije</h4>
+  </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8 row info-view">
+      <div class="col-lg-9">
+        <div class="form-group row col-md-10 gap-top-sm mx-auto">
+          <label>Autor: {{revizijaInfo.autor}}</label>
+        </div>
+
+        <div class="form-group row col-md-10 mx-auto">
+          <label>Naslov: {{revizijaInfo.naslov}}</label>
+        </div>
+        
+        <div class="form-group row col-md-10 mx-auto">
+          <label>Casopis: {{revizijaInfo.casopis}}, [{{revizijaInfo.casopisISSN}}]</label>
+        </div>
+
+        <div class="form-group row col-md-10 mx-auto">
+          <label>Naucna oblast: {{revizijaInfo.naucnaOblast}}, [{{revizijaInfo.naucnaOblastKod}}]</label>
+        </div>
+      </div>
+      <div class="col-lg-3">
+          <div class="download-button">
+              <button class="btn btn-default orange-circle-button" (click)="download()" ><i class="fas fa-file-download fa-3x"></i></button>
+          </div>
+      </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8 row info-view">
+        <div class="form-group row col-md-10 mx-auto">
+          <p>Apstrakt: {{revizijaInfo.apstrakt}}</p>
+        </div>
+    
+        <div class="form-group row col-md-10 mx-auto">
+          <p>Kljucne reci: {{revizijaInfo.kljucneReci}}</p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8 row info-view">
+        <div class="form-group row col-md-10 mx-auto">
+            <div class="checkbox gap-left">
+                <label style="font-size: 1.5em">
+                    <input type="checkbox" [(ngModel)]="revizijaInfo.temaOk" />Tematski prihvatljiv?
+                    <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                </label>
+            </div>
+            <div class="checkbox gap-left">
+              <label style="font-size: 1.5em">
+                  <input type="checkbox" [(ngModel)]="revizijaInfo.formatOk" />Dobro formatiran?
+                  <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+              </label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8 row info-view">
+        <div class="form-group row col-md-10 mx-auto">
+          <button class="logregBtn btn btn-light btn-md btn-block yellow-button" (click)="potvrdi()">Potvrdi</button>
+        </div>
+    </div>
+</div>

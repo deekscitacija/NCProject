@@ -69,7 +69,7 @@ export class AppComponent {
   odjava = function(){
     localStorage.removeItem('token');
     this.korisnik = null;
-    location.reload();
+    this.router.navigate([""]);
   }
 
   profil = function(){
