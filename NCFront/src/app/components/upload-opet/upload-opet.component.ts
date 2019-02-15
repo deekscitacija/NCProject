@@ -14,6 +14,7 @@ export class UploadOpetComponent implements OnInit {
   private revizijaId: number;
   private taskId: string;
   private processId: string;
+  private revizijaInfo: any = {komentar: ""}
 
   constructor(private radService: RadService, private router: Router, private route: ActivatedRoute, 
     private tokenService: TokenService) { }
@@ -24,12 +25,24 @@ export class UploadOpetComponent implements OnInit {
       this.revizijaId = +queryParams.get("revizijaId");
       this.processId = queryParams.get("processId");
       this.taskId = queryParams.get("taskId");
+      this.getRevizija();
     });
 
   }
 
   onFileChanged = function(event: any) {
     this.fajlovi = event.target.files[0];
+  }
+
+  getRevizija(){
+    this.radService.getRevizija(this.revizijaId).subscribe(
+      (res: any) => {
+        this.revizijaInfo = res;
+      },
+      (error: any) => {
+        alert('Greska!');
+      }
+    );
   }
 
   potvrdi(){
@@ -46,7 +59,8 @@ export class UploadOpetComponent implements OnInit {
         this.router.navigate([""]);
       },
       (error: any) => {
-        alert('Greska!');
+        alert('Vreme za formatiranje vaseg rada je isteklo.');
+        this.router.navigate([""]);
       }
     );
 

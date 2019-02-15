@@ -51,7 +51,7 @@ export class RadService {
     params = params.append('processId', String(processId));
     params = params.append('taskId', String(taskId));
 
-    return this.http.post("/app/inicijalniOdgovorRevizija", revizija, {params : params});
+    return this.http.post("/app/inicijalniOdgovorRevizija", revizija, {params : params, headers : this.tokenService.headerSetup()});
   }
 
   uploadPonovo(val: any, options: any){
