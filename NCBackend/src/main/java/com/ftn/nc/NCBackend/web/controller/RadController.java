@@ -18,14 +18,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ftn.nc.NCBackend.camunda.dto.RevizijaDTO;
 import com.ftn.nc.NCBackend.web.dto.IzdanjeDTO;
 import com.ftn.nc.NCBackend.web.dto.RadDTO;
 import com.ftn.nc.NCBackend.web.model.Izdanje;
 import com.ftn.nc.NCBackend.web.model.Korisnik;
 import com.ftn.nc.NCBackend.web.model.NaucniRad;
+import com.ftn.nc.NCBackend.web.model.RevizijaRada;
 import com.ftn.nc.NCBackend.web.service.IzdanjeService;
 import com.ftn.nc.NCBackend.web.service.KorisnikService;
 import com.ftn.nc.NCBackend.web.service.NaucniRadService;
+import com.ftn.nc.NCBackend.web.service.RevizijaService;
 
 @RestController
 @RequestMapping(value = "/app/")
@@ -39,6 +42,9 @@ public class RadController {
 	
 	@Autowired
 	private IzdanjeService izdanjeService;
+	
+	@Autowired
+	private RevizijaService revizijaService;
 	
 	
 	@RequestMapping(value = "download", method = RequestMethod.GET, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
@@ -68,8 +74,35 @@ public class RadController {
 		return new ResponseEntity<byte[]>(content, headers, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value = "downloadRevizija", method = RequestMethod.GET, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	public ResponseEntity<byte[]> downloadRevizija(@RequestParam (value = "revizijaId", required = true) Long revizijaId, HttpServletResponse response){
+		
+		RevizijaRada revizija = revizijaService.getById(revizijaId);
+		
+		if(revizija == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		HttpHeaders headers = new HttpHeaders();
+	    headers.setContentType(MediaType.APPLICATION_PDF);
+		
+		byte[] content;
+		
+		try {
+			File paperPdf = new File(revizija.getPutanja());
+			content = Files.readAllBytes(paperPdf.toPath());
+			headers.setContentDispositionFormData(paperPdf.getName(), paperPdf.getName());
+		    headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+		} catch (IOException e) {
+			
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return new ResponseEntity<byte[]>(content, headers, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value = "getIzdanje", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<IzdanjeDTO> getMagazine(@RequestParam(value = "izdanjeId", required = true) int izdanjeId){
+	public ResponseEntity<IzdanjeDTO> getIzdanje(@RequestParam(value = "izdanjeId", required = true) int izdanjeId){
 		
 		if(izdanjeId < 0) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -92,4 +125,18 @@ public class RadController {
 	}
 	
 
+	@RequestMapping(value = "getRevizija", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<RevizijaDTO> getMagazine(@RequestParam(value = "revizijaId", required = true) Long revizijaId){
+		
+		RevizijaRada revizija = revizijaService.getById(revizijaId);
+		
+		if(revizija == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		Korisnik autor = korisnikService.getById(revizija.getAutor().getId());
+		
+		return new ResponseEntity<RevizijaDTO>(new RevizijaDTO(revizija, autor), HttpStatus.OK);
+	}
+	
 }

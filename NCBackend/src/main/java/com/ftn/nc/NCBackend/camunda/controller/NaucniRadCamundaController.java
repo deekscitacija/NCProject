@@ -7,17 +7,22 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ftn.nc.NCBackend.camunda.dto.FileUploadDTO;
+import com.ftn.nc.NCBackend.camunda.dto.RevizijaDTO;
 import com.ftn.nc.NCBackend.camunda.service.CommonCamundaService;
 import com.ftn.nc.NCBackend.helpClasses.PDFUtils;
 import com.ftn.nc.NCBackend.security.TokenUtils;
@@ -115,6 +120,11 @@ public class NaucniRadCamundaController {
             	autor, casopis, newPaper.getNaucnaOblast(), null, null);
             
             revizija = revizijaService.save(revizija);
+            try {
+				commonCamundaService.setProcessVariable(newPaper.getProcesId(), "revizijaId", revizija.getId().toString(), "string");
+			} catch (JSONException e) {
+				System.out.println("*** Puklo setovanje REVIZIJA varijable! ***");
+			}
             break;
 		}
 		
@@ -132,6 +142,64 @@ public class NaucniRadCamundaController {
 		
 	}
 	
+	@RequestMapping(value = "inicijalniOdgovorRevizija", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces =  MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> inicijalniOdgovorRevizija(@RequestParam (required = true, value = "processId") String processId,
+													   @RequestParam (required = true, value = "taskId") String taskId,
+													   @RequestBody RevizijaDTO revizijaInfo){
+		
+		RevizijaRada revizija = revizijaService.getById(revizijaInfo.getId());
+		
+		if(revizija == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		revizija.setTemaOk(revizijaInfo.isTemaOk());
+		revizija.setFormatOk(revizijaInfo.isFormatOk());
+		
+		revizijaService.save(revizija);
+		
+		try {
+			commonCamundaService.setProcessVariable(processId, "tematskiPrihvatljiv", revizijaInfo.isTemaOk() ? "true" : "false", "boolean");
+			commonCamundaService.setProcessVariable(processId, "dobroFormatiran", revizijaInfo.isFormatOk() ? "true" : "false", "boolean");
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return commonCamundaService.compliteTaskNoForm(taskId);
+	}
 	
+	@RequestMapping(value = "uploadPonovo", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> uploadPonovo(@ModelAttribute FileUploadDTO uploadInfo){
+		
+		RevizijaRada revizija = revizijaService.getById(uploadInfo.getRevizijaId());
+		
+		if(revizija == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		for (MultipartFile file : uploadInfo.getFajlovi()) {
 
+			if (file.isEmpty()) {
+                continue;
+            }
+            
+            String putanja = "";
+			try {
+				putanja = PDFUtils.saveUploadedFile(file, PDFUtils.REPO_DIR_PATH);
+			} catch (IOException e) {
+				System.out.println("*** Puklo cuvanje fajle! ***");
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+            		
+			revizija.setPutanja(putanja);
+            revizija = revizijaService.save(revizija);
+            
+            commonCamundaService.compliteTaskNoForm(uploadInfo.getTaskId());
+            break;
+		}
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
 }

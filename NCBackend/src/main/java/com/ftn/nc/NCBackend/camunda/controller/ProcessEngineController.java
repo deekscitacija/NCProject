@@ -6,12 +6,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.camunda.bpm.engine.IdentityService;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +31,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.ftn.nc.NCBackend.camunda.dto.FormFieldDTO;
+import com.ftn.nc.NCBackend.camunda.dto.FormFieldsDTO;
+import com.ftn.nc.NCBackend.camunda.dto.RegistracijaDTO;
+import com.ftn.nc.NCBackend.camunda.dto.TaskDTO;
+import com.ftn.nc.NCBackend.camunda.dto.VariablesDTO;
+import com.ftn.nc.NCBackend.camunda.service.CommonCamundaService;
 import com.ftn.nc.NCBackend.security.TokenUtils;
 import com.ftn.nc.NCBackend.web.dto.FileMessageResourceDTO;
-import com.ftn.nc.NCBackend.web.dto.FormFieldDTO;
-import com.ftn.nc.NCBackend.web.dto.FormFieldsDTO;
-import com.ftn.nc.NCBackend.web.dto.RegistracijaDTO;
 import com.ftn.nc.NCBackend.web.model.Casopis;
 import com.ftn.nc.NCBackend.web.model.Korisnik;
 import com.ftn.nc.NCBackend.web.service.CasopisService;
@@ -56,9 +59,9 @@ public class ProcessEngineController {
 
 	@Autowired
 	private TokenUtils tokenUtils;
-
+	
 	@Autowired
-	private IdentityService identityService;
+	private CommonCamundaService commonCamundaService;
 
 	@RequestMapping(value = "deploySve", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> deploySve() {
@@ -226,6 +229,25 @@ public class ProcessEngineController {
 				String.class);
 
 		return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "getTaskForAssignee", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<TaskDTO>> getTasksForAssignee(HttpServletRequest request){
+		
+		Korisnik korisnik = korisnikService.getUserFromToken(request, tokenUtils);
+		
+		if(korisnik == null) {
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
+		
+		return commonCamundaService.getTasksByAssignee(korisnik.getId().toString());
+	}
+	
+	@RequestMapping(value = "getProcessVariables", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<VariablesDTO> getProcessVariables(@RequestParam(value = "processInstanceId", required = true) String processInstanceId){
+		
+		
+		return commonCamundaService.getVariablesForProcess(processInstanceId);
 	}
 
 	private JSONObject buildObject(String newValue) throws JSONException {

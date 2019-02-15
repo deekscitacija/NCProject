@@ -285,7 +285,7 @@ public class StartData {
 		
 		// *** Korisnici *** //
 		
-		Korisnik k1 = new Korisnik(null, "korisnik1@email.com", passwordEncoder.encode("lozinka1"), "Pera", "Peric", gr1, setAU, null, null, null, null);
+		Korisnik k1 = new Korisnik(null, "marijajoksimovic@hotmail.com", passwordEncoder.encode("lozinka1"), "Pera", "Peric", gr1, setAU, null, null, null, null);
 		Korisnik k2 = new Korisnik(null, "korisnik2@email.com", passwordEncoder.encode("lozinka2"), "Zika", "Zikic", gr2, setRK, null, null, null, null);
 		Korisnik k3 = new Korisnik(null, "korisnik3@email.com", passwordEncoder.encode("lozinka3"), "Sima", "Simic", gr3, setRE, null, null, null, null);
 		Korisnik k4 = new Korisnik(null, "korisnik4@email.com", passwordEncoder.encode("lozinka4"), "Mika", "Mikic", gr4, setUR, null, null, null, null);
@@ -302,7 +302,7 @@ public class StartData {
 		Korisnik k13 = new Korisnik(null, "korisnik13@email.com", passwordEncoder.encode("lozinka13"), "Lazar", "Lazarevic", gr6, setAU, null, null, null, null);
 		
 		// *** Urednici *** //
-		Korisnik k14 = new Korisnik(null, "korisnik14@email.com", passwordEncoder.encode("lozinka14"), "Sara", "Lazarevic", gr3, setUR, null, null, null, null);
+		Korisnik k14 = new Korisnik(null, "isaprojmmi2017@gmail.com", passwordEncoder.encode("lozinka14"), "Sara", "Lazarevic", gr3, setUR, null, null, null, null);
 		Korisnik k15 = new Korisnik(null, "korisnik15@email.com", passwordEncoder.encode("lozinka15"), "Luka", "Savic", gr4, setUR, null, null, null, null);
 		Korisnik k16 = new Korisnik(null, "korisnik16@email.com", passwordEncoder.encode("lozinka16"), "Marko", "Lazarevic", gr6, setUR, null, null, null, null);
 		Korisnik k17 = new Korisnik(null, "korisnik17@email.com", passwordEncoder.encode("lozinka17"), "Sara", "Savic", gr5, setUR, null, null, null, null);

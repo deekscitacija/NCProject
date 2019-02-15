@@ -40,7 +40,7 @@
     <bpmn:sequenceFlow id="SequenceFlow_00sr1p4" sourceRef="Task_1sim2cy" targetRef="ExclusiveGateway_11e80pq" />
     <bpmn:sequenceFlow id="SequenceFlow_10o9r19" name="Korisnik nije registrovan" sourceRef="ExclusiveGateway_0es1apm" targetRef="Task_1sim2cy" />
     <bpmn:endEvent id="EndEvent_1q1dbv6" name="Success">
-      <bpmn:incoming>SequenceFlow_1drvm14</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_0v8xywu</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:callActivity id="CallActivity_106951n" name="Provera i placanje clanarine" calledElement="ClanarinaProcess">
       <bpmn:extensionElements>
@@ -74,21 +74,7 @@
       <bpmn:incoming>SequenceFlow_0q5y81z</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1yfq4pu</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:sequenceFlow id="SequenceFlow_1yfq4pu" sourceRef="UserTask_08mvydr" targetRef="ServiceTask_1yzg97n" />
-    <bpmn:endEvent id="EndEvent_1qddyba">
-      <bpmn:incoming>SequenceFlow_1ltytek</bpmn:incoming>
-      <bpmn:errorEventDefinition id="ErrorEventDefinition_04hygmo" errorRef="Error_0qyoivn" />
-    </bpmn:endEvent>
-    <bpmn:boundaryEvent id="BoundaryEvent_0mhgeha" attachedToRef="ServiceTask_1yzg97n">
-      <bpmn:outgoing>SequenceFlow_1ltytek</bpmn:outgoing>
-      <bpmn:errorEventDefinition id="ErrorEventDefinition_00x9zjg" />
-    </bpmn:boundaryEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_1ltytek" name="Casopis nema glavnog urednika" sourceRef="BoundaryEvent_0mhgeha" targetRef="EndEvent_1qddyba" />
-    <bpmn:sequenceFlow id="SequenceFlow_1drvm14" sourceRef="ServiceTask_1yzg97n" targetRef="EndEvent_1q1dbv6" />
-    <bpmn:sendTask id="ServiceTask_1yzg97n" name="Notifikacija glavnog urednika i autora o prijavi rada" camunda:class="com.ftn.nc.NCBackend.camunda.message.PrijavaNovogRadaMessage">
-      <bpmn:incoming>SequenceFlow_1yfq4pu</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_1drvm14</bpmn:outgoing>
-    </bpmn:sendTask>
+    <bpmn:sequenceFlow id="SequenceFlow_1yfq4pu" sourceRef="UserTask_08mvydr" targetRef="ServiceTask_07s0u6d" />
     <bpmn:sequenceFlow id="SequenceFlow_13ez43y" sourceRef="BoundaryEvent_09hg57o" targetRef="EndEvent_0cnu6e3" />
     <bpmn:endEvent id="EndEvent_0cnu6e3">
       <bpmn:incoming>SequenceFlow_13ez43y</bpmn:incoming>
@@ -100,15 +86,59 @@
         <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT1H</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
+    <bpmn:serviceTask id="ServiceTask_07s0u6d" name="Dodavanje glavnog urednika" camunda:class="com.ftn.nc.NCBackend.camunda.delegate.SelekcijaUrednikaService">
+      <bpmn:incoming>SequenceFlow_1yfq4pu</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1tofc76</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_1tofc76" sourceRef="ServiceTask_07s0u6d" targetRef="CallActivity_1eo1fvg" />
+    <bpmn:boundaryEvent id="BoundaryEvent_0p99pn9" attachedToRef="ServiceTask_07s0u6d">
+      <bpmn:outgoing>SequenceFlow_01tll5k</bpmn:outgoing>
+      <bpmn:errorEventDefinition errorRef="Error_0qhvf0w" />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_01tll5k" sourceRef="BoundaryEvent_0p99pn9" targetRef="EndEvent_0f9m1e9" />
+    <bpmn:endEvent id="EndEvent_0f9m1e9">
+      <bpmn:incoming>SequenceFlow_01tll5k</bpmn:incoming>
+      <bpmn:errorEventDefinition errorRef="Error_0qhvf0w" />
+    </bpmn:endEvent>
+    <bpmn:callActivity id="CallActivity_1eo1fvg" name="Priprema revizije" calledElement="RevizijaPripremaProcess">
+      <bpmn:extensionElements>
+        <camunda:in source="autorRada" target="autorRada" />
+        <camunda:in source="odgovorniUrednik" target="odgovorniUrednik" />
+        <camunda:in source="revizijaId" target="revizijaId" />
+        <camunda:in source="casopis" target="casopis" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1tofc76</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0v8xywu</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:endEvent id="EndEvent_1ywl1m7" name="Greska, &#10;Priprema revizije">
+      <bpmn:incoming>SequenceFlow_0tv4t76</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_0pk4igm</bpmn:incoming>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_0cu3xue" errorRef="Error_0274kha" />
+    </bpmn:endEvent>
+    <bpmn:boundaryEvent id="BoundaryEvent_0xf49nj" attachedToRef="CallActivity_1eo1fvg">
+      <bpmn:outgoing>SequenceFlow_0pk4igm</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_05g2h3l" errorRef="Error_0274kha" />
+    </bpmn:boundaryEvent>
+    <bpmn:boundaryEvent id="BoundaryEvent_19a0644" attachedToRef="CallActivity_1eo1fvg">
+      <bpmn:outgoing>SequenceFlow_0tv4t76</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_1q9hsdy">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT1H</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0tv4t76" sourceRef="BoundaryEvent_19a0644" targetRef="EndEvent_1ywl1m7" />
+    <bpmn:sequenceFlow id="SequenceFlow_0pk4igm" sourceRef="BoundaryEvent_0xf49nj" targetRef="EndEvent_1ywl1m7" />
+    <bpmn:sequenceFlow id="SequenceFlow_0v8xywu" sourceRef="CallActivity_1eo1fvg" targetRef="EndEvent_1q1dbv6" />
   </bpmn:process>
   <bpmn:error id="Error_0qyoivn" name="greska_nema_urednika" errorCode="greska_nema_urednika" />
   <bpmn:error id="Error_08kelz1" name="greska_placanje" errorCode="greska_placanje" />
-  <bpmn:error id="Error_0274kha" name="greska_priprema_revizije" />
+  <bpmn:error id="Error_0274kha" name="greska_priprema_revizije" errorCode="greska_priprema_revizije" />
   <bpmn:error id="Error_0osee59" name="greska_revizija_istekla" errorCode="greska_revizija_istekla" />
   <bpmn:error id="Error_17go5n2" name="greska_dodatna_izmena" errorCode="greska_dodatna_izmena" />
   <bpmn:error id="Error_0ohhg5x" name="greska_nevalidan_autor" errorCode="greska_nevalidan_autor" />
   <bpmn:error id="Error_0c74m8n" name="isteklo_vreme_greska" errorCode="isteklo_vreme_greska" />
   <bpmn:error id="Error_03olbr7" name="isteklo_vreme_greska" errorCode="isteklo_vreme_greska" />
+  <bpmn:error id="Error_0qhvf0w" name="greska_nepostojeci_entitet" errorCode="greska_nepostojeci_entitet" />
+  <bpmn:error id="Error_06sajzp" name="greska_slanje_poruke" errorCode="greska_slanje_poruke" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="ObjavaRadaProcess">
       <bpmndi:BPMNShape id="ExclusiveGateway_11e80pq_di" bpmnElement="ExclusiveGateway_11e80pq" isMarkerVisible="true">
@@ -164,9 +194,9 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="EndEvent_1q1dbv6_di" bpmnElement="EndEvent_1q1dbv6">
-        <dc:Bounds x="1015" y="557" width="36" height="36" />
+        <dc:Bounds x="1215" y="557" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1012" y="600" width="43" height="14" />
+          <dc:Bounds x="1211" y="533" width="43" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="CallActivity_106951n_di" bpmnElement="CallActivity_106951n">
@@ -210,28 +240,8 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1yfq4pu_di" bpmnElement="SequenceFlow_1yfq4pu">
         <di:waypoint x="782" y="575" />
-        <di:waypoint x="831" y="575" />
+        <di:waypoint x="848" y="575" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="EndEvent_1qddyba_di" bpmnElement="EndEvent_1qddyba">
-        <dc:Bounds x="813" y="667" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BoundaryEvent_0mhgeha_di" bpmnElement="BoundaryEvent_0mhgeha">
-        <dc:Bounds x="813" y="597" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_1ltytek_di" bpmnElement="SequenceFlow_1ltytek">
-        <di:waypoint x="831" y="633" />
-        <di:waypoint x="831" y="667" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="789" y="704" width="84" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SequenceFlow_1drvm14_di" bpmnElement="SequenceFlow_1drvm14">
-        <di:waypoint x="931" y="575" />
-        <di:waypoint x="1015" y="575" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="SendTask_1oaflzd_di" bpmnElement="ServiceTask_1yzg97n">
-        <dc:Bounds x="831" y="535" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_13ez43y_di" bpmnElement="SequenceFlow_13ez43y">
         <di:waypoint x="682" y="633" />
         <di:waypoint x="682" y="667" />
@@ -242,6 +252,52 @@
       <bpmndi:BPMNShape id="BoundaryEvent_0qvhfmc_di" bpmnElement="BoundaryEvent_09hg57o">
         <dc:Bounds x="664" y="597" width="36" height="36" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_07s0u6d_di" bpmnElement="ServiceTask_07s0u6d">
+        <dc:Bounds x="848" y="535" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1tofc76_di" bpmnElement="SequenceFlow_1tofc76">
+        <di:waypoint x="948" y="575" />
+        <di:waypoint x="1030" y="575" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BoundaryEvent_1dk5ao8_di" bpmnElement="BoundaryEvent_0p99pn9">
+        <dc:Bounds x="830" y="597" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_01tll5k_di" bpmnElement="SequenceFlow_01tll5k">
+        <di:waypoint x="848" y="633" />
+        <di:waypoint x="848" y="667" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_06mqreh_di" bpmnElement="EndEvent_0f9m1e9">
+        <dc:Bounds x="830" y="667" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CallActivity_1eo1fvg_di" bpmnElement="CallActivity_1eo1fvg">
+        <dc:Bounds x="1030" y="535" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_1ywl1m7_di" bpmnElement="EndEvent_1ywl1m7">
+        <dc:Bounds x="1062" y="675" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1039" y="718" width="82" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_0xf49nj_di" bpmnElement="BoundaryEvent_0xf49nj">
+        <dc:Bounds x="1112" y="597" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_19a0644_di" bpmnElement="BoundaryEvent_19a0644">
+        <dc:Bounds x="1012" y="597" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0tv4t76_di" bpmnElement="SequenceFlow_0tv4t76">
+        <di:waypoint x="1030" y="633" />
+        <di:waypoint x="1030" y="693" />
+        <di:waypoint x="1062" y="693" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0pk4igm_di" bpmnElement="SequenceFlow_0pk4igm">
+        <di:waypoint x="1130" y="633" />
+        <di:waypoint x="1130" y="693" />
+        <di:waypoint x="1098" y="693" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0v8xywu_di" bpmnElement="SequenceFlow_0v8xywu">
+        <di:waypoint x="1130" y="575" />
+        <di:waypoint x="1215" y="575" />
+      </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

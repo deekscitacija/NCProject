@@ -1,4 +1,4 @@
-package com.ftn.nc.NCBackend.web.dto;
+package com.ftn.nc.NCBackend.camunda.dto;
 
 public class FormFieldDTO {
 	

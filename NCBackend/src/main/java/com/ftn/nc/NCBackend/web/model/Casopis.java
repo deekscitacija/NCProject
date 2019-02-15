@@ -42,7 +42,7 @@ public class Casopis {
 	@Column(nullable = true, length = 10, unique = true)
 	private String koncentratorKod;
 	
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	private Urednik urednik;
 	
 	@OneToMany
