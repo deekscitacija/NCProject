@@ -37,15 +37,13 @@ public class RevizijaDTO {
 
 	private String naucnaOblastKod;
 	
-	private Set<Komentar> komentari;
+	private Komentar komentar;
 
 	public RevizijaDTO() {
 		super();
 	}
-	
-	
 
-	public RevizijaDTO(RevizijaRada revizija, Korisnik autor) {
+	public RevizijaDTO(RevizijaRada revizija, Korisnik autor, Komentar komentar) {
 		super();
 		this.id = revizija.getId();
 		this.naslov = revizija.getNaslov();
@@ -60,7 +58,7 @@ public class RevizijaDTO {
 		this.casopisISSN = revizija.getCasopis().getIssn();
 		this.naucnaOblast = revizija.getNaucnaOblast().getNaziv();
 		this.naucnaOblastKod = revizija.getNaucnaOblast().getKod();
-		this.komentari = revizija.getKomentari();
+		this.komentar = komentar;
 	}
 
 
@@ -169,14 +167,13 @@ public class RevizijaDTO {
 		this.naucnaOblastKod = naucnaOblastKod;
 	}
 
-	public Set<Komentar> getKomentari() {
-		return komentari;
+	public Komentar getKomentar() {
+		return komentar;
 	}
 
-	public void setKomentari(Set<Komentar> komentari) {
-		this.komentari = komentari;
+	public void setKomentar(Komentar komentar) {
+		this.komentar = komentar;
 	}
-	
 	
 
 }

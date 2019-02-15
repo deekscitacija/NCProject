@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.ftn.nc.NCBackend.web.enums.KomentarVidljivost;
 
 @Entity
@@ -19,9 +20,11 @@ public class Komentar {
 	private Long id;
 	
 	@ManyToOne(optional = false)
+	@JsonBackReference
 	private Korisnik posiljalac;
 	
 	@ManyToOne(optional = false)
+	@JsonBackReference
 	private Korisnik primalac;
 	
 	@Column(nullable = false, length = 1024)

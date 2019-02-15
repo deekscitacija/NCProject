@@ -27,14 +27,18 @@ import com.ftn.nc.NCBackend.camunda.service.CommonCamundaService;
 import com.ftn.nc.NCBackend.helpClasses.PDFUtils;
 import com.ftn.nc.NCBackend.security.TokenUtils;
 import com.ftn.nc.NCBackend.web.dto.NaucniRadDTO;
+import com.ftn.nc.NCBackend.web.enums.KomentarVidljivost;
 import com.ftn.nc.NCBackend.web.model.Autor;
 import com.ftn.nc.NCBackend.web.model.Casopis;
 import com.ftn.nc.NCBackend.web.model.Koautor;
+import com.ftn.nc.NCBackend.web.model.Komentar;
 import com.ftn.nc.NCBackend.web.model.Korisnik;
 import com.ftn.nc.NCBackend.web.model.RevizijaRada;
+import com.ftn.nc.NCBackend.web.repository.KomentarRepository;
 import com.ftn.nc.NCBackend.web.service.AutorService;
 import com.ftn.nc.NCBackend.web.service.CasopisService;
 import com.ftn.nc.NCBackend.web.service.KoautorService;
+import com.ftn.nc.NCBackend.web.service.KomentarService;
 import com.ftn.nc.NCBackend.web.service.KorisnikService;
 import com.ftn.nc.NCBackend.web.service.RevizijaService;
 
@@ -63,6 +67,9 @@ public class NaucniRadCamundaController {
 	
 	@Autowired
 	private KoautorService koautorService;
+	
+	@Autowired
+	private KomentarService komentarService;
 	
 	@Autowired
 	private CommonCamundaService commonCamundaService;
@@ -145,12 +152,26 @@ public class NaucniRadCamundaController {
 	@RequestMapping(value = "inicijalniOdgovorRevizija", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces =  MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> inicijalniOdgovorRevizija(@RequestParam (required = true, value = "processId") String processId,
 													   @RequestParam (required = true, value = "taskId") String taskId,
-													   @RequestBody RevizijaDTO revizijaInfo){
+													   @RequestBody RevizijaDTO revizijaInfo, HttpServletRequest request){
+		
+		Korisnik urednik = korisnikService.getUserFromToken(request, tokenUtils);
+		
+		if(urednik == null) {
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
 		
 		RevizijaRada revizija = revizijaService.getById(revizijaInfo.getId());
 		
 		if(revizija == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		Korisnik autor = korisnikService.getById(revizija.getAutor().getId());
+		
+		if(revizijaInfo.getKomentar() != null) {
+			Komentar komentar = new Komentar(null, urednik, autor, revizijaInfo.getKomentar().getTekst(), false, KomentarVidljivost.SVI);
+			komentar = komentarService.save(komentar);
+			revizija.getKomentari().add(komentar);
 		}
 		
 		revizija.setTemaOk(revizijaInfo.isTemaOk());

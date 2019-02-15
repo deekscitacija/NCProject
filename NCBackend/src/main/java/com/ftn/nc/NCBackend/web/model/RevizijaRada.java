@@ -62,7 +62,7 @@ public class RevizijaRada {
 	private Set<Recenzent> recenzenti;
 	
 	@OneToMany
-	private Set<Komentar> komentari;
+	private List<Komentar> komentari;
 
 	public RevizijaRada() {
 		super();
@@ -70,7 +70,7 @@ public class RevizijaRada {
 	
 	public RevizijaRada(Long id, String naslov, List<Koautor> koAutori, String apstrakt, String kljucneReci, String putanja,
 			boolean temaOk, boolean formatOk, boolean prihvacen, Autor autor, Casopis casopis,
-			NaucnaOblast naucnaOblast, Set<Recenzent> recenzenti, Set<Komentar> komentari) {
+			NaucnaOblast naucnaOblast, Set<Recenzent> recenzenti, List<Komentar> komentari) {
 		super();
 		this.id = id;
 		this.naslov = naslov;
@@ -168,11 +168,11 @@ public class RevizijaRada {
 		this.recenzenti = recenzenti;
 	}
 
-	public Set<Komentar> getKomentari() {
+	public List<Komentar> getKomentari() {
 		return komentari;
 	}
 
-	public void setKomentari(Set<Komentar> komentari) {
+	public void setKomentari(List<Komentar> komentari) {
 		this.komentari = komentari;
 	}
 

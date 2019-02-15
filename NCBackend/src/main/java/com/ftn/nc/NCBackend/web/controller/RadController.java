@@ -22,6 +22,7 @@ import com.ftn.nc.NCBackend.camunda.dto.RevizijaDTO;
 import com.ftn.nc.NCBackend.web.dto.IzdanjeDTO;
 import com.ftn.nc.NCBackend.web.dto.RadDTO;
 import com.ftn.nc.NCBackend.web.model.Izdanje;
+import com.ftn.nc.NCBackend.web.model.Komentar;
 import com.ftn.nc.NCBackend.web.model.Korisnik;
 import com.ftn.nc.NCBackend.web.model.NaucniRad;
 import com.ftn.nc.NCBackend.web.model.RevizijaRada;
@@ -136,7 +137,14 @@ public class RadController {
 		
 		Korisnik autor = korisnikService.getById(revizija.getAutor().getId());
 		
-		return new ResponseEntity<RevizijaDTO>(new RevizijaDTO(revizija, autor), HttpStatus.OK);
+		Komentar komentar = null;
+		if(revizija.getKomentari() != null) {
+			if(!revizija.getKomentari().isEmpty()) {
+				komentar = revizija.getKomentari().get(0);
+			}
+		}
+		
+		return new ResponseEntity<RevizijaDTO>(new RevizijaDTO(revizija, autor, komentar), HttpStatus.OK);
 	}
 	
 }
