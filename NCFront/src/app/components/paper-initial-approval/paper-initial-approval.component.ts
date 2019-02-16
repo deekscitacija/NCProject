@@ -12,7 +12,7 @@ import { saveAs } from 'file-saver/dist/FileSaver';
 export class PaperInitialApprovalComponent implements OnInit {
 
   private revizijaInfo: any = {naslov: "", koAutori: [], apstrakt: "", kljucneReci: "", temaOk: false, formatOk: false, prihvacen: false, 
-                                autor: "", casopis: "", casopisISSN: "", naucnaOblast: "", naucnaOblastKod: "", komentar: {tekst: ""}}
+                                autor: "", casopis: "", casopisISSN: "", naucnaOblast: "", naucnaOblastKod: "", tekstKomentara: "" }
 
   private revizijaId: number;  
   private processId: string;
@@ -34,7 +34,6 @@ export class PaperInitialApprovalComponent implements OnInit {
   getRevizija(){
     this.radService.getRevizija(this.revizijaId).subscribe(
       (res: any) => {
-        res.komentar = {tekst: ""};
         this.revizijaInfo = res;
         console.log(this.revizijaInfo);
       },
