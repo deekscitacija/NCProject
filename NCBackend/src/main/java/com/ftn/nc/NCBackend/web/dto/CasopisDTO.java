@@ -1,6 +1,7 @@
 package com.ftn.nc.NCBackend.web.dto;
 
 
+import java.util.List;
 import java.util.Set;
 
 import com.ftn.nc.NCBackend.web.model.Casopis;
@@ -13,7 +14,7 @@ public class CasopisDTO {
 	private String issn;
 	private String naziv;
 	private boolean openAccess;
-	private Set<NaucnaOblast> naucneOblasti;
+	private List<NaucnaOblast> naucneOblasti;
 	private Double cenaPretplate;
 	private Double cenaClanarine;
 	private String urednik;
@@ -66,11 +67,11 @@ public class CasopisDTO {
 		this.openAccess = openAccess;
 	}
 
-	public Set<NaucnaOblast> getNaucneOblasti() {
+	public List<NaucnaOblast> getNaucneOblasti() {
 		return naucneOblasti;
 	}
 
-	public void setNaucneOblasti(Set<NaucnaOblast> naucneOblasti) {
+	public void setNaucneOblasti(List<NaucnaOblast> naucneOblasti) {
 		this.naucneOblasti = naucneOblasti;
 	}
 

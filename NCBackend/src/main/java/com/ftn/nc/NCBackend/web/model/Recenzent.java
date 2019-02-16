@@ -1,8 +1,13 @@
 package com.ftn.nc.NCBackend.web.model;
 
+import java.util.List;
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -17,15 +22,19 @@ public class Recenzent {
 	@JoinTable(name="CASOPIS_RECENZENT",
 	    joinColumns=@JoinColumn(name="recenzent_id"),
 	       inverseJoinColumns=@JoinColumn(name="casopis_id"))
-	private Set<Casopis> casopisi;
+	private List<Casopis> casopisi;
+	
+	@ManyToMany
+	private List<NaucnaOblast> naucneOblasti;
 
 	public Recenzent() {
 		super();
 	}
-	
-	public Recenzent(Long id) {
+
+	public Recenzent(Long id, List<NaucnaOblast> naucneOblasti) {
 		super();
 		this.id = id;
+		this.naucneOblasti = naucneOblasti;
 	}
 
 	public Long getId() {
@@ -36,12 +45,21 @@ public class Recenzent {
 		this.id = id;
 	}
 
-	public Set<Casopis> getCasopisi() {
+	public List<Casopis> getCasopisi() {
 		return casopisi;
 	}
 
-	public void setCasopisi(Set<Casopis> casopisi) {
+	public void setCasopisi(List<Casopis> casopisi) {
 		this.casopisi = casopisi;
 	}
+
+	public List<NaucnaOblast> getNaucneOblasti() {
+		return naucneOblasti;
+	}
+
+	public void setNaucneOblasti(List<NaucnaOblast> naucneOblasti) {
+		this.naucneOblasti = naucneOblasti;
+	}
+	
 
 }

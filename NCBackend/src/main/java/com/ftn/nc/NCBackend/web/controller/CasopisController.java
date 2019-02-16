@@ -82,7 +82,7 @@ public class CasopisController {
 	}
 	
 	@RequestMapping(value = "getNaucneOblastiCasopis", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Set<NaucnaOblast>> getNaucneOblastiCasopis(@RequestParam(value = "magazineId", required = true) Long magazineId){
+	public ResponseEntity<List<NaucnaOblast>> getNaucneOblastiCasopis(@RequestParam(value = "magazineId", required = true) Long magazineId){
 		
 		Casopis casopis = casopisService.getById(magazineId);
 		
@@ -90,7 +90,7 @@ public class CasopisController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		return new ResponseEntity<Set<NaucnaOblast>>(casopis.getNaucneOblasti(), HttpStatus.OK);
+		return new ResponseEntity<List<NaucnaOblast>>(casopis.getNaucneOblasti(), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "getRecenzenti", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

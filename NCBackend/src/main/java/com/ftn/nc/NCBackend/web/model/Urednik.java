@@ -1,10 +1,13 @@
 package com.ftn.nc.NCBackend.web.model;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
@@ -18,9 +21,12 @@ public class Urednik {
 	private String titula;
 	
 	@ManyToMany
-	private Set<NaucnaOblast> naucneOblasti;
+	private List<NaucnaOblast> naucneOblasti;
 	
 	@ManyToOne
+	@JoinTable(name="CASOPIS_UREDJIVACKI_ODBOR",
+    joinColumns=@JoinColumn(name="urednik_id"),
+       inverseJoinColumns=@JoinColumn(name="casopis_id"))
 	private Casopis uredjujeCasopis;
 	
 	@ManyToOne
@@ -30,7 +36,7 @@ public class Urednik {
 		super();
 	}
 	
-	public Urednik(Long id, String titula, Set<NaucnaOblast> naucneOblasti, Casopis odgovorniUrednik) {
+	public Urednik(Long id, String titula, List<NaucnaOblast> naucneOblasti, Casopis odgovorniUrednik) {
 		super();
 		this.id = id;
 		this.titula = titula;
@@ -54,11 +60,11 @@ public class Urednik {
 		this.titula = titula;
 	}
 
-	public Set<NaucnaOblast> getNaucneOblasti() {
+	public List<NaucnaOblast> getNaucneOblasti() {
 		return naucneOblasti;
 	}
 
-	public void setNaucneOblasti(Set<NaucnaOblast> naucneOblasti) {
+	public void setNaucneOblasti(List<NaucnaOblast> naucneOblasti) {
 		this.naucneOblasti = naucneOblasti;
 	}
 

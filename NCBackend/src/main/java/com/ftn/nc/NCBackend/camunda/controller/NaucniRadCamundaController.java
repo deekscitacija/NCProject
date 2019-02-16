@@ -150,10 +150,9 @@ public class NaucniRadCamundaController {
 	}
 	
 	@RequestMapping(value = "inicijalniOdgovorRevizija", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces =  MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> inicijalniOdgovorRevizija(@RequestParam (required = true, value = "processId") String processId,
-													   @RequestParam (required = true, value = "taskId") String taskId,
-													   @RequestBody RevizijaDTO revizijaInfo, HttpServletRequest request){
-		
+	public ResponseEntity<?> inicijalniOdgovorRevizija(@RequestBody RevizijaDTO revizijaInfo, HttpServletRequest request,
+													   @RequestParam (required = true, value = "processId") String processId,
+													   @RequestParam (required = true, value = "taskId") String taskId){
 		Korisnik urednik = korisnikService.getUserFromToken(request, tokenUtils);
 		
 		if(urednik == null) {
@@ -168,8 +167,8 @@ public class NaucniRadCamundaController {
 		
 		Korisnik autor = korisnikService.getById(revizija.getAutor().getId());
 		
-		if(revizijaInfo.getKomentar() != null) {
-			Komentar komentar = new Komentar(null, urednik, autor, revizijaInfo.getKomentar().getTekst(), false, KomentarVidljivost.SVI);
+		if(revizijaInfo.getTekstKomentara() != null) {
+			Komentar komentar = new Komentar(null, urednik, autor, revizijaInfo.getTekstKomentara(), false, KomentarVidljivost.SVI);
 			komentar = komentarService.save(komentar);
 			revizija.getKomentari().add(komentar);
 		}

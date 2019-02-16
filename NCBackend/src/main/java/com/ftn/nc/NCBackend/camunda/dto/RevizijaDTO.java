@@ -15,8 +15,6 @@ public class RevizijaDTO {
 	
 	private String naslov;
 	
-	private List<Koautor> koAutori;
-	
 	private String apstrakt;
 	
 	private String kljucneReci;
@@ -37,17 +35,17 @@ public class RevizijaDTO {
 
 	private String naucnaOblastKod;
 	
-	private Komentar komentar;
+	private String tekstKomentara;
+	
 
 	public RevizijaDTO() {
 		super();
 	}
 
-	public RevizijaDTO(RevizijaRada revizija, Korisnik autor, Komentar komentar) {
+	public RevizijaDTO(RevizijaRada revizija, Korisnik autor, String tekstKomentara) {
 		super();
 		this.id = revizija.getId();
 		this.naslov = revizija.getNaslov();
-		this.koAutori = revizija.getKoAutori();
 		this.apstrakt = revizija.getApstrakt();
 		this.kljucneReci = revizija.getKljucneReci();
 		this.temaOk = revizija.isTemaOk();
@@ -58,10 +56,8 @@ public class RevizijaDTO {
 		this.casopisISSN = revizija.getCasopis().getIssn();
 		this.naucnaOblast = revizija.getNaucnaOblast().getNaziv();
 		this.naucnaOblastKod = revizija.getNaucnaOblast().getKod();
-		this.komentar = komentar;
+		this.tekstKomentara = tekstKomentara;
 	}
-
-
 
 	public Long getId() {
 		return id;
@@ -77,14 +73,6 @@ public class RevizijaDTO {
 
 	public void setNaslov(String naslov) {
 		this.naslov = naslov;
-	}
-
-	public List<Koautor> getKoAutori() {
-		return koAutori;
-	}
-
-	public void setKoAutori(List<Koautor> koAutori) {
-		this.koAutori = koAutori;
 	}
 
 	public String getApstrakt() {
@@ -167,13 +155,12 @@ public class RevizijaDTO {
 		this.naucnaOblastKod = naucnaOblastKod;
 	}
 
-	public Komentar getKomentar() {
-		return komentar;
+	public String getTekstKomentara() {
+		return tekstKomentara;
 	}
 
-	public void setKomentar(Komentar komentar) {
-		this.komentar = komentar;
+	public void setTekstKomentara(String tekstKomentara) {
+		this.tekstKomentara = tekstKomentara;
 	}
 	
-
 }

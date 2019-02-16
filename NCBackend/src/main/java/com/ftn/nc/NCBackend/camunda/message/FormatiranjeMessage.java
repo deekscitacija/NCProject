@@ -38,9 +38,9 @@ public class FormatiranjeMessage implements JavaDelegate {
 		Long casopisId = Long.parseLong((String) execution.getVariable("casopis"));
 		Casopis casopis = casopisRepository.findById(casopisId).get();
 
-		String porukaAutor = "";
+		String poruka = "";
 
-		porukaAutor += "<html>"+
+		poruka += "<html>"+
 				  "<body>"+
 				  "<div>\r\n" + 
 				  "<h3>Rad nije dobro formatiran</h3>"+
@@ -51,7 +51,7 @@ public class FormatiranjeMessage implements JavaDelegate {
 				  "</html>";
 		
 		try {
-			MailSenderService.sendEmail(mailSender, environment, "NCMjok, Objava rada, formatiranje", porukaAutor, autor.getEmail());
+			MailSenderService.sendEmail(mailSender, environment, "NCMjok, Objava rada, formatiranje", poruka, autor.getEmail());
 		}catch(Exception e) {
 			System.out.println("* greska_slanje_poruke *");
 		}

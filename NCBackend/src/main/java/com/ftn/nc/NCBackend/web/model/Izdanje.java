@@ -1,6 +1,7 @@
 package com.ftn.nc.NCBackend.web.model;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -40,18 +41,18 @@ public class Izdanje {
 	@Column(nullable = true, length = 10, unique = true)
 	private String koncentratorKod;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
-	private Set<NaucnaOblast> naucneOblasti;
+	@ManyToMany
+	private List<NaucnaOblast> naucneOblasti;
 	
-	@OneToMany(fetch = FetchType.EAGER)
-	private Set<NaucniRad> radovi;
+	@OneToMany
+	private List<NaucniRad> radovi;
 
 	public Izdanje() {
 		super();
 	}
 
 	public Izdanje(Long id, Date objavljen, Casopis casopis, String naslov, Double cenaIzdanja, String koncentratorKod,
-			Set<NaucnaOblast> naucneOblasti, Set<NaucniRad> radovi) {
+			List<NaucnaOblast> naucneOblasti, List<NaucniRad> radovi) {
 		super();
 		this.id = id;
 		this.objavljen = objavljen;
@@ -95,19 +96,19 @@ public class Izdanje {
 		this.casopis = casopis;
 	}
 
-	public Set<NaucnaOblast> getNaucneOblasti() {
+	public List<NaucnaOblast> getNaucneOblasti() {
 		return naucneOblasti;
 	}
 
-	public void setNaucneOblasti(Set<NaucnaOblast> naucneOblasti) {
+	public void setNaucneOblasti(List<NaucnaOblast> naucneOblasti) {
 		this.naucneOblasti = naucneOblasti;
 	}
 
-	public Set<NaucniRad> getRadovi() {
+	public List<NaucniRad> getRadovi() {
 		return radovi;
 	}
 
-	public void setRadovi(Set<NaucniRad> radovi) {
+	public void setRadovi(List<NaucniRad> radovi) {
 		this.radovi = radovi;
 	}
 

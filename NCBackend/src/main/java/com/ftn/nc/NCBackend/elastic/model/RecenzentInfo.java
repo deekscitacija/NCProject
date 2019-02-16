@@ -7,6 +7,8 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 import org.springframework.data.elasticsearch.annotations.GeoPointField;
 import org.springframework.data.elasticsearch.core.geo.GeoPoint;
 
+import com.ftn.nc.NCBackend.web.model.Korisnik;
+
 @Document(indexName = "naucnacentrala", type = "recenzent")
 public class RecenzentInfo {
 	
@@ -37,6 +39,15 @@ public class RecenzentInfo {
 		this.prezime = prezime;
 		this.mesto = mesto;
 		this.lokacija = lokacija;
+	}
+	
+	public RecenzentInfo(Korisnik korisnik) {
+		super();
+		this.id = korisnik.getId().toString();
+		this.ime = korisnik.getIme();
+		this.prezime = korisnik.getPrezime();
+		this.mesto = korisnik.getGrad().getNaziv();
+		this.lokacija = new GeoPoint(korisnik.getGrad().getLat(), korisnik.getGrad().getLon());
 	}
 
 	public String getId() {

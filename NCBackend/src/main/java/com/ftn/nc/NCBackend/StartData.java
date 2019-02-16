@@ -12,7 +12,6 @@ import javax.annotation.PostConstruct;
 import org.camunda.bpm.engine.IdentityService;
 import org.camunda.bpm.engine.identity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.elasticsearch.core.geo.GeoPoint;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -233,27 +232,27 @@ public class StartData {
 		noi5 = naucnaOblastInfoRepository.save(noi5);
 		noi6 = naucnaOblastInfoRepository.save(noi6);
 		
-		Set<NaucnaOblast> naucneOblasti1 = new HashSet<>();
+		List<NaucnaOblast> naucneOblasti1 = new ArrayList<>();
 		naucneOblasti1.add(no1);
 		naucneOblasti1.add(no2);
 		naucneOblasti1.add(no6);
 		
-		Set<NaucnaOblast> naucneOblasti2 = new HashSet<>();
+		List<NaucnaOblast> naucneOblasti2 = new ArrayList<>();
 		naucneOblasti2.add(no2);
 		naucneOblasti2.add(no3);
 		naucneOblasti2.add(no1);
 		naucneOblasti2.add(no5);
 		
-		Set<NaucnaOblast> naucneOblasti3 = new HashSet<>();
+		List<NaucnaOblast> naucneOblasti3 = new ArrayList<>();
 		naucneOblasti3.add(no1);
 		naucneOblasti3.add(no3);
 		naucneOblasti2.add(no4);
 		
-		Set<NaucnaOblast> naucneOblasti4 = new HashSet<>();
+		List<NaucnaOblast> naucneOblasti4 = new ArrayList<>();
 		naucneOblasti4.add(no2);
 		naucneOblasti4.add(no3);
 		
-		Set<NaucnaOblast> naucneOblasti5 = new HashSet<>();
+		List<NaucnaOblast> naucneOblasti5 = new ArrayList<>();
 		naucneOblasti5.add(no1);
 		naucneOblasti5.add(no4);
 		naucneOblasti2.add(no6);
@@ -309,6 +308,30 @@ public class StartData {
 		Korisnik k18 = new Korisnik(null, "korisnik18@email.com", passwordEncoder.encode("lozinka18"), "Zika", "Mikic", gr5, setUR, null, null, null, null);
 		Korisnik k19 = new Korisnik(null, "korisnik19@email.com", passwordEncoder.encode("lozinka19"), "Lazar", "Milicic", gr6, setUR, null, null, null, null);
 		
+		// *** Recenzenti *** //
+		Korisnik k20 = new Korisnik(null, "korisnik20@email.com", passwordEncoder.encode("lozinka20"), "Nikola", "Mikic", gr1, setRE, null, null, null, null);
+		Korisnik k21 = new Korisnik(null, "korisnik21@email.com", passwordEncoder.encode("lozinka21"), "Lazar", "Lukic", gr2, setRE, null, null, null, null);
+		Korisnik k22 = new Korisnik(null, "korisnik22@email.com", passwordEncoder.encode("lozinka22"), "Marko", "Ostojic", gr3, setRE, null, null, null, null);
+		Korisnik k23 = new Korisnik(null, "korisnik23@email.com", passwordEncoder.encode("lozinka23"), "Milenko", "Ivanovic", gr4, setRE, null, null, null, null);
+		Korisnik k24 = new Korisnik(null, "korisnik24@email.com", passwordEncoder.encode("lozinka24"), "Lazar", "Novakovic", gr5, setRE, null, null, null, null);
+		Korisnik k25 = new Korisnik(null, "korisnik25@email.com", passwordEncoder.encode("lozinka25"), "Zorica", "Petrovic", gr6, setRE, null, null, null, null);
+		Korisnik k26 = new Korisnik(null, "korisnik26@email.com", passwordEncoder.encode("lozinka26"), "Rada", "Milicic", gr1, setRE, null, null, null, null);
+		Korisnik k27 = new Korisnik(null, "korisnik27@email.com", passwordEncoder.encode("lozinka27"), "Uros", "Krstic", gr2, setRE, null, null, null, null);
+		Korisnik k28 = new Korisnik(null, "korisnik28@email.com", passwordEncoder.encode("lozinka28"), "Mila", "Peric", gr3, setRE, null, null, null, null);
+		Korisnik k29 = new Korisnik(null, "korisnik29@email.com", passwordEncoder.encode("lozinka29"), "Sima", "Peric", gr4, setRE, null, null, null, null);
+		Korisnik k30 = new Korisnik(null, "korisnik30@email.com", passwordEncoder.encode("lozinka30"), "Rada", "Peric", gr5, setRE, null, null, null, null);
+		
+		// *** Urednici *** //
+		Korisnik k31 = new Korisnik(null, "korisnik31@email.com", passwordEncoder.encode("lozinka31"), "Sima", "Novakovic", gr1, setUR, null, null, null, null);
+		Korisnik k32 = new Korisnik(null, "korisnik32@email.com", passwordEncoder.encode("lozinka32"), "Nikola", "Pavlovic", gr2, setUR, null, null, null, null);
+		Korisnik k33 = new Korisnik(null, "korisnik33@email.com", passwordEncoder.encode("lozinka33"), "Marina", "Jankovic", gr3, setUR, null, null, null, null);
+		Korisnik k34 = new Korisnik(null, "korisnik34@email.com", passwordEncoder.encode("lozinka34"), "Mirna", "Lukic", gr4, setUR, null, null, null, null);
+		Korisnik k35 = new Korisnik(null, "korisnik35@email.com", passwordEncoder.encode("lozinka35"), "Sasa", "Savic", gr5, setUR, null, null, null, null);
+		Korisnik k36 = new Korisnik(null, "korisnik36@email.com", passwordEncoder.encode("lozinka36"), "Vasa", "Novakovic", gr1, setUR, null, null, null, null);
+		Korisnik k37 = new Korisnik(null, "korisnik37@email.com", passwordEncoder.encode("lozinka37"), "Rasa", "Petrovic", gr2, setUR, null, null, null, null);
+		Korisnik k38 = new Korisnik(null, "korisnik38@email.com", passwordEncoder.encode("lozinka38"), "Milos", "Simic", gr3, setUR, null, null, null, null);
+		Korisnik k39 = new Korisnik(null, "korisnik39@email.com", passwordEncoder.encode("lozinka39"), "Luka", "Krstic", gr4, setUR, null, null, null, null);
+		
 		k1 = korisnikRepository.save(k1);
 		k2 = korisnikRepository.save(k2);
 		k3 = korisnikRepository.save(k3);
@@ -328,6 +351,26 @@ public class StartData {
 		k17 = korisnikRepository.save(k17);
 		k18 = korisnikRepository.save(k18);
 		k19 = korisnikRepository.save(k19);
+		k20 = korisnikRepository.save(k20);
+		k21 = korisnikRepository.save(k21);
+		k22 = korisnikRepository.save(k22);
+		k23 = korisnikRepository.save(k23);
+		k24 = korisnikRepository.save(k24);
+		k25 = korisnikRepository.save(k25);
+		k26 = korisnikRepository.save(k26);
+		k27 = korisnikRepository.save(k27);
+		k28 = korisnikRepository.save(k28);
+		k29 = korisnikRepository.save(k29);
+		k30 = korisnikRepository.save(k30);
+		k31 = korisnikRepository.save(k31);
+		k32 = korisnikRepository.save(k32);
+		k33 = korisnikRepository.save(k33);
+		k34 = korisnikRepository.save(k34);
+		k35 = korisnikRepository.save(k35);
+		k36 = korisnikRepository.save(k36);
+		k37 = korisnikRepository.save(k37);
+		k38 = korisnikRepository.save(k38);
+		k39 = korisnikRepository.save(k39);
 		
 		Autor autor1 = new Autor(k1.getId(), null, null);
 		Autor autor2 = new Autor(k11.getId(), null, null);
@@ -341,8 +384,17 @@ public class StartData {
 		Urednik urednik3 = new Urednik(k15.getId(), "Titula 3", naucneOblasti3, null);
 		Urednik urednik4 = new Urednik(k16.getId(), "Titula 4", naucneOblasti4, null);
 		Urednik urednik5 = new Urednik(k17.getId(), "Titula 5", naucneOblasti5, null);
-		Urednik urednik6 = new Urednik(k18.getId(), "Titula 6", naucneOblasti3, null);
+		Urednik urednik6 = new Urednik(k18.getId(), "Titula 6", naucneOblasti1, null);
 		Urednik urednik7 = new Urednik(k19.getId(), "Titula 7", naucneOblasti2, null);
+		Urednik urednik8 = new Urednik(k31.getId(), "Titula 8", naucneOblasti3, null);
+		Urednik urednik9 = new Urednik(k32.getId(), "Titula 9", naucneOblasti5, null);
+		Urednik urednik10 = new Urednik(k33.getId(), "Titula 10", naucneOblasti1, null);
+		Urednik urednik11 = new Urednik(k34.getId(), "Titula 11", naucneOblasti2, null);
+		Urednik urednik12 = new Urednik(k35.getId(), "Titula 12", naucneOblasti3, null);
+		Urednik urednik13 = new Urednik(k36.getId(), "Titula 13", naucneOblasti4, null);
+		Urednik urednik14 = new Urednik(k37.getId(), "Titula 14", naucneOblasti5, null);
+		Urednik urednik15 = new Urednik(k38.getId(), "Titula 15", naucneOblasti1, null);
+		Urednik urednik16 = new Urednik(k39.getId(), "Titula 16", naucneOblasti2, null);
 		
 		autor1 = autorRepository.save(autor1);
 		autor2 = autorRepository.save(autor2);
@@ -358,14 +410,34 @@ public class StartData {
 		urednik5 = urednikRepository.save(urednik5);
 		urednik6 = urednikRepository.save(urednik6);
 		urednik7 = urednikRepository.save(urednik7);
+		urednik8 = urednikRepository.save(urednik8);
+		urednik9 = urednikRepository.save(urednik9);
+		urednik10 = urednikRepository.save(urednik10);
+		urednik11 = urednikRepository.save(urednik11);
+		urednik12 = urednikRepository.save(urednik12);
+		urednik13 = urednikRepository.save(urednik13);
+		urednik14 = urednikRepository.save(urednik14);
+		urednik15 = urednikRepository.save(urednik15);
+		urednik16 = urednikRepository.save(urednik16);
 		
-		Recenzent rec1 = new Recenzent(k3.getId());
-		Recenzent rec2 = new Recenzent(k5.getId());
-		Recenzent rec3 = new Recenzent(k6.getId());
-		Recenzent rec4 = new Recenzent(k7.getId());
-		Recenzent rec5 = new Recenzent(k8.getId());
-		Recenzent rec6 = new Recenzent(k9.getId());
-		Recenzent rec7 = new Recenzent(k10.getId());
+		Recenzent rec1 = new Recenzent(k3.getId(), naucneOblasti1);
+		Recenzent rec2 = new Recenzent(k5.getId(), naucneOblasti2);
+		Recenzent rec3 = new Recenzent(k6.getId(), naucneOblasti3);
+		Recenzent rec4 = new Recenzent(k7.getId(), naucneOblasti4);
+		Recenzent rec5 = new Recenzent(k8.getId(), naucneOblasti5);
+		Recenzent rec6 = new Recenzent(k9.getId(), naucneOblasti1);
+		Recenzent rec7 = new Recenzent(k10.getId(), naucneOblasti2);
+		Recenzent rec8 = new Recenzent(k20.getId(), naucneOblasti3);
+		Recenzent rec9 = new Recenzent(k21.getId(), naucneOblasti4);
+		Recenzent rec10 = new Recenzent(k22.getId(), naucneOblasti5);
+		Recenzent rec11 = new Recenzent(k23.getId(), naucneOblasti1);
+		Recenzent rec12 = new Recenzent(k24.getId(), naucneOblasti2);
+		Recenzent rec13 = new Recenzent(k25.getId(), naucneOblasti3);
+		Recenzent rec14 = new Recenzent(k26.getId(), naucneOblasti4);
+		Recenzent rec15 = new Recenzent(k27.getId(), naucneOblasti5);
+		Recenzent rec16 = new Recenzent(k28.getId(), naucneOblasti1);
+		Recenzent rec17 = new Recenzent(k29.getId(), naucneOblasti2);
+		Recenzent rec18 = new Recenzent(k30.getId(), naucneOblasti3);
 		
 		rec1 = recenzentRepository.save(rec1);
 		rec2 = recenzentRepository.save(rec2);
@@ -374,27 +446,25 @@ public class StartData {
 		rec5 = recenzentRepository.save(rec5);
 		rec6 = recenzentRepository.save(rec6);
 		rec7 = recenzentRepository.save(rec7);
+		rec8 = recenzentRepository.save(rec8);
+		rec9 = recenzentRepository.save(rec9);
+		rec10 = recenzentRepository.save(rec10);
+		rec11 = recenzentRepository.save(rec11);
+		rec12 = recenzentRepository.save(rec12);
+		rec13 = recenzentRepository.save(rec13);
+		rec14 = recenzentRepository.save(rec14);
+		rec15 = recenzentRepository.save(rec15);
+		rec16 = recenzentRepository.save(rec16);
+		rec17 = recenzentRepository.save(rec17);
+		rec18 = recenzentRepository.save(rec18);
 		
-		RecenzentInfo reci1 = new RecenzentInfo(rec1.getId().toString(), k3.getIme(), k3.getPrezime(), 
-				k3.getGrad().getNaziv(), new GeoPoint(k3.getGrad().getLat(), k3.getGrad().getLon()));
-		
-		RecenzentInfo reci2 = new RecenzentInfo(rec2.getId().toString(), k5.getIme(), k5.getPrezime(), 
-				k5.getGrad().getNaziv(), new GeoPoint(k5.getGrad().getLat(), k5.getGrad().getLon()));
-		
-		RecenzentInfo reci3 = new RecenzentInfo(rec3.getId().toString(), k6.getIme(), k6.getPrezime(), 
-				k6.getGrad().getNaziv(), new GeoPoint(k6.getGrad().getLat(), k6.getGrad().getLon()));
-		
-		RecenzentInfo reci4 = new RecenzentInfo(rec4.getId().toString(), k7.getIme(), k7.getPrezime(), 
-				k7.getGrad().getNaziv(), new GeoPoint(k7.getGrad().getLat(), k7.getGrad().getLon()));
-		
-		RecenzentInfo reci5 = new RecenzentInfo(rec5.getId().toString(), k8.getIme(), k8.getPrezime(), 
-				k8.getGrad().getNaziv(), new GeoPoint(k8.getGrad().getLat(), k8.getGrad().getLon()));
-		
-		RecenzentInfo reci6 = new RecenzentInfo(rec6.getId().toString(), k9.getIme(), k9.getPrezime(), 
-				k9.getGrad().getNaziv(), new GeoPoint(k9.getGrad().getLat(), k9.getGrad().getLon()));
-		
-		RecenzentInfo reci7 = new RecenzentInfo(rec7.getId().toString(), k10.getIme(), k10.getPrezime(), 
-				k10.getGrad().getNaziv(), new GeoPoint(k10.getGrad().getLat(), k10.getGrad().getLon()));
+		RecenzentInfo reci1 = new RecenzentInfo(k3);
+		RecenzentInfo reci2 = new RecenzentInfo(k5);
+		RecenzentInfo reci3 = new RecenzentInfo(k6);
+		RecenzentInfo reci4 = new RecenzentInfo(k7);
+		RecenzentInfo reci5 = new RecenzentInfo(k8);
+		RecenzentInfo reci6 = new RecenzentInfo(k9);	
+		RecenzentInfo reci7 = new RecenzentInfo(k10);
 		
 		reci1 = recenzentInfoRepository.save(reci1);
 		reci2 = recenzentInfoRepository.save(reci2);
@@ -423,6 +493,26 @@ public class StartData {
 		k17.setUrednik(urednik5);
 		k18.setUrednik(urednik6);
 		k19.setUrednik(urednik7);
+		k20.setRecenzent(rec8);
+		k21.setRecenzent(rec9);
+		k22.setRecenzent(rec10);
+		k23.setRecenzent(rec11);
+		k24.setRecenzent(rec12);
+		k25.setRecenzent(rec13);
+		k26.setRecenzent(rec14);
+		k27.setRecenzent(rec15);
+		k28.setRecenzent(rec16);
+		k29.setRecenzent(rec17);
+		k30.setRecenzent(rec18);
+		k31.setUrednik(urednik8);
+		k32.setUrednik(urednik9);
+		k33.setUrednik(urednik10);
+		k34.setUrednik(urednik11);
+		k35.setUrednik(urednik12);
+		k36.setUrednik(urednik13);
+		k37.setUrednik(urednik14);
+		k38.setUrednik(urednik15);
+		k39.setUrednik(urednik16);
 		
 		k1 = korisnikRepository.save(k1);
 		k2 = korisnikRepository.save(k2);
@@ -443,6 +533,27 @@ public class StartData {
 		k17 = korisnikRepository.save(k17);
 		k18 = korisnikRepository.save(k18);
 		k19 = korisnikRepository.save(k19);
+		k20 = korisnikRepository.save(k20);
+		k21 = korisnikRepository.save(k21);
+		k22 = korisnikRepository.save(k22);
+		k23 = korisnikRepository.save(k23);
+		k24 = korisnikRepository.save(k24);
+		k25 = korisnikRepository.save(k25);
+		k26 = korisnikRepository.save(k26);
+		k27 = korisnikRepository.save(k27);
+		k28 = korisnikRepository.save(k28);
+		k29 = korisnikRepository.save(k29);
+		k30 = korisnikRepository.save(k30);
+		k31 = korisnikRepository.save(k31);
+		k32 = korisnikRepository.save(k32);
+		k33 = korisnikRepository.save(k33);
+		k34 = korisnikRepository.save(k34);
+		k35 = korisnikRepository.save(k35);
+		k36 = korisnikRepository.save(k36);
+		k37 = korisnikRepository.save(k37);
+		k38 = korisnikRepository.save(k38);
+		k39 = korisnikRepository.save(k39);
+		
 		
 		// *** Camunda Korisnici *** //
 		
@@ -471,6 +582,26 @@ public class StartData {
 		User u17 = createCamundaUser(k17);
 		User u18 = createCamundaUser(k18);
 		User u19 = createCamundaUser(k19);
+		User u20 = createCamundaUser(k20);
+		User u21 = createCamundaUser(k21);
+		User u22 = createCamundaUser(k22);
+		User u23 = createCamundaUser(k23);
+		User u24 = createCamundaUser(k24);
+		User u25 = createCamundaUser(k25);
+		User u26 = createCamundaUser(k26);
+		User u27 = createCamundaUser(k27);
+		User u28 = createCamundaUser(k28);
+		User u29 = createCamundaUser(k29);
+		User u30 = createCamundaUser(k30);
+		User u31 = createCamundaUser(k31);
+		User u32 = createCamundaUser(k32);
+		User u33 = createCamundaUser(k33);
+		User u34 = createCamundaUser(k34);
+		User u35 = createCamundaUser(k35);
+		User u36 = createCamundaUser(k36);
+		User u37 = createCamundaUser(k37);
+		User u38 = createCamundaUser(k38);
+		User u39 = createCamundaUser(k39);
 		
 		identityService.saveUser(u);
 		identityService.saveUser(u1);
@@ -492,28 +623,60 @@ public class StartData {
 		identityService.saveUser(u17);
 		identityService.saveUser(u18);
 		identityService.saveUser(u19);
+		identityService.saveUser(u20);
+		identityService.saveUser(u21);
+		identityService.saveUser(u22);
+		identityService.saveUser(u23);
+		identityService.saveUser(u24);
+		identityService.saveUser(u25);
+		identityService.saveUser(u26);
+		identityService.saveUser(u27);
+		identityService.saveUser(u28);
+		identityService.saveUser(u29);
+		identityService.saveUser(u30);
+		identityService.saveUser(u31);
+		identityService.saveUser(u32);
+		identityService.saveUser(u33);
+		identityService.saveUser(u34);
+		identityService.saveUser(u35);
+		identityService.saveUser(u36);
+		identityService.saveUser(u37);
+		identityService.saveUser(u38);
+		identityService.saveUser(u39);
 		
-		Set<Recenzent> recenzenti1 = new HashSet<Recenzent>();
+		List<Recenzent> recenzenti1 = new ArrayList<>();
 		recenzenti1.add(rec1);
 		recenzenti1.add(rec3);
 		recenzenti1.add(rec4);
 		recenzenti1.add(rec5);
 		recenzenti1.add(rec7);
+		recenzenti1.add(rec11);
+		recenzenti1.add(rec18);
+		recenzenti1.add(rec16);
+		recenzenti1.add(rec14);
+		recenzenti1.add(rec10);
 		
-		Set<Recenzent> recenzenti2 = new HashSet<Recenzent>();
+		List<Recenzent> recenzenti2 = new ArrayList<>();
 		recenzenti2.add(rec2);
 		recenzenti2.add(rec4);
 		recenzenti2.add(rec6);
 		recenzenti2.add(rec1);
 		recenzenti2.add(rec3);
 		recenzenti2.add(rec7);
+		recenzenti2.add(rec12);
+		recenzenti2.add(rec10);
+		recenzenti2.add(rec17);
+		recenzenti2.add(rec9);
 		
-		Set<Recenzent> recenzenti3 = new HashSet<Recenzent>();
+		List<Recenzent> recenzenti3 = new ArrayList<>();
 		recenzenti3.add(rec7);
 		recenzenti3.add(rec5);
 		recenzenti3.add(rec4);
 		recenzenti3.add(rec2);
-		recenzenti3.add(rec1);
+		recenzenti3.add(rec13);
+		recenzenti3.add(rec15);
+		recenzenti3.add(rec16);
+		recenzenti3.add(rec8);
 		
 		List<RecenzentInfo> recenzentiI1 = new ArrayList<>();
 		recenzentiI1.add(reci1);
@@ -537,11 +700,30 @@ public class StartData {
 		recenzentiI3.add(reci2);
 		recenzentiI3.add(reci1);
 		
+		// *** Uredjivacki odbori *** //
+		List<Urednik> uredjivackiOdbor1 = new ArrayList<>();
+		uredjivackiOdbor1.add(urednik3);
+		uredjivackiOdbor1.add(urednik4);
+		uredjivackiOdbor1.add(urednik5);
+		uredjivackiOdbor1.add(urednik6);
+		
+		List<Urednik> uredjivackiOdbor2 = new ArrayList<>();
+		uredjivackiOdbor2.add(urednik7);
+		uredjivackiOdbor2.add(urednik8);
+		uredjivackiOdbor2.add(urednik9);
+		uredjivackiOdbor2.add(urednik10);
+		
+		List<Urednik> uredjivackiOdbor3 = new ArrayList<>();
+		uredjivackiOdbor3.add(urednik11);
+		uredjivackiOdbor3.add(urednik12);
+		uredjivackiOdbor3.add(urednik13);
+		uredjivackiOdbor3.add(urednik14);
+		
 		// *** Casopisi *** //
 		
-		Casopis c1 = new Casopis(null, "0001-184X", "Acta herbologica", true, naucneOblasti1, 11.99, 11.99, "CAS#1#MARA",urednik1, null, recenzenti3);
-		Casopis c2 = new Casopis(null, "0002-1X22", "Arhitektura i urbanizam", false, naucneOblasti2, 14.99, 14.99, "CAS#2#MARA", urednik2, null, recenzenti2);
-		Casopis c3 = new Casopis(null, "0003-45X6", "Balkan Journal of Dental Medicine", true, naucneOblasti3, null, 9.99, "CAS#3#MARA", urednik3, null, recenzenti1);
+		Casopis c1 = new Casopis(null, "0001-184X", "Acta herbologica", true, naucneOblasti1, 11.99, 11.99, "CAS#1#MARA",urednik1, uredjivackiOdbor1, recenzenti3);
+		Casopis c2 = new Casopis(null, "0002-1X22", "Arhitektura i urbanizam", false, naucneOblasti2, 14.99, 14.99, "CAS#2#MARA", urednik2, uredjivackiOdbor2, recenzenti2);
+		Casopis c3 = new Casopis(null, "0003-45X6", "Balkan Journal of Dental Medicine", true, naucneOblasti3, null, 9.99, "CAS#3#MARA", urednik3, uredjivackiOdbor3, recenzenti1);
 		Casopis c4 = new Casopis(null, "0004-7895", "Ekonomika poljoprivrede", false, naucneOblasti4, 7.99, null, "CAS#4#MARA", urednik4, null, recenzenti3);
 		Casopis c5 = new Casopis(null, "0005-7802", "Civitas", true, naucneOblasti5, null, 12.99, "CAS#5#MARA", urednik5, null, recenzenti2);
 		Casopis c6 = new Casopis(null, "0006-5630", "Geonauka", true, naucneOblasti1, null, 17.99, "CAS#6#MARA", urednik6, null, recenzenti1);
@@ -675,16 +857,16 @@ public class StartData {
 		rad10 = naucniRadRepository.save(rad10);
 		rad11 = naucniRadRepository.save(rad11);
 		
-		Set<NaucniRad> radovi1 = new HashSet<>();
+		List<NaucniRad> radovi1 = new ArrayList<>();
 		radovi1.add(rad1);
 		radovi1.add(rad5);
 		radovi1.add(rad6);
 		
-		Set<NaucniRad> radovi2 = new HashSet<>();
+		List<NaucniRad> radovi2 = new ArrayList<>();
 		radovi2.add(rad2);
 		radovi2.add(rad3);
 		
-		Set<NaucniRad> radovi3 = new HashSet<>();
+		List<NaucniRad> radovi3 = new ArrayList<>();
 		radovi3.add(rad4);
 		radovi3.add(rad7);
 	

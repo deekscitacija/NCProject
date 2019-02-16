@@ -1,12 +1,11 @@
 package com.ftn.nc.NCBackend.web.dto;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import com.ftn.nc.NCBackend.web.model.Izdanje;
-import com.ftn.nc.NCBackend.web.model.Korisnik;
 import com.ftn.nc.NCBackend.web.model.NaucnaOblast;
-import com.ftn.nc.NCBackend.web.model.NaucniRad;
 
 public class IzdanjeDTO {
 	
@@ -20,9 +19,9 @@ public class IzdanjeDTO {
 	
 	private Double cenaIzdanja;
 	
-	private Set<NaucnaOblast> naucneOblasti;
+	private List<NaucnaOblast> naucneOblasti;
 	
-	private Set<RadDTO> radovi;
+	private List<RadDTO> radovi;
 	
 	private boolean openAccess;
 
@@ -31,7 +30,7 @@ public class IzdanjeDTO {
 	}
 
 	public IzdanjeDTO(Long id, Date objavljen, String casopis, String naslov, Double cenaIzdanja,
-			Set<NaucnaOblast> naucneOblasti, Set<RadDTO> radovi) {
+			List<NaucnaOblast> naucneOblasti, List<RadDTO> radovi) {
 		super();
 		this.id = id;
 		this.objavljen = objavljen;
@@ -42,7 +41,7 @@ public class IzdanjeDTO {
 		this.radovi = radovi;
 	}
 	
-	public IzdanjeDTO(Izdanje izdanje, Set<RadDTO> radovi) {
+	public IzdanjeDTO(Izdanje izdanje, List<RadDTO> radovi) {
 		super();
 		this.id = izdanje.getId();
 		this.objavljen = izdanje.getObjavljen();
@@ -94,19 +93,19 @@ public class IzdanjeDTO {
 		this.cenaIzdanja = cenaIzdanja;
 	}
 
-	public Set<NaucnaOblast> getNaucneOblasti() {
+	public List<NaucnaOblast> getNaucneOblasti() {
 		return naucneOblasti;
 	}
 
-	public void setNaucneOblasti(Set<NaucnaOblast> naucneOblasti) {
+	public void setNaucneOblasti(List<NaucnaOblast> naucneOblasti) {
 		this.naucneOblasti = naucneOblasti;
 	}
 
-	public Set<RadDTO> getRadovi() {
+	public List<RadDTO> getRadovi() {
 		return radovi;
 	}
 
-	public void setRadovi(Set<RadDTO> radovi) {
+	public void setRadovi(List<RadDTO> radovi) {
 		this.radovi = radovi;
 	}
 

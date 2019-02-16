@@ -3,7 +3,9 @@ package com.ftn.nc.NCBackend.web.controller;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
@@ -115,7 +117,7 @@ public class RadController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
-		Set<RadDTO> radovi = new HashSet<>();
+		List<RadDTO> radovi = new ArrayList<>();
 		for(NaucniRad rad : izdanje.getRadovi()) {
 			Korisnik autor = korisnikService.getById(rad.getRevizija().getAutor().getId());
 			RadDTO radDTO = new RadDTO(rad, autor);
@@ -137,10 +139,10 @@ public class RadController {
 		
 		Korisnik autor = korisnikService.getById(revizija.getAutor().getId());
 		
-		Komentar komentar = null;
+		String komentar = "";
 		if(revizija.getKomentari() != null) {
 			if(!revizija.getKomentari().isEmpty()) {
-				komentar = revizija.getKomentari().get(0);
+				komentar = revizija.getKomentari().get(0).getTekst();
 			}
 		}
 		
