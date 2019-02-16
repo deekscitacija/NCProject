@@ -1,0 +1,22 @@
+<div class="row gap-top-md">
+  <div class="col-lg-3"></div>
+  <div class="col-lg-6 card list-view">
+    <div class="container div-padding-md">
+        <h4 align="center" class="title-text-md">Izaberite recenzente: </h4>
+        <div class="mx-auto">
+          <button class="btn btn-light btn-block" (click)="selektujNaucnaOblast()" [ngClass]="{'samoNaucna' : samoNaucna}">Samo naucna oblast?</button>
+        </div>
+        <ul class="list-group">
+            <li class="list-group-item" *ngFor="let recenzent of recenzenti">
+              <div class="row">
+                <input type="checkbox" class="col-lg-2 gap-top-xxs" (change)="bindRecenzenti(recenzent)" [checked]="containsElement(recenzent) != -1"/>
+                <p class="col-lg-10"><b>{{recenzent.ime}} {{recenzent.prezime}}</b>, {{recenzent.mesto}}</p>
+              </div>
+            </li>
+        </ul>
+        <div class="mx-auto">
+          <button class="btn btn-light btn-block" (click)="potvrdi()" [disabled]="izabraniRecenzenti.length < 2">Potvrdi</button>
+        </div>
+    </div>
+  </div>
+</div>

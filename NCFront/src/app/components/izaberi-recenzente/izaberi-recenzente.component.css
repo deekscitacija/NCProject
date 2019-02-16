@@ -1,0 +1,27 @@
+.list-group{
+    margin-bottom: 10px;
+    margin-top: 10px;
+    overflow:scroll;
+    -webkit-overflow-scrolling: touch;
+    max-height: 430px;
+    min-height: 430px;
+    background: #ffffff;
+}
+
+.list-group-item {
+    color: #3c425c;
+}
+
+.list-view{
+    min-height: 450px;
+    background: #c0bc8d;
+}
+
+.gap-top-xxs{
+    margin-top : 7px;
+}
+
+.samoNaucna {
+    background: rgb(255, 240, 158);
+    border: rgb(252, 233, 130);
+}
