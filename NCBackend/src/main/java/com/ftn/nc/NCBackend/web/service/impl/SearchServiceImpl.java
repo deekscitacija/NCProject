@@ -314,7 +314,7 @@ public class SearchServiceImpl implements SearchService{
             			autorRepository.findById(autor.getId()).get(), 
             			casopis, 
             			paperInfo.getNaucneOblasti().get(0),
-            			recenzenti, null);
+            			null, null);
             	
             	
             	revizija = revizijaRadaRepository.save(revizija);

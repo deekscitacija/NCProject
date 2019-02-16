@@ -59,18 +59,19 @@ public class RevizijaRada {
 	private NaucnaOblast naucnaOblast;
 	
 	@ManyToMany
-	private List<Recenzent> recenzenti;
+	private List<RevizijaRadaRecenzent> recenzentiRevizija;
 	
 	@OneToMany
 	private List<Komentar> komentari;
+	
 
 	public RevizijaRada() {
 		super();
 	}
 	
-	public RevizijaRada(Long id, String naslov, List<Koautor> koAutori, String apstrakt, String kljucneReci, String putanja,
-			boolean temaOk, boolean formatOk, boolean prihvacen, Autor autor, Casopis casopis,
-			NaucnaOblast naucnaOblast, List<Recenzent> recenzenti, List<Komentar> komentari) {
+	public RevizijaRada(Long id, String naslov, List<Koautor> koAutori, String apstrakt, String kljucneReci,
+			String putanja, boolean temaOk, boolean formatOk, boolean prihvacen, Autor autor, Casopis casopis,
+			NaucnaOblast naucnaOblast, List<RevizijaRadaRecenzent> recenzentiRevizija, List<Komentar> komentari) {
 		super();
 		this.id = id;
 		this.naslov = naslov;
@@ -84,7 +85,7 @@ public class RevizijaRada {
 		this.autor = autor;
 		this.casopis = casopis;
 		this.naucnaOblast = naucnaOblast;
-		this.recenzenti = recenzenti;
+		this.recenzentiRevizija = recenzentiRevizija;
 		this.komentari = komentari;
 	}
 
@@ -159,21 +160,13 @@ public class RevizijaRada {
 	public void setAutor(Autor autor) {
 		this.autor = autor;
 	}
-
-	public List<Recenzent> getRecenzenti() {
-		return recenzenti;
+	
+	public List<RevizijaRadaRecenzent> getRecenzentiRevizija() {
+		return recenzentiRevizija;
 	}
 
-	public void setRecenzenti(List<Recenzent> recenzenti) {
-		this.recenzenti = recenzenti;
-	}
-
-	public List<Komentar> getKomentari() {
-		return komentari;
-	}
-
-	public void setKomentari(List<Komentar> komentari) {
-		this.komentari = komentari;
+	public void setRecenzentiRevizija(List<RevizijaRadaRecenzent> recenzentiRevizija) {
+		this.recenzentiRevizija = recenzentiRevizija;
 	}
 
 	public String getPutanja() {
@@ -198,6 +191,14 @@ public class RevizijaRada {
 
 	public void setNaucnaOblast(NaucnaOblast naucnaOblast) {
 		this.naucnaOblast = naucnaOblast;
+	}
+
+	public List<Komentar> getKomentari() {
+		return komentari;
+	}
+
+	public void setKomentari(List<Komentar> komentari) {
+		this.komentari = komentari;
 	}
 
 }

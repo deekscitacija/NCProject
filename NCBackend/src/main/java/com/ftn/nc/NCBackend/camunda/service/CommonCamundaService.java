@@ -9,7 +9,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -20,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.ftn.nc.NCBackend.camunda.dto.RecenzentDTO;
 import com.ftn.nc.NCBackend.camunda.dto.TaskDTO;
 import com.ftn.nc.NCBackend.camunda.dto.VariablesDTO;
 
@@ -146,5 +146,31 @@ public class CommonCamundaService {
 		}
         
         return new ResponseEntity<VariablesDTO>(retVal, HttpStatus.OK);
+	}
+	
+	public ResponseEntity<String> setRecenzentiVariableCollection(List<RecenzentDTO> recenzenti, String processId) throws JSONException{
+		
+		RestTemplate restTemplate = new RestTemplate();
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		
+		String listContent = "[";
+		
+		for(RecenzentDTO recenzent : recenzenti) {
+			listContent += recenzent.getId().toString()+",";
+		}
+		
+		listContent = listContent.substring(0, listContent.length()-1);
+		listContent = listContent+="]";
+		
+		JSONObject listInfo = new JSONObject();
+		listInfo.put("value", listContent);
+		listInfo.put("type", "Object");
+		
+		HttpEntity<String> entity = new HttpEntity<String>(listInfo.toString(), headers);
+		
+		HttpsURLConnection.setDefaultHostnameVerifier ((hostname, session) -> true);
+        return restTemplate.exchange(processEngineRootPath + "process-instance/"+processId+"/variables/listaRecenzenata", HttpMethod.PUT, entity, String.class);
 	}
 }

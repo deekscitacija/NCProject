@@ -68,8 +68,8 @@ public class UrednikRecenzentMessage implements JavaDelegate {
 		poruka += "<html>"+
 				  "<body>"+
 				  "<div>\r\n" + 
-				  "<h3>Prijavljan novi rad na recenziju</h3>"+
-				  "<p>Postovani, izabrani ste da u casopisu \""+casopis.getNaziv()+"\" budete zaduzeni za upravljanje recenzijom novog rada. </p>"+
+				  "<h3>Prijavljen novi rad na recenziju</h3>"+
+				  "<p>Postovani "+korisnik.getIme()+" "+korisnik.getPrezime()+", izabrani ste da u casopisu \""+casopis.getNaziv()+"\" budete zaduzeni za upravljanje recenzijom novog rada. </p>"+
 				  "<p>Detalje mozete videti u Vasoj listi zadataka.</p>"+
 				  "</div>"+
 				  "</body>"+

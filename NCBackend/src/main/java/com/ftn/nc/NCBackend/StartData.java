@@ -35,6 +35,7 @@ import com.ftn.nc.NCBackend.web.model.Permisija;
 import com.ftn.nc.NCBackend.web.model.Recenzent;
 import com.ftn.nc.NCBackend.web.model.RegistrovaniKorisnik;
 import com.ftn.nc.NCBackend.web.model.RevizijaRada;
+import com.ftn.nc.NCBackend.web.model.RevizijaRadaRecenzent;
 import com.ftn.nc.NCBackend.web.model.TipKorisnika;
 import com.ftn.nc.NCBackend.web.model.Urednik;
 import com.ftn.nc.NCBackend.web.repository.AutorRepository;
@@ -50,6 +51,7 @@ import com.ftn.nc.NCBackend.web.repository.NaucniRadRepository;
 import com.ftn.nc.NCBackend.web.repository.PermisijaRepository;
 import com.ftn.nc.NCBackend.web.repository.RecenzentRepository;
 import com.ftn.nc.NCBackend.web.repository.RegistrovaniKorisnikRepository;
+import com.ftn.nc.NCBackend.web.repository.RevizijaRadaRecenzentRepository;
 import com.ftn.nc.NCBackend.web.repository.RevizijaRadaRepository;
 import com.ftn.nc.NCBackend.web.repository.TipKorisnikaRepository;
 import com.ftn.nc.NCBackend.web.repository.UrednikRepository;
@@ -106,6 +108,9 @@ public class StartData {
 	
 	@Autowired
 	private KoautorRepository koautorRepository;
+	
+	@Autowired
+	private RevizijaRadaRecenzentRepository revizijaRadaRecenzentRepository;
 	
 	// *** Camunda *** //
 	
@@ -778,48 +783,72 @@ public class StartData {
 		
 		RevizijaRada revizija1 = new RevizijaRada(null, "Predikcija ishoda teniskih meceva", koautori1, 
 				"U radu je opisana predkcija ishoda teniskih meceva.", "predikcija, tenis, mec, loptica, Naive Bayes", LIBRARY_DIR_PATH+"\\2015 Predikcija ishoda teniskih meceva.pdf", 
-				true, true, true, autor1, c1, no1, recenzenti1, null);
+				true, true, true, autor1, c1, no1, null, null);
 		
 		RevizijaRada revizija2 = new RevizijaRada(null, "Цене некретнина", koautori2, 
 				"Кретање цена некретнина, опширно и детаљно,", "предикција, некретнине, некретнина, кластернованје, кластер, цена, новац, стан, кућа", LIBRARY_DIR_PATH+"\\2016 Predikcija cene nekretnina.pdf", 
-				true, true, true, autor2, c2, no2, recenzenti2, null);
+				true, true, true, autor2, c2, no2, null, null);
 		
 		RevizijaRada revizija3 = new RevizijaRada(null, "Predikcija musterija koje ce napustiti kompaniju", koautori3, 
 				"Postoji li rizik da vasi zaposleni napuste kompaniju?", "predikcija, kompanija, zaposleni, nezadovoljstvo, klaster, klasterovanje", LIBRARY_DIR_PATH+"\\2016 Predikcija Churn (musterije koje ce napustiti kompaniju).pdf", 
-				true, true, true, autor3, c2, no3, recenzenti3, null);
+				true, true, true, autor3, c2, no3, null, null);
 		
 		RevizijaRada revizija4 = new RevizijaRada(null, "IMDB, predikcija ranka filmova", koautori1, 
 				"Metode koriscenje kako bi se izvrsila predikcija ranka filma na IMDB sajtu.", "predikcija, film, uspeh, rank, zanr, faktori", LIBRARY_DIR_PATH+"\\2016 Predikcija ranka filmova na IMDB.pdf", 
-				true, true, true, autor4, c3, no4, recenzenti1, null);
+				true, true, true, autor4, c3, no4, null, null);
 		
 		RevizijaRada revizija5 = new RevizijaRada(null, "Анализа кашњења авионских летова", koautori2, 
 				"Анализа и прикз доминантних разлога кашњења авионских летова на свим рутама.", "анализа, кашњење, касни, авион, лет, писта", LIBRARY_DIR_PATH+"\\2017 Analiza kasnjenja avionskih letova.pdf", 
-				true, true, true, autor1, c1, no5, recenzenti2, null);
+				true, true, true, autor1, c1, no5, null, null);
 		
 		RevizijaRada revizija6 = new RevizijaRada(null, "Hronicne bubrezne bolesti", koautori3, 
 				"Predikcija hronicnih bubreznih bolesti iz prethodnih anamneza nekog pacijenta i procena rizika razvijanja.", "predikcija, bubreg, bubrezi, bolest, anamneza, hronicno", LIBRARY_DIR_PATH+"\\2017 Chronic kidney disease.pdf", 
-				true, true, true, autor2, c1, no6, recenzenti3, null);
+				true, true, true, autor2, c1, no6, null, null);
 		
 		RevizijaRada revizija7 = new RevizijaRada(null, "СМС спам", koautori1, 
 				"Анализа смс порука и предикција спама на основу претходне анализе.", "предикција, анализа, смс, спам", LIBRARY_DIR_PATH+"\\2017 Predikcija SMS spama.pdf", 
-				true, true, true, autor3, c3, no1, recenzenti1, null);
+				true, true, true, autor3, c3, no1, null, null);
 		
 		RevizijaRada revizija8 = new RevizijaRada(null, "Modul za upravljanje sertifikatima u okviru informacionog sistema za rezervaciju smeštaja", koautori2, 
 				"Tema ovog rada jeste jedna iz skupa prethodno navedenih aplikacija, čija je osnovna namena generisanje, distribucija i povlačenje digitalnih sertifikata. Upotreba digitalnih sertifikata je trenutno najčešći i najpouzdaniji mehanizam za autentifikaciju učesnika u komunikaciji i zaštitu sadržaja poruka koje se šalju od neovlašćenog čitanja ili izmene.", 
 				"sertifikat, digitalni, CSR, SSL, model pretnji", LIBRARY_DIR_PATH+"\\DIPL_Marija_Joksimovic_BSEP-finalno.pdf", 
-				true, true, true, autor4, c2, no2, recenzenti2, null);
+				true, true, true, autor4, c2, no2, null, null);
 		
 		RevizijaRada revizija9 = new RevizijaRada(null, "Smernice za pisanje diplomskog rada", koautori3, 
 				"Smernice za pisanje diplomskog rada.", "diplomski, rad, smernica, smernice", LIBRARY_DIR_PATH+"\\Smernice za pisanje diplomskog rada.pdf", 
-				true, true, true, autor1, c1, no3, recenzenti3, null);
+				true, true, true, autor1, c1, no3, null, null);
 		
 		RevizijaRada revizija10 = new RevizijaRada(null, "Upravljanje digitalnim dokumentima, kontrolna tačka 1", koautori1, 
 				"Upravljanje digitalnim dokumentima.", "digitalni, dokument, kontrolna, tacka", LIBRARY_DIR_PATH+"\\UDD-2018-2019-KT1-Marija-Joksimović-E262-2018.pdf", 
-				true, true, true, autor2, c3, no4, recenzenti1, null);
+				true, true, true, autor2, c3, no4, null, null);
 		
 		RevizijaRada revizija11 = new RevizijaRada(null, "Upravljanje digitalnim dokumentima, kontrolna tačka 2", koautori2, 
 				"Upravljanje digitalnim dokumentima.", "digitalni, dokument, kontrolna, tacka", LIBRARY_DIR_PATH+"\\UDD-2018-2019-KT2-Marija-Joksimovic.pdf", 
-				true, true, true, autor3, c2, no5, recenzenti2, null);
+				true, true, true, autor3, c2, no5, null, null);
+		
+		revizija1 = revizijaRadaRepository.save(revizija1);
+		revizija2 = revizijaRadaRepository.save(revizija2);
+		revizija3 = revizijaRadaRepository.save(revizija3);
+		revizija4 = revizijaRadaRepository.save(revizija4);
+		revizija5 = revizijaRadaRepository.save(revizija5);
+		revizija6 = revizijaRadaRepository.save(revizija6);
+		revizija7 = revizijaRadaRepository.save(revizija7);
+		revizija8 = revizijaRadaRepository.save(revizija8);
+		revizija9 = revizijaRadaRepository.save(revizija9);
+		revizija10 = revizijaRadaRepository.save(revizija10);
+		revizija11 = revizijaRadaRepository.save(revizija11);
+		
+		revizija1.setRecenzentiRevizija(this.createRevizije(revizija1, recenzenti1));
+		revizija2.setRecenzentiRevizija(this.createRevizije(revizija2, recenzenti2));
+		revizija3.setRecenzentiRevizija(this.createRevizije(revizija3, recenzenti3));
+		revizija4.setRecenzentiRevizija(this.createRevizije(revizija4, recenzenti1));
+		revizija5.setRecenzentiRevizija(this.createRevizije(revizija5, recenzenti2));
+		revizija6.setRecenzentiRevizija(this.createRevizije(revizija6, recenzenti3));
+		revizija7.setRecenzentiRevizija(this.createRevizije(revizija7, recenzenti1));
+		revizija8.setRecenzentiRevizija(this.createRevizije(revizija8, recenzenti2));
+		revizija9.setRecenzentiRevizija(this.createRevizije(revizija9, recenzenti3));
+		revizija10.setRecenzentiRevizija(this.createRevizije(revizija10, recenzenti1));
+		revizija11.setRecenzentiRevizija(this.createRevizije(revizija11, recenzenti2));
 		
 		revizija1 = revizijaRadaRepository.save(revizija1);
 		revizija2 = revizijaRadaRepository.save(revizija2);
@@ -958,5 +987,17 @@ public class StartData {
 		retVal.setLastName(k.getPrezime());
 		retVal.setPassword(k.getLozinka());
 		return retVal;
+	}
+	
+	private List<RevizijaRadaRecenzent> createRevizije(RevizijaRada revizija, List<Recenzent> recenzenti){
+		
+		List<RevizijaRadaRecenzent> retVal = new ArrayList<>();
+		for(Recenzent recenzent : recenzenti) {
+			RevizijaRadaRecenzent rrr = new RevizijaRadaRecenzent(null, recenzent, revizija, false);
+			rrr = revizijaRadaRecenzentRepository.save(rrr);
+			retVal.add(rrr);
+		}
+		
+		return (retVal.isEmpty()) ? null : retVal;
 	}
 }
