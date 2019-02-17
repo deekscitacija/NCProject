@@ -1,14 +1,8 @@
 package com.ftn.nc.NCBackend.web.service.impl;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.lucene.search.join.ScoreMode;
 import org.elasticsearch.common.unit.DistanceUnit;
@@ -314,7 +308,7 @@ public class SearchServiceImpl implements SearchService{
             			autorRepository.findById(autor.getId()).get(), 
             			casopis, 
             			paperInfo.getNaucneOblasti().get(0),
-            			null, null);
+            			null, null, null);
             	
             	
             	revizija = revizijaRadaRepository.save(revizija);

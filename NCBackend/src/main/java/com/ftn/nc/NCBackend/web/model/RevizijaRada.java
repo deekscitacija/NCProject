@@ -5,6 +5,8 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,6 +16,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import com.ftn.nc.NCBackend.web.enums.RecenzijaStatus;
 
 @Entity
 public class RevizijaRada {
@@ -64,6 +68,9 @@ public class RevizijaRada {
 	@OneToMany
 	private List<Komentar> komentari;
 	
+	@Enumerated(EnumType.STRING)
+	private RecenzijaStatus status;
+	
 
 	public RevizijaRada() {
 		super();
@@ -71,7 +78,8 @@ public class RevizijaRada {
 	
 	public RevizijaRada(Long id, String naslov, List<Koautor> koAutori, String apstrakt, String kljucneReci,
 			String putanja, boolean temaOk, boolean formatOk, boolean prihvacen, Autor autor, Casopis casopis,
-			NaucnaOblast naucnaOblast, List<RevizijaRadaRecenzent> recenzentiRevizija, List<Komentar> komentari) {
+			NaucnaOblast naucnaOblast, List<RevizijaRadaRecenzent> recenzentiRevizija, List<Komentar> komentari,
+			RecenzijaStatus status) {
 		super();
 		this.id = id;
 		this.naslov = naslov;
@@ -87,6 +95,7 @@ public class RevizijaRada {
 		this.naucnaOblast = naucnaOblast;
 		this.recenzentiRevizija = recenzentiRevizija;
 		this.komentari = komentari;
+		this.status = status;
 	}
 
 	public Long getId() {
@@ -199,6 +208,14 @@ public class RevizijaRada {
 
 	public void setKomentari(List<Komentar> komentari) {
 		this.komentari = komentari;
+	}
+
+	public RecenzijaStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(RecenzijaStatus status) {
+		this.status = status;
 	}
 
 }

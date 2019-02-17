@@ -3,6 +3,7 @@ package com.ftn.nc.NCBackend.camunda.dto;
 import java.util.List;
 import java.util.Set;
 
+import com.ftn.nc.NCBackend.web.dto.KomentarDTO;
 import com.ftn.nc.NCBackend.web.model.Koautor;
 import com.ftn.nc.NCBackend.web.model.Komentar;
 import com.ftn.nc.NCBackend.web.model.Korisnik;
@@ -37,12 +38,13 @@ public class RevizijaDTO {
 	
 	private String tekstKomentara;
 	
-
+	private List<KomentarDTO> komentari;
+	
 	public RevizijaDTO() {
 		super();
 	}
 
-	public RevizijaDTO(RevizijaRada revizija, Korisnik autor, String tekstKomentara) {
+	public RevizijaDTO(RevizijaRada revizija, Korisnik autor, String tekstKomentara, List<KomentarDTO> komentari) {
 		super();
 		this.id = revizija.getId();
 		this.naslov = revizija.getNaslov();
@@ -57,6 +59,7 @@ public class RevizijaDTO {
 		this.naucnaOblast = revizija.getNaucnaOblast().getNaziv();
 		this.naucnaOblastKod = revizija.getNaucnaOblast().getKod();
 		this.tekstKomentara = tekstKomentara;
+		this.komentari = komentari;
 	}
 
 	public Long getId() {
@@ -161,6 +164,14 @@ public class RevizijaDTO {
 
 	public void setTekstKomentara(String tekstKomentara) {
 		this.tekstKomentara = tekstKomentara;
+	}
+
+	public List<KomentarDTO> getKomentari() {
+		return komentari;
+	}
+
+	public void setKomentari(List<KomentarDTO> komentari) {
+		this.komentari = komentari;
 	}
 	
 }

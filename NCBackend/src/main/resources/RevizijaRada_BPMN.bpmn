@@ -43,10 +43,10 @@
     </bpmn:userTask>
     <bpmn:sequenceFlow id="SequenceFlow_1wdn9ad" sourceRef="UserTask_0i4cabx" targetRef="ExclusiveGateway_1lthcst" />
     <bpmn:sequenceFlow id="SequenceFlow_08b92pd" name="Ocene se NE razlikuju drasticno" sourceRef="ExclusiveGateway_1lthcst" targetRef="EndEvent_0pknmyp">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${not drasticnaRazlika}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${revizijaStatus != 'D'}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_0uk2ku9" name="Ocene se razlikuju drasticno" sourceRef="ExclusiveGateway_1lthcst" targetRef="UserTask_1ooekym">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${drasticnaRazlika}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${revizijaStatus == 'D'}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_1dkrlag" sourceRef="StartEvent_1" targetRef="SubProcess_1qb73az" />
     <bpmn:endEvent id="EndEvent_0pknmyp" name="Success">
@@ -59,13 +59,18 @@
       </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
     <bpmn:userTask id="UserTask_1kwu8e8" name="Izbor novih recenzenata" camunda:assignee="${urednikRecenzent}">
-      <bpmn:incoming>SequenceFlow_0csqz3e</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_0z0ojja</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0ea25df</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:sequenceFlow id="SequenceFlow_0ea25df" sourceRef="UserTask_1kwu8e8" targetRef="SubProcess_1qb73az" />
     <bpmn:sequenceFlow id="SequenceFlow_1pzp2jm" sourceRef="SubProcess_1qb73az" targetRef="UserTask_0i4cabx" />
     <bpmn:sequenceFlow id="SequenceFlow_164uv3h" sourceRef="UserTask_1ooekym" targetRef="SubProcess_1qb73az" />
-    <bpmn:sequenceFlow id="SequenceFlow_0csqz3e" sourceRef="BoundaryEvent_1rkreh4" targetRef="UserTask_1kwu8e8" />
+    <bpmn:sequenceFlow id="SequenceFlow_0csqz3e" sourceRef="BoundaryEvent_1rkreh4" targetRef="Task_0mmcl7u" />
+    <bpmn:sequenceFlow id="SequenceFlow_0z0ojja" sourceRef="Task_0mmcl7u" targetRef="UserTask_1kwu8e8" />
+    <bpmn:sendTask id="Task_0mmcl7u" name="Recenzenti nisu izvrsili recenziju" camunda:class="com.ftn.nc.NCBackend.camunda.message.RecenzijaIsteklaMessage">
+      <bpmn:incoming>SequenceFlow_0csqz3e</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0z0ojja</bpmn:outgoing>
+    </bpmn:sendTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="RevizijaRadaProcess">
@@ -103,7 +108,7 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="UserTask_1kwu8e8_di" bpmnElement="UserTask_1kwu8e8">
-        <dc:Bounds x="543" y="430" width="100" height="80" />
+        <dc:Bounds x="470" y="430" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="UserTask_0g513ze_di" bpmnElement="UserTask_0g513ze">
         <dc:Bounds x="599" y="239" width="100" height="80" />
@@ -138,7 +143,7 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0ea25df_di" bpmnElement="SequenceFlow_0ea25df">
-        <di:waypoint x="543" y="470" />
+        <di:waypoint x="470" y="470" />
         <di:waypoint x="414" y="470" />
         <di:waypoint x="414" y="370" />
       </bpmndi:BPMNEdge>
@@ -164,8 +169,15 @@
       <bpmndi:BPMNEdge id="SequenceFlow_0csqz3e_di" bpmnElement="SequenceFlow_0csqz3e">
         <di:waypoint x="791" y="388" />
         <di:waypoint x="791" y="470" />
-        <di:waypoint x="643" y="470" />
+        <di:waypoint x="719" y="470" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0z0ojja_di" bpmnElement="SequenceFlow_0z0ojja">
+        <di:waypoint x="619" y="470" />
+        <di:waypoint x="570" y="470" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="SendTask_1c60dty_di" bpmnElement="Task_0mmcl7u">
+        <dc:Bounds x="619" y="430" width="100" height="80" />
+      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

@@ -57,7 +57,7 @@ public class KomentarController {
 		
 		Korisnik primalac = korisnikService.getById(revizija.getAutor().getId());
 		
-		Komentar komentar = new Komentar(null, posiljalac, primalac, komentarInfo.getTekst(), false, komentarInfo.getVidljivost());
+		Komentar komentar = new Komentar(null, posiljalac, primalac, komentarInfo.getTekst(), komentarInfo.getVidljivost());
 		komentar = komentarService.save(komentar);
 		
 		revizija.getKomentari().add(komentar);

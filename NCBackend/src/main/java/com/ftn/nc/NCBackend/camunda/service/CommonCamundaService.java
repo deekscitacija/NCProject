@@ -148,5 +148,25 @@ public class CommonCamundaService {
         return new ResponseEntity<VariablesDTO>(retVal, HttpStatus.OK);
 	}
 	
+	public Long getAssigneeId(String taskId){
+		
+		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+
+		HttpEntity<String> entity = new HttpEntity<String>(headers);
+		
+		HttpsURLConnection.setDefaultHostnameVerifier ((hostname, session) -> true);
+		String taskInfoStr = restTemplate.exchange(processEngineRootPath + "task/"+taskId, HttpMethod.GET, entity, String.class).getBody();
+		
+		try {
+			JSONObject taskInfo = new JSONObject(taskInfoStr);
+			String assignee = taskInfo.getString("assignee");
+			return Long.parseLong(assignee);
+		} catch (JSONException e) {
+			return null;
+		}
+	}
+	
 	
 }

@@ -6,4 +6,5 @@ import com.ftn.nc.NCBackend.web.model.Komentar;
 
 public interface KomentarRepository extends JpaRepository<Komentar, Long>{
 
+	
 }

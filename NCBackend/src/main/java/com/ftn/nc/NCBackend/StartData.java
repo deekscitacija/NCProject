@@ -783,48 +783,48 @@ public class StartData {
 		
 		RevizijaRada revizija1 = new RevizijaRada(null, "Predikcija ishoda teniskih meceva", koautori1, 
 				"U radu je opisana predkcija ishoda teniskih meceva.", "predikcija, tenis, mec, loptica, Naive Bayes", LIBRARY_DIR_PATH+"\\2015 Predikcija ishoda teniskih meceva.pdf", 
-				true, true, true, autor1, c1, no1, null, null);
+				true, true, true, autor1, c1, no1, null, null, null);
 		
 		RevizijaRada revizija2 = new RevizijaRada(null, "Цене некретнина", koautori2, 
 				"Кретање цена некретнина, опширно и детаљно,", "предикција, некретнине, некретнина, кластернованје, кластер, цена, новац, стан, кућа", LIBRARY_DIR_PATH+"\\2016 Predikcija cene nekretnina.pdf", 
-				true, true, true, autor2, c2, no2, null, null);
+				true, true, true, autor2, c2, no2, null, null, null);
 		
 		RevizijaRada revizija3 = new RevizijaRada(null, "Predikcija musterija koje ce napustiti kompaniju", koautori3, 
 				"Postoji li rizik da vasi zaposleni napuste kompaniju?", "predikcija, kompanija, zaposleni, nezadovoljstvo, klaster, klasterovanje", LIBRARY_DIR_PATH+"\\2016 Predikcija Churn (musterije koje ce napustiti kompaniju).pdf", 
-				true, true, true, autor3, c2, no3, null, null);
+				true, true, true, autor3, c2, no3, null, null, null);
 		
 		RevizijaRada revizija4 = new RevizijaRada(null, "IMDB, predikcija ranka filmova", koautori1, 
 				"Metode koriscenje kako bi se izvrsila predikcija ranka filma na IMDB sajtu.", "predikcija, film, uspeh, rank, zanr, faktori", LIBRARY_DIR_PATH+"\\2016 Predikcija ranka filmova na IMDB.pdf", 
-				true, true, true, autor4, c3, no4, null, null);
+				true, true, true, autor4, c3, no4, null, null, null);
 		
 		RevizijaRada revizija5 = new RevizijaRada(null, "Анализа кашњења авионских летова", koautori2, 
 				"Анализа и прикз доминантних разлога кашњења авионских летова на свим рутама.", "анализа, кашњење, касни, авион, лет, писта", LIBRARY_DIR_PATH+"\\2017 Analiza kasnjenja avionskih letova.pdf", 
-				true, true, true, autor1, c1, no5, null, null);
+				true, true, true, autor1, c1, no5, null, null, null);
 		
 		RevizijaRada revizija6 = new RevizijaRada(null, "Hronicne bubrezne bolesti", koautori3, 
 				"Predikcija hronicnih bubreznih bolesti iz prethodnih anamneza nekog pacijenta i procena rizika razvijanja.", "predikcija, bubreg, bubrezi, bolest, anamneza, hronicno", LIBRARY_DIR_PATH+"\\2017 Chronic kidney disease.pdf", 
-				true, true, true, autor2, c1, no6, null, null);
+				true, true, true, autor2, c1, no6, null, null, null);
 		
 		RevizijaRada revizija7 = new RevizijaRada(null, "СМС спам", koautori1, 
 				"Анализа смс порука и предикција спама на основу претходне анализе.", "предикција, анализа, смс, спам", LIBRARY_DIR_PATH+"\\2017 Predikcija SMS spama.pdf", 
-				true, true, true, autor3, c3, no1, null, null);
+				true, true, true, autor3, c3, no1, null, null, null);
 		
 		RevizijaRada revizija8 = new RevizijaRada(null, "Modul za upravljanje sertifikatima u okviru informacionog sistema za rezervaciju smeštaja", koautori2, 
 				"Tema ovog rada jeste jedna iz skupa prethodno navedenih aplikacija, čija je osnovna namena generisanje, distribucija i povlačenje digitalnih sertifikata. Upotreba digitalnih sertifikata je trenutno najčešći i najpouzdaniji mehanizam za autentifikaciju učesnika u komunikaciji i zaštitu sadržaja poruka koje se šalju od neovlašćenog čitanja ili izmene.", 
 				"sertifikat, digitalni, CSR, SSL, model pretnji", LIBRARY_DIR_PATH+"\\DIPL_Marija_Joksimovic_BSEP-finalno.pdf", 
-				true, true, true, autor4, c2, no2, null, null);
+				true, true, true, autor4, c2, no2, null, null, null);
 		
 		RevizijaRada revizija9 = new RevizijaRada(null, "Smernice za pisanje diplomskog rada", koautori3, 
 				"Smernice za pisanje diplomskog rada.", "diplomski, rad, smernica, smernice", LIBRARY_DIR_PATH+"\\Smernice za pisanje diplomskog rada.pdf", 
-				true, true, true, autor1, c1, no3, null, null);
+				true, true, true, autor1, c1, no3, null, null, null);
 		
 		RevizijaRada revizija10 = new RevizijaRada(null, "Upravljanje digitalnim dokumentima, kontrolna tačka 1", koautori1, 
 				"Upravljanje digitalnim dokumentima.", "digitalni, dokument, kontrolna, tacka", LIBRARY_DIR_PATH+"\\UDD-2018-2019-KT1-Marija-Joksimović-E262-2018.pdf", 
-				true, true, true, autor2, c3, no4, null, null);
+				true, true, true, autor2, c3, no4, null, null, null);
 		
 		RevizijaRada revizija11 = new RevizijaRada(null, "Upravljanje digitalnim dokumentima, kontrolna tačka 2", koautori2, 
 				"Upravljanje digitalnim dokumentima.", "digitalni, dokument, kontrolna, tacka", LIBRARY_DIR_PATH+"\\UDD-2018-2019-KT2-Marija-Joksimovic.pdf", 
-				true, true, true, autor3, c2, no5, null, null);
+				true, true, true, autor3, c2, no5, null, null, null);
 		
 		revizija1 = revizijaRadaRepository.save(revizija1);
 		revizija2 = revizijaRadaRepository.save(revizija2);
@@ -993,7 +993,7 @@ public class StartData {
 		
 		List<RevizijaRadaRecenzent> retVal = new ArrayList<>();
 		for(Recenzent recenzent : recenzenti) {
-			RevizijaRadaRecenzent rrr = new RevizijaRadaRecenzent(null, recenzent, revizija, false, null);
+			RevizijaRadaRecenzent rrr = new RevizijaRadaRecenzent(null, recenzent, revizija, false, null, false);
 			rrr = revizijaRadaRecenzentRepository.save(rrr);
 			retVal.add(rrr);
 		}

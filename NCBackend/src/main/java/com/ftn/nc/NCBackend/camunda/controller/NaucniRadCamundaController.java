@@ -134,7 +134,7 @@ public class NaucniRadCamundaController {
             		
             RevizijaRada revizija = new RevizijaRada(null, newPaper.getNaslov(), koautori, 
             	newPaper.getApstrakt(), newPaper.getKljucne(), putanja, false, false, false, 
-            	autor, casopis, newPaper.getNaucnaOblast(), null, null);
+            	autor, casopis, newPaper.getNaucnaOblast(), null, null, null);
             
             revizija = revizijaService.save(revizija);
             try {
@@ -169,6 +169,10 @@ public class NaucniRadCamundaController {
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
 		
+		if(urednik.getId() != commonCamundaService.getAssigneeId(taskId)) {
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
+		
 		RevizijaRada revizija = revizijaService.getById(revizijaInfo.getId());
 		
 		if(revizija == null) {
@@ -178,7 +182,7 @@ public class NaucniRadCamundaController {
 		Korisnik autor = korisnikService.getById(revizija.getAutor().getId());
 		
 		if(revizijaInfo.getTekstKomentara() != null) {
-			Komentar komentar = new Komentar(null, urednik, autor, revizijaInfo.getTekstKomentara(), false, KomentarVidljivost.SVI);
+			Komentar komentar = new Komentar(null, urednik, autor, revizijaInfo.getTekstKomentara(), KomentarVidljivost.SVI);
 			komentar = komentarService.save(komentar);
 			revizija.getKomentari().add(komentar);
 		}
@@ -232,40 +236,6 @@ public class NaucniRadCamundaController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "submitRecenzija", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> submitRecenzija(@RequestParam (required = true, value = "processId") String processId, @RequestParam (required = true, value = "taskId") String taskId,
-			   								@RequestParam (required = true, value = "revizijaId") Long revizijaId, @RequestParam (required = true, value = "revizijaStatus") RecenzijaStatus revizijaStatus,
-			   							    HttpServletRequest request){
-		
-		RevizijaRada revizija = revizijaService.getById(revizijaId);
-		
-		if(revizija == null) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		
-		Korisnik recenzent = korisnikService.getUserFromToken(request, tokenUtils);
-		
-		if(recenzent == null) {
-			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-		}
-		
-		RevizijaRadaRecenzent recenzijaInfo = null;
-		
-		for(RevizijaRadaRecenzent tempR : revizija.getRecenzentiRevizija()) {
-			if(tempR.getRecenzent().getId() == recenzent.getId()) {
-				recenzijaInfo = tempR;
-				break;
-			}
-		}
-		
-		if(recenzijaInfo != null) {
-			recenzijaInfo.setStatus(revizijaStatus);
-			recenzijaInfo.setZavrseno(true);
-			revizijaRadaRecenzentService.save(recenzijaInfo);
-			return commonCamundaService.compliteTaskNoForm(taskId);
-		}
-		
-		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-	}
+	
 	
 }

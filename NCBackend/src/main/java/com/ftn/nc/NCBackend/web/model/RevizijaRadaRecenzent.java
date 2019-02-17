@@ -30,18 +30,22 @@ public class RevizijaRadaRecenzent {
 	@Enumerated(EnumType.STRING)
 	private RecenzijaStatus status;
 	
+	@Column(nullable = false)
+	private boolean aktuelno;
+	
 	public RevizijaRadaRecenzent() {
 		super();
 	}
 
 	public RevizijaRadaRecenzent(Long id, Recenzent recenzent, RevizijaRada revizija, boolean zavrseno,
-			RecenzijaStatus status) {
+			RecenzijaStatus status, boolean aktuelno) {
 		super();
 		this.id = id;
 		this.recenzent = recenzent;
 		this.revizija = revizija;
 		this.zavrseno = zavrseno;
 		this.status = status;
+		this.aktuelno = aktuelno;
 	}
 
 	public Long getId() {
@@ -82,6 +86,14 @@ public class RevizijaRadaRecenzent {
 
 	public void setStatus(RecenzijaStatus status) {
 		this.status = status;
+	}
+
+	public boolean isAktuelno() {
+		return aktuelno;
+	}
+
+	public void setAktuelno(boolean aktuelno) {
+		this.aktuelno = aktuelno;
 	}
 
 }

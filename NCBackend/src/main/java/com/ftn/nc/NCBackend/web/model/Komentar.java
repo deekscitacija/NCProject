@@ -30,9 +30,6 @@ public class Komentar {
 	@Column(nullable = false, length = 1024)
 	private String tekst;
 	
-	@Column(nullable = false)
-	private boolean procitan;
-	
 	@Enumerated(EnumType.STRING)
 	private KomentarVidljivost vidljivost;
 
@@ -40,14 +37,12 @@ public class Komentar {
 		super();
 	}
 
-	public Komentar(Long id, Korisnik posiljalac, Korisnik primalac, String tekst, boolean procitan,
-			KomentarVidljivost vidljivost) {
+	public Komentar(Long id, Korisnik posiljalac, Korisnik primalac, String tekst, KomentarVidljivost vidljivost) {
 		super();
 		this.id = id;
 		this.posiljalac = posiljalac;
 		this.primalac = primalac;
 		this.tekst = tekst;
-		this.procitan = procitan;
 		this.vidljivost = vidljivost;
 	}
 
@@ -81,14 +76,6 @@ public class Komentar {
 
 	public void setTekst(String tekst) {
 		this.tekst = tekst;
-	}
-
-	public boolean isProcitan() {
-		return procitan;
-	}
-
-	public void setProcitan(boolean procitan) {
-		this.procitan = procitan;
 	}
 
 	public KomentarVidljivost getVidljivost() {
