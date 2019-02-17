@@ -35,7 +35,6 @@ export class PaperInitialApprovalComponent implements OnInit {
     this.radService.getRevizija(this.revizijaId).subscribe(
       (res: any) => {
         this.revizijaInfo = res;
-        console.log(this.revizijaInfo);
       },
       (error: any) => {
         alert('Greska');

@@ -14,6 +14,7 @@ export class AnalizaRecenzijaComponent implements OnInit {
   private taskId: string;
   private komentari: any[] = [];
   private ocene: any[] = [];
+  private revizijaStatus: string;
 
   constructor(private router: Router, private route: ActivatedRoute, private recenzijaService: RecenzijaService) { }
 
@@ -45,6 +46,17 @@ export class AnalizaRecenzijaComponent implements OnInit {
       },
       (error: any) => {
         alert('Greska!');
+      }
+    );
+  }
+
+  potvrdi(){
+    this.recenzijaService.submitAnalizaRecenzija(this.revizijaId, this.revizijaStatus, this.taskId, this.processId).subscribe(
+      (res: any) => {
+        this.router.navigate([""]);
+      },
+      (error: any) => {
+        alert('Greska!')
       }
     );
   }

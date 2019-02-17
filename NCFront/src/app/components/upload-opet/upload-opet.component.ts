@@ -14,7 +14,7 @@ export class UploadOpetComponent implements OnInit {
   private revizijaId: number;
   private taskId: string;
   private processId: string;
-  private revizijaInfo: any = {komentar: ""}
+  private revizijaInfo: any = {komentari : []};
 
   constructor(private radService: RadService, private router: Router, private route: ActivatedRoute, 
     private tokenService: TokenService) { }
@@ -35,7 +35,7 @@ export class UploadOpetComponent implements OnInit {
   }
 
   getRevizija(){
-    this.radService.getRevizija(this.revizijaId).subscribe(
+    this.radService.getRevizijaAutor(this.revizijaId).subscribe(
       (res: any) => {
         this.revizijaInfo = res;
       },

@@ -8,8 +8,10 @@
 <div class="row">
         <div class="col-lg-2"></div>
         <div class="col-lg-8 row info-view">
-            <div class="form-group row col-md-10 mx-auto gap-top-md">
-                <p class="form-control" *ngIf="revizijaInfo.komentar">Komentar urednika: <i>{{revizijaInfo.komentar.tekst}}</i></p>
+            <div class="komentar-panel gap-top-sm col-lg-12">
+                <div class="row form-control gap-top-sm move-left-sm" *ngFor="let komentar of revizijaInfo.komentari">
+                  <b>{{komentar.autor}}</b> : {{komentar.tekst}}
+                </div>
             </div>
         </div>
     </div>

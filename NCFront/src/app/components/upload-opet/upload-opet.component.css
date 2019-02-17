@@ -17,3 +17,21 @@ label, p {
 .button-view{
     margin-top: 5%;
 }
+
+.komentar-panel{
+    margin-bottom: 10px;
+    overflow:scroll;
+    -webkit-overflow-scrolling: touch;
+    max-height: 250px;
+    min-height: 250px;
+    min-width: 700px;
+    background: #ffffff;
+}
+
+.move-left{
+    margin-left: 15%;
+}
+
+.move-left-sm {
+    margin-left: 1%;
+}

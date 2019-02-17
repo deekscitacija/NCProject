@@ -16,6 +16,7 @@ export class IzaberiRecenzenteComponent implements OnInit {
   private revizijaId: number;
   private processId: string;
   private taskId: string;
+  private mode: string;
   private samoNaucna: boolean = false;
 
   constructor(private radService: RadService, private router: Router, private route: ActivatedRoute, private recenzijaService: RecenzijaService) { }
@@ -27,13 +28,35 @@ export class IzaberiRecenzenteComponent implements OnInit {
       this.processId = queryParams.get("processId");
       this.taskId = queryParams.get("taskId");
       this.revizijaId = +queryParams.get("revizijaId");
-      this.getRecenzenti();
+      this.mode = queryParams.get("mode");
+      this.bindRecenzentiList();
     });
 
   }
 
   getRecenzenti = function(){
     this.recenzijaService.getRecenzentiForCasopis(this.casopisId).subscribe(
+      (res: any) => {
+        this.recenzenti = res;
+        this.izabraniRecenzenti = [];
+      },
+      (error: any) => {
+        alert('Greska!');
+      }
+    );
+  }
+
+  bindRecenzentiList(){
+    if(this.mode === 'BASIC'){
+      return this.getRecenzenti();
+    }else if(this.mode === 'EXPIRED' || this.mode === 'GRADES'){
+      return this.getRecenzentiExpired();
+    }
+    return [];
+  }
+
+  getRecenzentiExpired = function(){
+    this.recenzijaService.getRecenzentiForCasopisExpired(this.casopisId, this.revizijaId).subscribe(
       (res: any) => {
         this.recenzenti = res;
         this.izabraniRecenzenti = [];

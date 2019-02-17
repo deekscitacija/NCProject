@@ -37,6 +37,14 @@ export class RadService {
     return this.http.get("/app/getRevizija", {params : params});
   }
 
+  getRevizijaAutor(revizijaId: number){
+
+    var params = new HttpParams();
+    params = params.append('revizijaId', String(revizijaId));
+
+    return this.http.get("/app/getRevizijaAutor", {params : params});
+  }
+
   downloadRevizija(revizijaId: number){
 
     var params = new HttpParams();

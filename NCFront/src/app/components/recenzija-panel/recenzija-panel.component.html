@@ -1,37 +1,45 @@
 <div class="row gap-top-md">
   <div class="col-lg-2"></div>
-  <div class="col-lg-8 card blue-bg1">
+  <div class="col-lg-8 card olive-bg1">
     <h4 align="center">Recenzija rada</h4>
 
-    <div class="radio-panel">
-        <div class="radio">
-            <label>
-                <input type="radio" name="status" [(ngModel)]="revizijaStatus" value="P">
-                <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
-                Prihvati
-            </label>
+    <div class="row">
+        <div class="radio-panel col-lg-6">
+            <div class="radio">
+                <label>
+                    <input type="radio" name="status" [(ngModel)]="revizijaStatus" value="P">
+                    <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+                    Prihvati
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="status" [(ngModel)]="revizijaStatus" value="M">
+                    <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+                    Prihvati, manje ispravke
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="status" [(ngModel)]="revizijaStatus" value="U">
+                    <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+                    Uslovno prihvati
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="status" [(ngModel)]="revizijaStatus" value="O">
+                    <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+                    Odbij
+                </label>
+            </div>
         </div>
-        <div class="radio">
-            <label>
-                <input type="radio" name="status" [(ngModel)]="revizijaStatus" value="M">
-                <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
-                Prihvati, manje ispravke
-            </label>
+        <div class="col-lg-4">  
+            <div class="download-button">
+                <button class="btn btn-default orange-circle-button" (click)="download()" ><i class="fas fa-file-download fa-3x"></i></button>
+            </div>
         </div>
-        <div class="radio">
-            <label>
-                <input type="radio" name="status" [(ngModel)]="revizijaStatus" value="U">
-                <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
-                Uslovno prihvati
-            </label>
-        </div>
-        <div class="radio">
-            <label>
-                <input type="radio" name="status" [(ngModel)]="revizijaStatus" value="O">
-                <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
-                Odbij
-            </label>
-        </div>
+
     </div>
     <hr/>
     <div class="komentar-panel">

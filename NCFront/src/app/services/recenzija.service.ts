@@ -15,6 +15,15 @@ export class RecenzijaService {
     return this.http.get("/app/getRecenzentiCasopis", {params : params});
   }
 
+  getRecenzentiForCasopisExpired(casopisId: number, revizijaId: number){
+
+    let params = new HttpParams();
+    params = params.append("casopisId", String(casopisId));
+    params = params.append("revizijaId", String(revizijaId));
+
+    return this.http.get("/app/getRecenzentiCasopisExpired", {params : params});
+  }
+
   getRecenzentiForCasopisAndNaucna(casopisId: number, revizijaId: number){
 
     let params = new HttpParams();
@@ -32,7 +41,7 @@ export class RecenzijaService {
     params = params.append("processId", processId);
     params = params.append("taskId", taskId);
 
-    return this.http.post("/app/izaberiRecenzente", val, {params : params});
+    return this.http.post("/app/izaberiRecenzente", val, {params : params, headers : this.tokenService.headerSetup()});
   }
 
   getKomentari(revizijaId: number){
@@ -69,6 +78,28 @@ export class RecenzijaService {
     params = params.append("revizijaId", String(revizijaId));
 
     return this.http.get("/app/getGotovaRevizijaInfo", {params : params});
+  }
+
+  submitAnalizaRecenzija(revizijaId: number, revizijaStatus: string, taskId: string, processId: string){
+
+    let params = new HttpParams();
+    params = params.append("revizijaId", String(revizijaId));
+    params = params.append("revizijaStatus", revizijaStatus);
+    params = params.append("taskId", taskId);
+    params = params.append("processId", processId);
+
+    return this.http.get("/app/submitAnalizaRecenzija", {params : params, headers : this.tokenService.headerSetup()});
+  }
+
+  submitPonovnoPregledanje(revizijaId: number, ishod: string, taskId: string, processId: string){
+
+    let params = new HttpParams();
+    params = params.append("revizijaId", String(revizijaId));
+    params = params.append("ishod", ishod);
+    params = params.append("taskId", taskId);
+    params = params.append("processId", processId);
+
+    return this.http.get("/app/submitPonovnoPregledanje", {params : params, headers : this.tokenService.headerSetup()});
   }
 
 }

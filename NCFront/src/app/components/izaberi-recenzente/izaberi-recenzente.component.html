@@ -3,7 +3,7 @@
   <div class="col-lg-6 card list-view">
     <div class="container div-padding-md">
         <h4 align="center" class="title-text-md">Izaberite recenzente: </h4>
-        <div class="mx-auto">
+        <div class="mx-auto" *ngIf="mode === 'BASIC'">
           <button class="btn btn-light btn-block" (click)="selektujNaucnaOblast()" [ngClass]="{'samoNaucna' : samoNaucna}">Samo naucna oblast?</button>
         </div>
         <ul class="list-group">
@@ -15,7 +15,7 @@
             </li>
         </ul>
         <div class="mx-auto">
-          <button class="btn btn-light btn-block" (click)="potvrdi()" [disabled]="izabraniRecenzenti.length < 2 && recenzenti.length >= 2">Potvrdi</button>
+          <button class="btn btn-light btn-block" (click)="potvrdi()" [disabled]="izabraniRecenzenti.length < 2 && recenzenti.length >= 2 && mode==='BASIC'">Potvrdi</button>
         </div>
     </div>
   </div>

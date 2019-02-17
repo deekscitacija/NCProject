@@ -5,19 +5,17 @@ import { RadService } from '../../services/rad.service';
 import { saveAs } from 'file-saver/dist/FileSaver';
 
 @Component({
-  selector: 'app-recenzija-panel',
-  templateUrl: './recenzija-panel.component.html',
-  styleUrls: ['./recenzija-panel.component.css']
+  selector: 'app-ponovo-pregledaj',
+  templateUrl: './ponovo-pregledaj.component.html',
+  styleUrls: ['./ponovo-pregledaj.component.css']
 })
-export class RecenzijaPanelComponent implements OnInit {
+export class PonovoPregledajComponent implements OnInit {
 
-  private isKomentar: boolean = false;
-  private komentari: any[] = [];
   private revizijaId: number;
   private processId: string;
   private taskId: string;
-  private revizijaStatus: string;
   private revizijaInfo : any = {};
+  private ishod: string = "";
 
   constructor(private router: Router, private route: ActivatedRoute, private recenzijaService: RecenzijaService, private radService: RadService) { }
 
@@ -27,46 +25,18 @@ export class RecenzijaPanelComponent implements OnInit {
       this.revizijaId = +queryParams.get("revizijaId");
       this.processId = queryParams.get("processId");
       this.taskId = queryParams.get("taskId");
-      this.getKomentari();
       this.getRevizija();
     });
-
   }
 
   getRevizija(){
+    console.log(this.revizijaId);
     this.radService.getRevizija(this.revizijaId).subscribe(
       (res: any) => {
         this.revizijaInfo = res;
       },
       (error: any) => {
         alert('Greska');
-      }
-    );
-  }
-
-  getKomentari(){
-    this.recenzijaService.getKomentari(this.revizijaId).subscribe(
-      (res: any) => {
-        this.komentari = res;
-      },
-      (error: any) => {
-        alert('Greska!');
-      }
-    );
-  }
-
-  komentarisi = function(){
-    this.isKomentar = !this.isKomentar;
-  }
-
-  potvrdi = function(){
-
-    this.recenzijaService.submitRecenzija(this.revizijaId, this.processId, this.taskId, this.revizijaStatus).subscribe(
-      (res: any) => {
-        this.router.navigate([""]);
-      },
-      (error: any) => {
-        alert('Greska!');
       }
     );
   }
@@ -79,9 +49,21 @@ export class RecenzijaPanelComponent implements OnInit {
         saveAs(res, filename);
       },
       (error: any) => {
-        alert('Greska!')
+        alert('Greska!');
       }
-    )
+    );
+  }
+
+  potvrdi(){
+    console.log(this.ishod)
+    this.recenzijaService.submitPonovnoPregledanje(this.revizijaId, this.ishod, this.taskId, this.processId).subscribe(
+      (res: any) => {
+        this.router.navigate([""]);
+      },
+      (error: any) => {
+        alert('Greska!');
+      }
+    );
   }
 
 }

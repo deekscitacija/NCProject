@@ -80,6 +80,7 @@ export class TaskViewComponent implements OnInit {
     if(taskInfo.taskName === 'Izbor recenzenata'){
       queryParams['revizijaId'] = variables.revizijaId;
       queryParams['casopis'] = variables.casopisId;
+      queryParams['mode'] = "BASIC";
       this.router.navigate(['naucna-centrala.com/izaberi-recenzente'], {queryParams : queryParams});
     }
 
@@ -91,6 +92,35 @@ export class TaskViewComponent implements OnInit {
     if(taskInfo.taskName === 'Analiza recenzija'){
       queryParams['revizijaId'] = variables.revizijaId;
       this.router.navigate(['naucna-centrala.com/recenzije-analiza'], {queryParams : queryParams});
+    }
+
+    if(taskInfo.taskName === 'Izbor novih recenzenata'){
+      queryParams['revizijaId'] = variables.revizijaId;
+      queryParams['casopis'] = variables.casopisId;
+      queryParams['mode'] = "EXPIRED";
+      this.router.navigate(['naucna-centrala.com/izaberi-recenzente'], {queryParams : queryParams});
+    }
+
+    if(taskInfo.taskName === 'Oznaci recenzente za zamensku recenziju'){
+      queryParams['revizijaId'] = variables.revizijaId;
+      queryParams['casopis'] = variables.casopisId;
+      queryParams['mode'] = "GRADES";
+      this.router.navigate(['naucna-centrala.com/izaberi-recenzente'], {queryParams : queryParams});
+    }
+
+    if(taskInfo.taskName === 'Izmene rada nakon recenzije'){
+      queryParams['revizijaId'] = variables.revizijaId;
+      this.router.navigate(['naucna-centrala.com/upload-revizija'], {queryParams : queryParams});
+    }
+
+    if(taskInfo.taskName === 'Ponovna izmena rada'){
+      queryParams['revizijaId'] = variables.revizijaId;
+      this.router.navigate(['naucna-centrala.com/upload-revizija'], {queryParams : queryParams});
+    }
+
+    if(taskInfo.taskName === 'Ponovno pregledanje rada'){
+      queryParams['revizijaId'] = variables.revizijaId;
+      this.router.navigate(['naucna-centrala.com/pregledanje-ponovo'], {queryParams : queryParams});
     }
 
   }

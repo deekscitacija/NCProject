@@ -50,6 +50,7 @@ import { IzaberiRecenzenteComponent } from './components/izaberi-recenzente/izab
 import { RecenzijaPanelComponent } from './components/recenzija-panel/recenzija-panel.component';
 import { KomentarComponentComponent } from './components/komentar-component/komentar-component.component';
 import { AnalizaRecenzijaComponent } from './components/analiza-recenzija/analiza-recenzija.component';
+import { PonovoPregledajComponent } from './components/ponovo-pregledaj/ponovo-pregledaj.component';
 
 
 
@@ -86,7 +87,8 @@ import { AnalizaRecenzijaComponent } from './components/analiza-recenzija/analiz
     RecenzijaPanelComponent,
     KomentarComponentComponent,
     AnalizaRecenzijaComponent,
-    RevizijaStatusPipe
+    RevizijaStatusPipe,
+    PonovoPregledajComponent
   ],
   imports: [
     BrowserModule,
@@ -144,6 +146,10 @@ import { AnalizaRecenzijaComponent } from './components/analiza-recenzija/analiz
       {
         path : 'naucna-centrala.com/recenzije-analiza',
         component : AnalizaRecenzijaComponent
+      },
+      {
+        path : 'naucna-centrala.com/pregledanje-ponovo',
+        component : PonovoPregledajComponent
       },
       {
         path : 'naucna-centrala.com/izaberi-recenzente',

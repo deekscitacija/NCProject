@@ -1,0 +1,44 @@
+<div class="row gap-top-md">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8 row card blue-bg1">
+        <h4 align="center" class="title-text-md">Ponovni pregled rada : </h4>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8 row card">
+        <div class="download-button">
+            <button class="btn btn-default orange-circle-button" (click)="download()" ><i class="fas fa-file-download fa-3x"></i></button>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8 row info-view">
+        <div class="form-group row mx-auto">
+            <div class="radio col-lg-6">
+                <label style="font-size: 1.5em">
+                    <input type="radio" [(ngModel)]="ishod" value="true">Ispravke zadovoljene
+                    <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+                </label>
+            </div>
+            <div class="radio col-lg-6">
+                <label style="font-size: 1.5em">
+                    <input type="radio" [(ngModel)]="ishod" value="false">Ispravke nisu zadovoljene
+                    <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8 row info-view">
+        <div class="form-group row col-md-10 mx-auto">
+          <button class="logregBtn btn btn-light btn-md btn-block yellow-button" (click)="potvrdi()">Potvrdi</button>
+        </div>
+    </div>
+</div>
