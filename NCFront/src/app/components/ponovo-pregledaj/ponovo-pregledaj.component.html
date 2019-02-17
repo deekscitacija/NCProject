@@ -1,7 +1,12 @@
 <div class="row gap-top-md">
     <div class="col-lg-2"></div>
     <div class="col-lg-8 row card blue-bg1">
-        <h4 align="center" class="title-text-md">Ponovni pregled rada : </h4>
+        <h4 align="center" class="title-text-md gap-top-sm">Ponovni pregled rada : </h4>
+        <div class="komentar-panel gap-top-md">
+            <div class="row col-lg-11 form-control gap-top-sm move-left-sm" *ngFor="let komentar of komentari">
+            {{komentar.autor}} : {{komentar.tekst}}
+            </div>
+        </div>
     </div>
 </div>
 

@@ -61,3 +61,20 @@
 .gap-left{
     margin-left: 5%
 }
+
+.komentar-panel{
+    margin-bottom: 10px;
+    overflow:scroll;
+    -webkit-overflow-scrolling: touch;
+    max-height: 200px;
+    min-height: 200px;
+    background: #ffffff;
+}
+
+.move-left{
+    margin-left: 15%;
+}
+
+.move-left-sm {
+    margin-left: 2%;
+}

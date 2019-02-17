@@ -15,6 +15,7 @@ export class PonovoPregledajComponent implements OnInit {
   private processId: string;
   private taskId: string;
   private revizijaInfo : any = {};
+  private komentari: any[] = [];
   private ishod: string = "";
 
   constructor(private router: Router, private route: ActivatedRoute, private recenzijaService: RecenzijaService, private radService: RadService) { }
@@ -26,6 +27,7 @@ export class PonovoPregledajComponent implements OnInit {
       this.processId = queryParams.get("processId");
       this.taskId = queryParams.get("taskId");
       this.getRevizija();
+      this.getKomentari();
     });
   }
 
@@ -37,6 +39,17 @@ export class PonovoPregledajComponent implements OnInit {
       },
       (error: any) => {
         alert('Greska');
+      }
+    );
+  }
+
+  getKomentari(){
+    this.recenzijaService.getKomentari(this.revizijaId).subscribe(
+      (res: any) => {
+        this.komentari = res;
+      },
+      (error: any) => {
+        alert('Greska!');
       }
     );
   }
