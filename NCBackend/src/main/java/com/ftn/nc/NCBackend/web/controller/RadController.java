@@ -124,26 +124,4 @@ public class RadController {
 		return new ResponseEntity<IzdanjeDTO>(new IzdanjeDTO(izdanje, radovi), HttpStatus.OK);
 	}
 	
-
-	@RequestMapping(value = "getRevizija", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<RevizijaDTO> getMagazine(@RequestParam(value = "revizijaId", required = true) Long revizijaId){
-		
-		RevizijaRada revizija = revizijaService.getById(revizijaId);
-		
-		if(revizija == null) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		
-		Korisnik autor = korisnikService.getById(revizija.getAutor().getId());
-		
-		String komentar = "";
-		if(revizija.getKomentari() != null) {
-			if(!revizija.getKomentari().isEmpty()) {
-				komentar = revizija.getKomentari().get(0).getTekst();
-			}
-		}
-		
-		return new ResponseEntity<RevizijaDTO>(new RevizijaDTO(revizija, autor, komentar), HttpStatus.OK);
-	}
-	
 }
