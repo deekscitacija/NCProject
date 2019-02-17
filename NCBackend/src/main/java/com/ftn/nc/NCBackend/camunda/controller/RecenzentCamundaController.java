@@ -119,6 +119,10 @@ public class RecenzentCamundaController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
+		if(recenzenti.size() < 2) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
 		List<String> recStr = new ArrayList<String>();
 		for(RecenzentDTO recenzent : recenzenti) {
 			recStr.add(recenzent.getId().toString());

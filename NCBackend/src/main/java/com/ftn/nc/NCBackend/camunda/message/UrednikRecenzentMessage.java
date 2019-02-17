@@ -88,6 +88,7 @@ public class UrednikRecenzentMessage implements JavaDelegate {
 		for(Urednik urednik : casopis.getUredjivackiOdbor()) {
 			for(NaucnaOblast tempNaucnaOblast : urednik.getNaucneOblasti()) {
 				if(tempNaucnaOblast.getKod().equals(naucnaOblast.getKod())) {
+					System.out.println("\n ***SELEKTUJE UREDNIKA ZA: "+tempNaucnaOblast.getKod()+" "+naucnaOblast.getKod());
 					return urednik;
 				}
 			}

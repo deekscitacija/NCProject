@@ -10,6 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -28,18 +29,21 @@ import com.ftn.nc.NCBackend.helpClasses.PDFUtils;
 import com.ftn.nc.NCBackend.security.TokenUtils;
 import com.ftn.nc.NCBackend.web.dto.NaucniRadDTO;
 import com.ftn.nc.NCBackend.web.enums.KomentarVidljivost;
+import com.ftn.nc.NCBackend.web.enums.RecenzijaStatus;
 import com.ftn.nc.NCBackend.web.model.Autor;
 import com.ftn.nc.NCBackend.web.model.Casopis;
 import com.ftn.nc.NCBackend.web.model.Koautor;
 import com.ftn.nc.NCBackend.web.model.Komentar;
 import com.ftn.nc.NCBackend.web.model.Korisnik;
 import com.ftn.nc.NCBackend.web.model.RevizijaRada;
-import com.ftn.nc.NCBackend.web.repository.KomentarRepository;
+import com.ftn.nc.NCBackend.web.model.RevizijaRadaRecenzent;
 import com.ftn.nc.NCBackend.web.service.AutorService;
 import com.ftn.nc.NCBackend.web.service.CasopisService;
 import com.ftn.nc.NCBackend.web.service.KoautorService;
 import com.ftn.nc.NCBackend.web.service.KomentarService;
 import com.ftn.nc.NCBackend.web.service.KorisnikService;
+import com.ftn.nc.NCBackend.web.service.RecenzentService;
+import com.ftn.nc.NCBackend.web.service.RevizijaRadaRecenzentService;
 import com.ftn.nc.NCBackend.web.service.RevizijaService;
 
 
@@ -57,6 +61,9 @@ public class NaucniRadCamundaController {
 	private AutorService autorService;
 	
 	@Autowired
+	private RecenzentService recenzentService;
+	
+	@Autowired
 	private TokenUtils tokenUtils;
 	
 	@Autowired
@@ -70,6 +77,9 @@ public class NaucniRadCamundaController {
 	
 	@Autowired
 	private KomentarService komentarService;
+	
+	@Autowired
+	private RevizijaRadaRecenzentService revizijaRadaRecenzentService; 
 	
 	@Autowired
 	private CommonCamundaService commonCamundaService;
@@ -220,6 +230,42 @@ public class NaucniRadCamundaController {
 		}
 		
 		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "submitRecenzija", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> submitRecenzija(@RequestParam (required = true, value = "processId") String processId, @RequestParam (required = true, value = "taskId") String taskId,
+			   								@RequestParam (required = true, value = "revizijaId") Long revizijaId, @RequestParam (required = true, value = "revizijaStatus") RecenzijaStatus revizijaStatus,
+			   							    HttpServletRequest request){
+		
+		RevizijaRada revizija = revizijaService.getById(revizijaId);
+		
+		if(revizija == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		Korisnik recenzent = korisnikService.getUserFromToken(request, tokenUtils);
+		
+		if(recenzent == null) {
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
+		
+		RevizijaRadaRecenzent recenzijaInfo = null;
+		
+		for(RevizijaRadaRecenzent tempR : revizija.getRecenzentiRevizija()) {
+			if(tempR.getRecenzent().getId() == recenzent.getId()) {
+				recenzijaInfo = tempR;
+				break;
+			}
+		}
+		
+		if(recenzijaInfo != null) {
+			recenzijaInfo.setStatus(revizijaStatus);
+			recenzijaInfo.setZavrseno(true);
+			revizijaRadaRecenzentService.save(recenzijaInfo);
+			return commonCamundaService.compliteTaskNoForm(taskId);
+		}
+		
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
 	
 }

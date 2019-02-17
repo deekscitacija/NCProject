@@ -1,14 +1,15 @@
 package com.ftn.nc.NCBackend.web.model;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+
+import com.ftn.nc.NCBackend.web.enums.RecenzijaStatus;
 
 @Entity
 public class RevizijaRadaRecenzent {
@@ -26,16 +27,21 @@ public class RevizijaRadaRecenzent {
 	@Column(nullable = false)
 	private boolean zavrseno;
 	
+	@Enumerated(EnumType.STRING)
+	private RecenzijaStatus status;
+	
 	public RevizijaRadaRecenzent() {
 		super();
 	}
 
-	public RevizijaRadaRecenzent(Long id, Recenzent recenzent, RevizijaRada revizija, boolean zavrseno) {
+	public RevizijaRadaRecenzent(Long id, Recenzent recenzent, RevizijaRada revizija, boolean zavrseno,
+			RecenzijaStatus status) {
 		super();
 		this.id = id;
 		this.recenzent = recenzent;
 		this.revizija = revizija;
 		this.zavrseno = zavrseno;
+		this.status = status;
 	}
 
 	public Long getId() {
@@ -68,6 +74,14 @@ public class RevizijaRadaRecenzent {
 
 	public void setZavrseno(boolean zavrseno) {
 		this.zavrseno = zavrseno;
+	}
+
+	public RecenzijaStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(RecenzijaStatus status) {
+		this.status = status;
 	}
 
 }

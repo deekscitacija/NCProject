@@ -9,4 +9,8 @@ public interface RecenzentService {
 
 	public List<Recenzent> findAllByCasopis(Casopis casopis);
 	
+	public Recenzent findById(Long id);
+	
+	public Recenzent save(Recenzent recenzent);
+	
 }

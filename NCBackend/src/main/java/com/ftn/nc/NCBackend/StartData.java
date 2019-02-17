@@ -251,7 +251,7 @@ public class StartData {
 		List<NaucnaOblast> naucneOblasti3 = new ArrayList<>();
 		naucneOblasti3.add(no1);
 		naucneOblasti3.add(no3);
-		naucneOblasti2.add(no4);
+		naucneOblasti3.add(no4);
 		
 		List<NaucnaOblast> naucneOblasti4 = new ArrayList<>();
 		naucneOblasti4.add(no2);
@@ -260,7 +260,7 @@ public class StartData {
 		List<NaucnaOblast> naucneOblasti5 = new ArrayList<>();
 		naucneOblasti5.add(no1);
 		naucneOblasti5.add(no4);
-		naucneOblasti2.add(no6);
+		naucneOblasti5.add(no6);
 		
 		List<NaucnaOblastInfo> naucneOblastiI1 = new ArrayList<>();
 		naucneOblastiI1.add(noi1);
@@ -993,7 +993,7 @@ public class StartData {
 		
 		List<RevizijaRadaRecenzent> retVal = new ArrayList<>();
 		for(Recenzent recenzent : recenzenti) {
-			RevizijaRadaRecenzent rrr = new RevizijaRadaRecenzent(null, recenzent, revizija, false);
+			RevizijaRadaRecenzent rrr = new RevizijaRadaRecenzent(null, recenzent, revizija, false, null);
 			rrr = revizijaRadaRecenzentRepository.save(rrr);
 			retVal.add(rrr);
 		}

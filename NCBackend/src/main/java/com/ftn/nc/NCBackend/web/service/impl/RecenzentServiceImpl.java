@@ -22,4 +22,16 @@ public class RecenzentServiceImpl implements RecenzentService{
 		return recenzentRepository.findByCasopisiContaining(casopis);
 	}
 
+	@Override
+	public Recenzent findById(Long id) {
+		
+		return recenzentRepository.getOne(id);
+	}
+
+	@Override
+	public Recenzent save(Recenzent recenzent) {
+		
+		return recenzentRepository.save(recenzent);
+	}
+
 }

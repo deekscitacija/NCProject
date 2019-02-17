@@ -4,9 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,7 +22,6 @@ import com.ftn.nc.NCBackend.camunda.dto.RevizijaDTO;
 import com.ftn.nc.NCBackend.web.dto.IzdanjeDTO;
 import com.ftn.nc.NCBackend.web.dto.RadDTO;
 import com.ftn.nc.NCBackend.web.model.Izdanje;
-import com.ftn.nc.NCBackend.web.model.Komentar;
 import com.ftn.nc.NCBackend.web.model.Korisnik;
 import com.ftn.nc.NCBackend.web.model.NaucniRad;
 import com.ftn.nc.NCBackend.web.model.RevizijaRada;
