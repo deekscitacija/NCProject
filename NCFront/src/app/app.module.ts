@@ -46,6 +46,9 @@ import { TaskViewComponent } from './components/user-profile/task-view/task-view
 import { PaperInitialApprovalComponent } from './components/paper-initial-approval/paper-initial-approval.component';
 import { UploadOpetComponent } from './components/upload-opet/upload-opet.component';
 import { IzaberiRecenzenteComponent } from './components/izaberi-recenzente/izaberi-recenzente.component';
+import { RecenzijaPanelComponent } from './components/recenzija-panel/recenzija-panel.component';
+import { KomentarComponentComponent } from './components/komentar-component/komentar-component.component';
+import { AnalizaRecenzijaComponent } from './components/analiza-recenzija/analiza-recenzija.component';
 
 
 
@@ -77,7 +80,10 @@ import { IzaberiRecenzenteComponent } from './components/izaberi-recenzente/izab
     TaskViewComponent,
     PaperInitialApprovalComponent,
     UploadOpetComponent,
-    IzaberiRecenzenteComponent
+    IzaberiRecenzenteComponent,
+    RecenzijaPanelComponent,
+    KomentarComponentComponent,
+    AnalizaRecenzijaComponent
   ],
   imports: [
     BrowserModule,
@@ -127,6 +133,10 @@ import { IzaberiRecenzenteComponent } from './components/izaberi-recenzente/izab
       {
         path : 'naucna-centrala.com/upload-revizija',
         component : UploadOpetComponent
+      },
+      {
+        path : 'naucna-centrala.com/recenzija-panel',
+        component : RecenzijaPanelComponent
       },
       {
         path : 'naucna-centrala.com/izaberi-recenzente',

@@ -15,7 +15,7 @@
             </li>
         </ul>
         <div class="mx-auto">
-          <button class="btn btn-light btn-block" (click)="potvrdi()" [disabled]="izabraniRecenzenti.length < 2">Potvrdi</button>
+          <button class="btn btn-light btn-block" (click)="potvrdi()" [disabled]="izabraniRecenzenti.length < 2 && recenzenti.length >= 2">Potvrdi</button>
         </div>
     </div>
   </div>

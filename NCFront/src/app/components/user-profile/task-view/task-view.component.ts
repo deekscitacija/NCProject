@@ -83,6 +83,11 @@ export class TaskViewComponent implements OnInit {
       this.router.navigate(['naucna-centrala.com/izaberi-recenzente'], {queryParams : queryParams});
     }
 
+    if(taskInfo.taskName === 'Obavljanje recenzije'){
+      queryParams['revizijaId'] = variables.revizijaId;
+      this.router.navigate(['naucna-centrala.com/recenzija-panel'], {queryParams : queryParams});
+    }
+
   }
 
 

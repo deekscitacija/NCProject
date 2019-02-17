@@ -1,0 +1,53 @@
+<div class="row gap-top-md">
+  <div class="col-lg-2"></div>
+  <div class="col-lg-8 card blue-bg1">
+    <h4 align="center">Recenzija rada</h4>
+
+    <div class="radio-panel">
+        <div class="radio">
+            <label>
+                <input type="radio" name="status" [(ngModel)]="revizijaStatus" value="P">
+                <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+                Prihvati
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="status" [(ngModel)]="revizijaStatus" value="M">
+                <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+                Prihvati, manje ispravke
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="status" [(ngModel)]="revizijaStatus" value="U">
+                <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+                Uslovno prihvati
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="status" [(ngModel)]="revizijaStatus" value="O">
+                <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+                Odbij
+            </label>
+        </div>
+    </div>
+    <hr/>
+    <div class="komentar-panel">
+      <div class="row col-lg-11 form-control gap-top-sm move-left-sm" *ngFor="let komentar of komentari">
+        {{komentar.autor}} : {{komentar.tekst}}
+      </div>
+    </div>
+    <div>
+      <button class="btn btn-md btn-light col-lg-2 yellow-button" (click)="komentarisi()" *ngIf="!isKomentar">Novi komentar?</button>
+      <button class="btn btn-md btn-light col-lg-2 yellow-button" (click)="komentarisi()" *ngIf="isKomentar">Otkazi</button>
+    </div>
+    <div class="gap-top-md" *ngIf="isKomentar">
+        <app-komentar-component [revizijaId]="revizijaId"></app-komentar-component>
+    </div>
+    <div class="row gap-top-md"> 
+      <button class="btn btn-light btn-md col-lg-8 move-left" [disabled]="!revizijaStatus" (click)="potvrdi()">Zavrsi recenziju</button>
+    </div>
+  </div>
+</div>

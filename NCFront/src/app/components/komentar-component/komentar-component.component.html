@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="col-lg-3"> 
+    <label ><b>Vidljivost komentara :</b></label>
+  </div>
+  <div class="col-lg-3"> 
+      <div class="radio">
+          <label>
+              <input type="radio" name="vidljivost" [(ngModel)]="komentar.vidljivost" value="SVI">
+              <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+              Svi
+          </label>
+      </div>
+  </div>
+  <div class="col-lg-3"> 
+      <div class="radio">
+          <label>
+              <input type="radio" name="vidljivost" [(ngModel)]="komentar.vidljivost" value="SVI" value="RECENZENTI">
+              <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+              Urednici/recenzenti
+          </label>
+      </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-1"></div>
+  <div class="col-lg-10">
+    <textarea placeholder="Tekst komentara..." class="form-control" rows="4" [(ngModel)]="komentar.tekst" value="SVI"></textarea>
+    <button class="btn btn-success btn-circle-md gap-left-xxs gap-top-sm" (click)="potvrdi()"><i class="fas fa-check"></i></button>
+  </div>
+</div>
