@@ -1,5 +1,6 @@
 package com.ftn.nc.NCBackend.web.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -77,6 +78,22 @@ public class NaucniRad {
 		this.apstrakt = revizija.getApstrakt();
 		this.kljucneReci = revizija.getApstrakt();
 		this.putanja = revizija.getPutanja();
+		this.naucnaOblast = revizija.getNaucnaOblast();
+		this.revizija = revizija;
+		this.cena = cena;
+		this.koncentratorKod = koncentratorKod;
+	}
+	
+	public NaucniRad(RevizijaRada revizija, Double cena, String putanja, String koncentratorKod) {
+		super();
+		this.revizija = revizija;
+		this.naslov = revizija.getNaslov();
+		List<Koautor> tempKoautori = new ArrayList<>();
+		tempKoautori.addAll(revizija.getKoAutori());
+		this.koAutori = tempKoautori;
+		this.apstrakt = revizija.getApstrakt();
+		this.kljucneReci = revizija.getApstrakt();
+		this.putanja = putanja;
 		this.naucnaOblast = revizija.getNaucnaOblast();
 		this.revizija = revizija;
 		this.cena = cena;

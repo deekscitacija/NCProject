@@ -90,7 +90,7 @@ public class RevizijaController {
 		List<RevizijaRadaRecenzentDTO> retVal = new ArrayList<>();
 		
 		for(RevizijaRadaRecenzent rrr : revizija.getRecenzentiRevizija()) {
-			if(rrr.isAktuelno()) {
+			if(rrr.isZavrseno()) {
 				Korisnik recenzent = korisnikService.getById(rrr.getRecenzent().getId());
 				retVal.add(new RevizijaRadaRecenzentDTO(rrr, recenzent));
 			}

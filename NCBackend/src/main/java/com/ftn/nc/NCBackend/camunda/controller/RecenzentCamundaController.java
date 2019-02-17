@@ -212,7 +212,7 @@ public class RecenzentCamundaController {
 		RevizijaRadaRecenzent recenzijaInfo = null;
 		
 		for(RevizijaRadaRecenzent tempR : revizija.getRecenzentiRevizija()) {
-			if(tempR.getRecenzent().getId() == recenzent.getId()) {
+			if(tempR.getRecenzent().getId() == recenzent.getId() && tempR.isAktuelno()) {
 				recenzijaInfo = tempR;
 				break;
 			}

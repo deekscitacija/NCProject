@@ -62,9 +62,9 @@ public class RecenzijaIsteklaMessage implements JavaDelegate {
 				  "<h3>Recenzenti koji nizu obavizi recenziju za objavu rada u casopisu \""+casopis.getNaziv()+"\" : </h3>";
 				  
 		for(RevizijaRadaRecenzent rrr: revizija.getRecenzentiRevizija()) {
+			rrr.setAktuelno(false);
+			rrr = revizijaRadaRecenzentRepository.save(rrr);
 			if(!rrr.isZavrseno()) {
-				rrr.setAktuelno(false);
-				rrr = revizijaRadaRecenzentRepository.save(rrr);
 				Korisnik recenzent = korisnikRepository.getOne(rrr.getRecenzent().getId());
 				poruka += "<p>"+recenzent.getIme()+" "+recenzent.getPrezime()+", "+recenzent.getEmail()+".";
 			}
