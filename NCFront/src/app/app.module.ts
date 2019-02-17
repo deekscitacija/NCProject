@@ -23,6 +23,8 @@ import { ListToStringPipe } from './pipes/list-to-string.pipe';
 import { YesNoPipe } from './pipes/yes-no.pipe';
 import { SubstringPipe } from './pipes/substring.pipe';
 import { DateDisplayPipe } from './pipes/date-display.pipe';
+import { RevizijaStatusPipe } from './pipes/revizija-status.pipe';
+import { TransactionTypePipe } from './pipes/transaction-type.pipe';
 
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { MagazineListComponent } from './components/magazine-list/magazine-list.component';
@@ -37,7 +39,6 @@ import { IzdanjePreviewComponent } from './components/izdanje-preview/izdanje-pr
 import { PaperPreviewComponent } from './components/paper-preview/paper-preview.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { TransactionPanelComponent } from './components/user-profile/transaction-panel/transaction-panel.component';
-import { TransactionTypePipe } from './pipes/transaction-type.pipe';
 import { SuccessComponent } from './components/success/success.component';
 import { FailComponent } from './components/fail/fail.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
@@ -49,6 +50,7 @@ import { IzaberiRecenzenteComponent } from './components/izaberi-recenzente/izab
 import { RecenzijaPanelComponent } from './components/recenzija-panel/recenzija-panel.component';
 import { KomentarComponentComponent } from './components/komentar-component/komentar-component.component';
 import { AnalizaRecenzijaComponent } from './components/analiza-recenzija/analiza-recenzija.component';
+
 
 
 
@@ -83,7 +85,8 @@ import { AnalizaRecenzijaComponent } from './components/analiza-recenzija/analiz
     IzaberiRecenzenteComponent,
     RecenzijaPanelComponent,
     KomentarComponentComponent,
-    AnalizaRecenzijaComponent
+    AnalizaRecenzijaComponent,
+    RevizijaStatusPipe
   ],
   imports: [
     BrowserModule,
@@ -137,6 +140,10 @@ import { AnalizaRecenzijaComponent } from './components/analiza-recenzija/analiz
       {
         path : 'naucna-centrala.com/recenzija-panel',
         component : RecenzijaPanelComponent
+      },
+      {
+        path : 'naucna-centrala.com/recenzije-analiza',
+        component : AnalizaRecenzijaComponent
       },
       {
         path : 'naucna-centrala.com/izaberi-recenzente',

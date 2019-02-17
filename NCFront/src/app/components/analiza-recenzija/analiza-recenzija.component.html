@@ -1,3 +1,58 @@
-<p>
-  analiza-recenzija works!
-</p>
+<div class="row gap-top-md">
+  <div class="col-lg-2"></div>
+  <div class="col-lg-8 card blue-bg1">
+    <h4 align="center" class="gap-top-sm">Pregled recenzija:</h4>
+
+    <div class="komentar-panel gap-top-sm">
+        <div class="row col-lg-11 form-control gap-top-sm move-left-sm" *ngFor="let komentar of komentari">
+          <b>{{komentar.autor}}</b> : {{komentar.tekst}}
+        </div>
+    </div>
+    <hr/>
+    <h4 align="center" class="gap-top-sm">Ocene recenzenata:</h4>
+    <div *ngFor="let ocena of ocene">
+      <div class="card white-bg1 gap-top-sm col-lg-6">
+          <label class="move-left-sm"><b>Recenzent:</b> {{ocena.recenzent}}</label>
+          <label class="move-left-sm"><b>Ocena:</b> {{ocena.status | revizijaStatus}}</label>
+      </div>
+    </div>
+    <hr/>
+    <h4 align="center" class="gap-top-sm">Konacna odluka:</h4>
+    <div class="card white-bg1 gap-top-sm">
+        <div class="radio-panel">
+            <div class="radio">
+                <label>
+                    <input type="radio" name="status" [(ngModel)]="revizijaStatus" value="P">
+                    <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+                    <b>Prihvati</b>
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="status" [(ngModel)]="revizijaStatus" value="M">
+                    <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+                    <b>Prihvati, manje ispravke</b>
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="status" [(ngModel)]="revizijaStatus" value="U">
+                    <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+                    <b>Uslovno prihvati</b>
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="status" [(ngModel)]="revizijaStatus" value="O">
+                    <span class="cr"><i class="cr-icon fa fa-circle"></i></span>
+                    <b>Odbij</b>
+                </label>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div>
+        <button class="btn btn-light yellow-button btn-md col-lg-8 move-left" (click)="potvrdi()">Potvrdi odluku</button>
+    </div>
+  </div>
+</div>

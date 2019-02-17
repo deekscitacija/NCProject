@@ -59,14 +59,16 @@ export class RecenzijaService {
     params = params.append("taskId", taskId);
     params = params.append("revizijaStatus", revizijaStatus);
 
-    console.log(revizijaId);
-    console.log(processId);
-    console.log(taskId);
-    console.log(revizijaStatus);
-    console.log(localStorage.getItem('token'));
-
     return this.http.get("/app/submitRecenzija", {params : params, headers : this.tokenService.headerSetup()});
 
+  }
+
+  getOcene(revizijaId: number){
+
+    let params = new HttpParams();
+    params = params.append("revizijaId", String(revizijaId));
+
+    return this.http.get("/app/getGotovaRevizijaInfo", {params : params});
   }
 
 }
