@@ -17,7 +17,7 @@ public class TipKorisnika {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(nullable = false, length = 2)
+	@Column(nullable = false, length = 2, unique = true)
 	private String kod;
 	
 	@Column(nullable = false, length = 120)

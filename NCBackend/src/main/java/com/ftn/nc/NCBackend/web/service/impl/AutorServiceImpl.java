@@ -19,4 +19,10 @@ public class AutorServiceImpl implements AutorService {
 		return autorRepository.getOne(id);
 	}
 
+	@Override
+	public Autor save(Autor autor) {
+		
+		return autorRepository.save(autor);
+	}
+
 }

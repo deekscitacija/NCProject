@@ -10,6 +10,7 @@ import java.util.Set;
 import javax.annotation.PostConstruct;
 
 import org.camunda.bpm.engine.IdentityService;
+import org.camunda.bpm.engine.identity.Group;
 import org.camunda.bpm.engine.identity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -239,17 +240,14 @@ public class StartData {
 		
 		List<NaucnaOblast> naucneOblasti1 = new ArrayList<>();
 		naucneOblasti1.add(no1);
-		naucneOblasti1.add(no2);
 		naucneOblasti1.add(no6);
 		
 		List<NaucnaOblast> naucneOblasti2 = new ArrayList<>();
 		naucneOblasti2.add(no2);
-		naucneOblasti2.add(no3);
 		naucneOblasti2.add(no1);
 		naucneOblasti2.add(no5);
 		
 		List<NaucnaOblast> naucneOblasti3 = new ArrayList<>();
-		naucneOblasti3.add(no1);
 		naucneOblasti3.add(no3);
 		naucneOblasti3.add(no4);
 		
@@ -258,23 +256,19 @@ public class StartData {
 		naucneOblasti4.add(no3);
 		
 		List<NaucnaOblast> naucneOblasti5 = new ArrayList<>();
-		naucneOblasti5.add(no1);
 		naucneOblasti5.add(no4);
-		naucneOblasti5.add(no6);
+		naucneOblasti5.add(no5);
 		
 		List<NaucnaOblastInfo> naucneOblastiI1 = new ArrayList<>();
 		naucneOblastiI1.add(noi1);
-		naucneOblastiI1.add(noi2);
 		naucneOblastiI1.add(noi6);
 		
 		List<NaucnaOblastInfo> naucneOblastiI2 = new ArrayList<>();
 		naucneOblastiI2.add(noi2);
-		naucneOblastiI2.add(noi3);
 		naucneOblastiI2.add(noi1);
 		naucneOblastiI2.add(noi5);
 		
 		List<NaucnaOblastInfo> naucneOblastiI3 = new ArrayList<>();
-		naucneOblastiI3.add(noi1);
 		naucneOblastiI3.add(noi3);
 		naucneOblastiI3.add(noi4);
 		
@@ -283,9 +277,8 @@ public class StartData {
 		naucneOblastiI4.add(noi3);
 		
 		List<NaucnaOblastInfo> naucneOblastiI5 = new ArrayList<>();
-		naucneOblastiI5.add(noi1);
 		naucneOblastiI5.add(noi4);
-		naucneOblastiI5.add(noi6);
+		naucneOblastiI5.add(noi5);
 		
 		// *** Korisnici *** //
 		
@@ -608,46 +601,101 @@ public class StartData {
 		User u38 = createCamundaUser(k38);
 		User u39 = createCamundaUser(k39);
 		
+		Group autori = identityService.newGroup("AUTORI");
+		autori.setName("Autori");
+		identityService.saveGroup(autori);
+		
+		Group recenzenti = identityService.newGroup("RECENZENTI");
+		recenzenti.setName("Recenzenti");
+		identityService.saveGroup(recenzenti);
+		
+		Group urednici = identityService.newGroup("UREDNICI");
+		urednici.setName("Urednici");
+		identityService.saveGroup(urednici);
+		
+		Group regKor = identityService.newGroup("KORISNICI");
+		regKor.setName("Registrovani korisnici");
+		identityService.saveGroup(regKor);
+		
 		identityService.saveUser(u);
 		identityService.saveUser(u1);
+		identityService.createMembership(u1.getId(), autori.getId());
 		identityService.saveUser(u2);
+		identityService.createMembership(u2.getId(), regKor.getId());
 		identityService.saveUser(u3);
+		identityService.createMembership(u3.getId(), recenzenti.getId());
 		identityService.saveUser(u4);
+		identityService.createMembership(u4.getId(), urednici.getId());
 		identityService.saveUser(u5);
+		identityService.createMembership(u5.getId(), recenzenti.getId());
 		identityService.saveUser(u6);
+		identityService.createMembership(u6.getId(), recenzenti.getId());
 		identityService.saveUser(u7);
+		identityService.createMembership(u7.getId(), recenzenti.getId());
 		identityService.saveUser(u8);
+		identityService.createMembership(u8.getId(), recenzenti.getId());
 		identityService.saveUser(u9);
+		identityService.createMembership(u9.getId(), recenzenti.getId());
 		identityService.saveUser(u10);
+		identityService.createMembership(u10.getId(), recenzenti.getId());
 		identityService.saveUser(u11);
+		identityService.createMembership(u11.getId(), autori.getId());
 		identityService.saveUser(u12);
+		identityService.createMembership(u12.getId(), autori.getId());
 		identityService.saveUser(u13);
+		identityService.createMembership(u13.getId(), autori.getId());
 		identityService.saveUser(u14);
+		identityService.createMembership(u14.getId(), urednici.getId());
 		identityService.saveUser(u15);
+		identityService.createMembership(u15.getId(), urednici.getId());
 		identityService.saveUser(u16);
+		identityService.createMembership(u16.getId(), urednici.getId());
 		identityService.saveUser(u17);
+		identityService.createMembership(u17.getId(), urednici.getId());
 		identityService.saveUser(u18);
+		identityService.createMembership(u18.getId(), urednici.getId());
 		identityService.saveUser(u19);
+		identityService.createMembership(u19.getId(), urednici.getId());
 		identityService.saveUser(u20);
+		identityService.createMembership(u20.getId(), recenzenti.getId());
 		identityService.saveUser(u21);
+		identityService.createMembership(u21.getId(), recenzenti.getId());
 		identityService.saveUser(u22);
+		identityService.createMembership(u22.getId(), recenzenti.getId());
 		identityService.saveUser(u23);
+		identityService.createMembership(u23.getId(), recenzenti.getId());
 		identityService.saveUser(u24);
+		identityService.createMembership(u24.getId(), recenzenti.getId());
 		identityService.saveUser(u25);
+		identityService.createMembership(u25.getId(), recenzenti.getId());
 		identityService.saveUser(u26);
+		identityService.createMembership(u26.getId(), recenzenti.getId());
 		identityService.saveUser(u27);
+		identityService.createMembership(u27.getId(), recenzenti.getId());
 		identityService.saveUser(u28);
+		identityService.createMembership(u28.getId(), recenzenti.getId());
 		identityService.saveUser(u29);
+		identityService.createMembership(u29.getId(), recenzenti.getId());
 		identityService.saveUser(u30);
+		identityService.createMembership(u30.getId(), recenzenti.getId());
 		identityService.saveUser(u31);
+		identityService.createMembership(u31.getId(), urednici.getId());
 		identityService.saveUser(u32);
+		identityService.createMembership(u32.getId(), urednici.getId());
 		identityService.saveUser(u33);
+		identityService.createMembership(u33.getId(), urednici.getId());
 		identityService.saveUser(u34);
+		identityService.createMembership(u34.getId(), urednici.getId());
 		identityService.saveUser(u35);
+		identityService.createMembership(u35.getId(), urednici.getId());
 		identityService.saveUser(u36);
+		identityService.createMembership(u36.getId(), urednici.getId());
 		identityService.saveUser(u37);
+		identityService.createMembership(u37.getId(), urednici.getId());
 		identityService.saveUser(u38);
+		identityService.createMembership(u38.getId(), urednici.getId());
 		identityService.saveUser(u39);
+		identityService.createMembership(u39.getId(), urednici.getId());
 		
 		List<Recenzent> recenzenti1 = new ArrayList<>();
 		recenzenti1.add(rec1);

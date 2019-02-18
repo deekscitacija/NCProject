@@ -45,4 +45,10 @@ public class KorisnikServiceImpl implements KorisnikService{
 		return korisnikRepository.findByEmail(email);
 	}
 
+	@Override
+	public Korisnik save(Korisnik korisnik) {
+		
+		return korisnikRepository.save(korisnik);
+	}
+
 }

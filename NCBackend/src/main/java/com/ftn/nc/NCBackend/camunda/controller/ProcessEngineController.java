@@ -5,13 +5,17 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.camunda.bpm.engine.IdentityService;
+import org.camunda.bpm.engine.identity.User;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +25,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
@@ -39,10 +44,15 @@ import com.ftn.nc.NCBackend.camunda.dto.VariablesDTO;
 import com.ftn.nc.NCBackend.camunda.service.CommonCamundaService;
 import com.ftn.nc.NCBackend.security.TokenUtils;
 import com.ftn.nc.NCBackend.web.dto.FileMessageResourceDTO;
+import com.ftn.nc.NCBackend.web.model.Autor;
 import com.ftn.nc.NCBackend.web.model.Casopis;
 import com.ftn.nc.NCBackend.web.model.Korisnik;
+import com.ftn.nc.NCBackend.web.model.TipKorisnika;
+import com.ftn.nc.NCBackend.web.service.AutorService;
 import com.ftn.nc.NCBackend.web.service.CasopisService;
+import com.ftn.nc.NCBackend.web.service.GradService;
 import com.ftn.nc.NCBackend.web.service.KorisnikService;
+import com.ftn.nc.NCBackend.web.service.TipKorisnikaService;
 
 @RestController
 @RequestMapping(value = "/app/")
@@ -55,6 +65,18 @@ public class ProcessEngineController {
 	private KorisnikService korisnikService;
 	
 	@Autowired
+	private AutorService autorService;
+	
+	@Autowired
+	private TipKorisnikaService tipKorisnikaService;
+	
+	@Autowired
+	private GradService gradService;
+	
+	@Autowired
+	private IdentityService identityService;
+	
+	@Autowired
 	private CasopisService casopisService;
 
 	@Autowired
@@ -62,6 +84,10 @@ public class ProcessEngineController {
 	
 	@Autowired
 	private CommonCamundaService commonCamundaService;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 
 	@RequestMapping(value = "deploySve", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> deploySve() {
@@ -152,6 +178,18 @@ public class ProcessEngineController {
 		
 		return restTemplate.postForEntity(processEngineRootPath + "process-definition/key/ObjavaRadaProcess/start", entity, String.class);
 	}
+	
+
+	@RequestMapping(value = "dobaviTrenutniTask", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> dobaviTrenutniTask(@RequestParam(value = "processId", required = true) String processId) {
+		
+		try {
+			return new ResponseEntity<String>(commonCamundaService.getCurrentTaskByProcessInstanceId(processId), HttpStatus.OK);
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "dobaviFormuTask", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -202,6 +240,22 @@ public class ProcessEngineController {
 		if (result.hasErrors()) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
+		
+		Set<TipKorisnika> tip = new HashSet<>();
+		tip.add(tipKorisnikaService.getByKod("AU"));
+		
+		Korisnik noviAutor = new Korisnik(null, params.getEmail(), passwordEncoder.encode(params.getLozinka()), params.getIme(), params.getPrezime(), gradService.getById(new Long(1)), tip, null, null, null, null);
+		noviAutor = korisnikService.save(noviAutor);
+		
+		Autor autor = new Autor(noviAutor.getId(), null, null);
+		autor = autorService.save(autor);
+		
+		noviAutor.setAutor(autor);
+		noviAutor = korisnikService.save(noviAutor);
+		
+		User user = createCamundaUser(noviAutor);
+		identityService.saveUser(user);
+		identityService.createMembership(user.getId(), "AUTORI");
 
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
@@ -218,14 +272,22 @@ public class ProcessEngineController {
 			variables.put("drzava", this.buildObject(params.getDrzava()));
 			variables.put("grad", this.buildObject(params.getGrad()));
 			variables.put("username", this.buildObject(params.getEmail()));
+			variables.put("registracijaUser", this.buildObject(noviAutor.getId().toString()));
 
 			requestVariable.put("variables", variables);
 		} catch (JSONException e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-
+		
+		try {
+			commonCamundaService.setProcessVariable(params.getProcessId(), "autorRada", noviAutor.getId().toString(), "string");
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
 		HttpEntity<String> entity = new HttpEntity<String>(requestVariable.toString(), headers);
-		restTemplate.postForEntity(processEngineRootPath + "task/" + params.getTaskId() + "/complete", entity,
+		restTemplate.postForEntity(processEngineRootPath + "task/" + params.getTaskId() + "/submit-form", entity,
 				String.class);
 
 		return new ResponseEntity<Boolean>(true, HttpStatus.OK);
@@ -254,6 +316,15 @@ public class ProcessEngineController {
 		JSONObject objValue = new JSONObject();
 		objValue.put("value", newValue);
 		return objValue;
+	}
+	
+	private User createCamundaUser(Korisnik k) {
+		User retVal = identityService.newUser(k.getId().toString());
+		retVal.setEmail(k.getEmail());
+		retVal.setFirstName(k.getIme());
+		retVal.setLastName(k.getPrezime());
+		retVal.setPassword(k.getLozinka());
+		return retVal;
 	}
 
 }

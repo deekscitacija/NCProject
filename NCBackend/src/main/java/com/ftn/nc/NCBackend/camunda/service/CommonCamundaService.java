@@ -44,6 +44,35 @@ public class CommonCamundaService {
 		return restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, String.class);
 	}
 	
+	public String getCurrentTaskByProcessInstanceId(String processInstanceId) throws JSONException{
+		
+		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+
+		HttpEntity<String> entity = new HttpEntity<String>(headers);
+		UriComponentsBuilder builderProcess = UriComponentsBuilder.fromHttpUrl(processEngineRootPath + "process-instance")
+		        .queryParam("superProcessInstance", processInstanceId);
+		       
+		HttpsURLConnection.setDefaultHostnameVerifier ((hostname, session) -> true);
+		
+		String processesInfo = restTemplate.exchange(builderProcess.toUriString(), HttpMethod.GET, entity, String.class).getBody();
+		
+		JSONArray processList = new JSONArray(processesInfo);
+		JSONObject processInfo = processList.getJSONObject(0);
+		String registerProcessId = (String) processInfo.get("id");
+		
+		UriComponentsBuilder builderTasks = UriComponentsBuilder.fromHttpUrl(processEngineRootPath + "task")
+		        .queryParam("processInstanceId", registerProcessId);
+		
+		String tasksInfo = restTemplate.exchange(builderTasks.toUriString(), HttpMethod.GET, entity, String.class).getBody();
+		
+		JSONArray taskList = new JSONArray(tasksInfo);
+		JSONObject taskInfo = taskList.getJSONObject(0);
+		String taskId = taskInfo.getString("id");
+		return taskId;
+	}
+	
 	public ResponseEntity<List<TaskDTO>> getTasksByAssignee(String assignee){
 		
 		RestTemplate restTemplate = new RestTemplate();

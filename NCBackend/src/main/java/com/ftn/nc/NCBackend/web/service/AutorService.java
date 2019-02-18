@@ -6,4 +6,6 @@ public interface AutorService {
 
 	public Autor getById(Long id);
 	
+	public Autor save(Autor autor);
+	
 }

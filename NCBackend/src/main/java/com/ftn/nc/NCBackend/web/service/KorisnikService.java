@@ -13,4 +13,6 @@ public interface KorisnikService {
 	
 	public Korisnik getUserFromToken(ServletRequest request, TokenUtils tokenUtils);
 	
+	public Korisnik save(Korisnik korisnik);
+	
 }

@@ -25,20 +25,11 @@ public class RegistracijaDTO {
 	@NotNull
 	private String taskId;
 	
+	@NotNull
+	private String processId;
+	
 	public RegistracijaDTO() {
 		super();
-	}
-
-	public RegistracijaDTO(String ime, String prezime, String lozinka, String drzava, String grad, String email,
-			String taskId) {
-		super();
-		this.ime = ime;
-		this.prezime = prezime;
-		this.lozinka = lozinka;
-		this.drzava = drzava;
-		this.grad = grad;
-		this.email = email;
-		this.taskId = taskId;
 	}
 
 	public String getIme() {
@@ -95,6 +86,14 @@ public class RegistracijaDTO {
 
 	public void setTaskId(String taskId) {
 		this.taskId = taskId;
+	}
+
+	public String getProcessId() {
+		return processId;
+	}
+
+	public void setProcessId(String processId) {
+		this.processId = processId;
 	}
 	
 }
