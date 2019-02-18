@@ -1,3 +1,31 @@
-<p>
-  register works!
-</p>
+<div class="row gap-top-md">
+  <div class="col-lg-3"></div>
+  <div class="col-lg-6 card blue-bg1">
+
+    <div class="container">
+        <form #f="ngForm" (ngSubmit)="onSubmit(f.value, f)" ngNativeValidate>
+            <fieldset>
+
+            <legend class="leg title-text-md" align="center"><strong>Unesite podatke: </strong></legend>
+
+            <div *ngFor="let field of formFields" >
+                <div class="form-group row">
+                    <div class="col-md-10 mx-auto">
+                      <label for={{field.key}}>{{field.key}}</label>
+                      <input type="text" class="form-control" name={{field.key}} ngModel *ngIf="field.dataType=='String' && field.key!='lozinka'" >
+                      <input type="password" class="form-control" name={{field.key}} ngModel  *ngIf="field.dataType=='String' && field.key==='lozinka'" >
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group row">
+                <div class="col-md-10 mx-auto">
+                  <button type="submit" class="logregBtn btn btn-light btn-md btn-block" name="submitPaperBtn" >Posalji</button>
+                </div>
+            </div>
+
+            </fieldset>
+        </form>
+    </div>
+  </div>
+</div>

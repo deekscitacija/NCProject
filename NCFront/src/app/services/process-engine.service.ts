@@ -15,17 +15,22 @@ export class ProcessEngineService {
     return this.http.get("/app/dobaviFormuTask", {params : params});
   }
 
+  submitTaskForm = function(val: any){
+    
+    return this.http.post("/app/registrujTask", val);
+  }
+
   pokreniObjavu(magazineId: number){
 
     var params = new HttpParams();
     params = params.append('magazineId', String(magazineId));
     
-    return this.http.get("/app/pokreniObjavu", {params : params, headers : this.tokenService.headerSetup()})
+    return this.http.get("/app/pokreniObjavu", {params : params, headers : this.tokenService.headerSetup()});
   }
 
   getTaskList(){
 
-    return this.http.get("/app/getTaskForAssignee", {headers : this.tokenService.headerSetup()})
+    return this.http.get("/app/getTaskForAssignee", {headers : this.tokenService.headerSetup()});
   }
 
   getVariableList(processInstanceId: string){
@@ -33,7 +38,15 @@ export class ProcessEngineService {
     var params = new HttpParams();
     params = params.append('processInstanceId', processInstanceId);
     
-    return this.http.get("/app/getProcessVariables", {params : params})
+    return this.http.get("/app/getProcessVariables", {params : params});
+  }
+
+  getCurrentTask(processId: string){
+
+    var params = new HttpParams();
+    params = params.append('processId', processId);
+    
+    return this.http.get("/app/dobaviTrenutniTask", {params : params, responseType: 'text'})
   }
 
 }

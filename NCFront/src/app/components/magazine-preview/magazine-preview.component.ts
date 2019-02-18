@@ -62,7 +62,11 @@ export class MagazinePreviewComponent implements OnInit {
     this.processEngineService.pokreniObjavu(this.casopis.id).subscribe(
       (res: any) => {
         queryParams['processId'] = res.id;
-        this.router.navigate(['naucna-centrala.com/novi-rad'], {queryParams : queryParams});
+        if(localStorage.getItem('token')){
+          this.router.navigate(['naucna-centrala.com/novi-rad'], {queryParams : queryParams});
+        }else{
+          this.router.navigate(['naucna-centrala.com/registracija'], {queryParams : queryParams});
+        }
       },
       (error: any) => {
         alert('Greska!')
