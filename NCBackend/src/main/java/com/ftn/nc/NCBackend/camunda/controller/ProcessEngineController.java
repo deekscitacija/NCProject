@@ -16,6 +16,7 @@ import javax.validation.Valid;
 
 import org.camunda.bpm.engine.IdentityService;
 import org.camunda.bpm.engine.identity.User;
+import org.camunda.bpm.engine.rest.dto.task.TaskDto;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,6 @@ import org.springframework.web.client.RestTemplate;
 import com.ftn.nc.NCBackend.camunda.dto.FormFieldDTO;
 import com.ftn.nc.NCBackend.camunda.dto.FormFieldsDTO;
 import com.ftn.nc.NCBackend.camunda.dto.RegistracijaDTO;
-import com.ftn.nc.NCBackend.camunda.dto.TaskDTO;
 import com.ftn.nc.NCBackend.camunda.dto.VariablesDTO;
 import com.ftn.nc.NCBackend.camunda.service.CommonCamundaService;
 import com.ftn.nc.NCBackend.security.TokenUtils;
@@ -181,10 +181,10 @@ public class ProcessEngineController {
 	
 
 	@RequestMapping(value = "dobaviTrenutniTask", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> dobaviTrenutniTask(@RequestParam(value = "processId", required = true) String processId) {
+	public ResponseEntity<TaskDto> dobaviTrenutniTask(@RequestParam(value = "processId", required = true) String processId) {
 		
 		try {
-			return new ResponseEntity<String>(commonCamundaService.getCurrentTaskByProcessInstanceId(processId), HttpStatus.OK);
+			return new ResponseEntity<TaskDto>(commonCamundaService.getCurrentTaskByProcessInstanceId(processId), HttpStatus.OK);
 		} catch (JSONException e) {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -272,7 +272,6 @@ public class ProcessEngineController {
 			variables.put("drzava", this.buildObject(params.getDrzava()));
 			variables.put("grad", this.buildObject(params.getGrad()));
 			variables.put("username", this.buildObject(params.getEmail()));
-			variables.put("registracijaUser", this.buildObject(noviAutor.getId().toString()));
 
 			requestVariable.put("variables", variables);
 		} catch (JSONException e) {
@@ -280,6 +279,7 @@ public class ProcessEngineController {
 		}
 		
 		try {
+			System.out.println(params.getProcessId());
 			commonCamundaService.setProcessVariable(params.getProcessId(), "autorRada", noviAutor.getId().toString(), "string");
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -294,7 +294,7 @@ public class ProcessEngineController {
 	}
 	
 	@RequestMapping(value = "getTaskForAssignee", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<TaskDTO>> getTasksForAssignee(HttpServletRequest request){
+	public ResponseEntity<List<TaskDto>> getTasksForAssignee(HttpServletRequest request){
 		
 		Korisnik korisnik = korisnikService.getUserFromToken(request, tokenUtils);
 		
@@ -302,7 +302,7 @@ public class ProcessEngineController {
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
 		
-		return commonCamundaService.getTasksByAssignee(korisnik.getId().toString());
+		return new ResponseEntity<List<TaskDto>>(commonCamundaService.getTasksByAssignee(korisnik.getId().toString()), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "getProcessVariables", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

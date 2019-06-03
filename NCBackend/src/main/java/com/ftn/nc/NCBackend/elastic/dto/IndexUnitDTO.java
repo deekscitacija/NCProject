@@ -7,7 +7,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ftn.nc.NCBackend.web.dto.KorisnikDTO;
 import com.ftn.nc.NCBackend.web.model.NaucnaOblast;
-import com.ftn.nc.NCBackend.web.model.Recenzent;
 
 
 public class IndexUnitDTO {

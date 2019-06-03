@@ -1,5 +1,7 @@
 package com.ftn.nc.NCBackend.elastic.model;
 
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
@@ -25,6 +27,9 @@ public class RecenzentInfo {
 	@Field(type = FieldType.text)
 	private String mesto;
 	
+	@Field(type = FieldType.Nested)
+	private List<CasopisInfo> casopisi;
+	
 	@GeoPointField
 	private GeoPoint lokacija;
 
@@ -41,13 +46,14 @@ public class RecenzentInfo {
 		this.lokacija = lokacija;
 	}
 	
-	public RecenzentInfo(Korisnik korisnik) {
+	public RecenzentInfo(Korisnik korisnik, List<CasopisInfo> casopisi) {
 		super();
 		this.id = korisnik.getId().toString();
 		this.ime = korisnik.getIme();
 		this.prezime = korisnik.getPrezime();
 		this.mesto = korisnik.getGrad().getNaziv();
 		this.lokacija = new GeoPoint(korisnik.getGrad().getLat(), korisnik.getGrad().getLon());
+		this.casopisi = casopisi;
 	}
 
 	public String getId() {
@@ -88,6 +94,14 @@ public class RecenzentInfo {
 
 	public void setLokacija(GeoPoint lokacija) {
 		this.lokacija = lokacija;
+	}
+
+	public List<CasopisInfo> getCasopisi() {
+		return casopisi;
+	}
+
+	public void setCasopisi(List<CasopisInfo> casopisi) {
+		this.casopisi = casopisi;
 	}
 	
 }

@@ -2,7 +2,6 @@ package com.ftn.nc.NCBackend.web.dto;
 
 
 import java.util.List;
-import java.util.Set;
 
 import com.ftn.nc.NCBackend.web.model.Casopis;
 import com.ftn.nc.NCBackend.web.model.Korisnik;

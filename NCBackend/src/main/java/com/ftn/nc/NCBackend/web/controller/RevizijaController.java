@@ -20,7 +20,6 @@ import com.ftn.nc.NCBackend.web.model.Komentar;
 import com.ftn.nc.NCBackend.web.model.Korisnik;
 import com.ftn.nc.NCBackend.web.model.RevizijaRada;
 import com.ftn.nc.NCBackend.web.model.RevizijaRadaRecenzent;
-import com.ftn.nc.NCBackend.web.repository.KorisnikRepository;
 import com.ftn.nc.NCBackend.web.service.KorisnikService;
 import com.ftn.nc.NCBackend.web.service.RevizijaService;
 

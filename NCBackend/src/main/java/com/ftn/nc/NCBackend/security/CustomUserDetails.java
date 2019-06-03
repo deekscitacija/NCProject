@@ -1,4 +1,4 @@
-package com.ftn.nc.NCBackend.securityBeans;
+package com.ftn.nc.NCBackend.security;
 
 import java.util.Collection;
 

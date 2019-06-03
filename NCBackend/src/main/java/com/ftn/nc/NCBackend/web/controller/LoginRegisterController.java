@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ftn.nc.NCBackend.security.CustomUserDetailsFactory;
 import com.ftn.nc.NCBackend.security.TokenUtils;
-import com.ftn.nc.NCBackend.securityBeans.CustomUserDetailsFactory;
 import com.ftn.nc.NCBackend.web.dto.KorisnikDTO;
 import com.ftn.nc.NCBackend.web.dto.LoginDTO;
 import com.ftn.nc.NCBackend.web.model.Korisnik;

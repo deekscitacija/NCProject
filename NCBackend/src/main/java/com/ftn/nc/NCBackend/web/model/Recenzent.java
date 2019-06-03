@@ -1,9 +1,9 @@
 package com.ftn.nc.NCBackend.web.model;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -17,7 +17,7 @@ public class Recenzent {
 	@Id
 	private Long id;
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JsonBackReference
 	@JoinTable(name="CASOPIS_RECENZENT",
 	    joinColumns=@JoinColumn(name="recenzent_id"),

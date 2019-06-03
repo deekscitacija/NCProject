@@ -2,7 +2,6 @@ package com.ftn.nc.NCBackend.web.dto;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import com.ftn.nc.NCBackend.web.model.Izdanje;
 import com.ftn.nc.NCBackend.web.model.NaucnaOblast;

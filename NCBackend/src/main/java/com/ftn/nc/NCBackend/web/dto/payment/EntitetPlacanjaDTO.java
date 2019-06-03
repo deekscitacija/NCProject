@@ -1,7 +1,5 @@
 package com.ftn.nc.NCBackend.web.dto.payment;
 
-import javax.validation.constraints.NotNull;
-
 public class EntitetPlacanjaDTO {
 	
 	private String identifikacioniKod;

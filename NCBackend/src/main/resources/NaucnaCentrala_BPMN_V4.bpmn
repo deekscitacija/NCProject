@@ -18,10 +18,6 @@
         <bpmn:outgoing>SequenceFlow_1t82g4x</bpmn:outgoing>
       </bpmn:startEvent>
       <bpmn:callActivity id="Task_1sim2cy" name="Registracija" calledElement="RegistracijaProcess">
-        <bpmn:extensionElements>
-          <camunda:in source="autorRada" target="registracijaUser" />
-          <camunda:out source="autorRada" target="autorRada" />
-        </bpmn:extensionElements>
         <bpmn:incoming>SequenceFlow_10o9r19</bpmn:incoming>
         <bpmn:outgoing>SequenceFlow_00sr1p4</bpmn:outgoing>
       </bpmn:callActivity>

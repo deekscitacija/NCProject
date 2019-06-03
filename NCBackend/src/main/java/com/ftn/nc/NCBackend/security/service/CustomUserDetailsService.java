@@ -1,4 +1,4 @@
-package com.ftn.nc.NCBackend.securityService;
+package com.ftn.nc.NCBackend.security.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.ftn.nc.NCBackend.securityBeans.CustomUserDetailsFactory;
+import com.ftn.nc.NCBackend.security.CustomUserDetailsFactory;
 import com.ftn.nc.NCBackend.web.model.Korisnik;
 import com.ftn.nc.NCBackend.web.repository.KorisnikRepository;
 

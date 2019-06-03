@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ftn.nc.NCBackend.camunda.dto.RevizijaDTO;
 import com.ftn.nc.NCBackend.web.dto.IzdanjeDTO;
 import com.ftn.nc.NCBackend.web.dto.RadDTO;
 import com.ftn.nc.NCBackend.web.model.Izdanje;

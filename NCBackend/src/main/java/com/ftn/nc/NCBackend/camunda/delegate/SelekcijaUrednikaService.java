@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ftn.nc.NCBackend.web.model.Casopis;
-import com.ftn.nc.NCBackend.web.model.Urednik;
 import com.ftn.nc.NCBackend.web.repository.CasopisRepository;
 
 @Service

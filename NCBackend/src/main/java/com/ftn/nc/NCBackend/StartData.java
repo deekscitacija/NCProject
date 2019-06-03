@@ -16,10 +16,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import com.ftn.nc.NCBackend.constants.ProjectConstants;
 import com.ftn.nc.NCBackend.elastic.handler.PDFHandler;
+import com.ftn.nc.NCBackend.elastic.model.CasopisInfo;
 import com.ftn.nc.NCBackend.elastic.model.IndexUnit;
 import com.ftn.nc.NCBackend.elastic.model.NaucnaOblastInfo;
 import com.ftn.nc.NCBackend.elastic.model.RecenzentInfo;
+import com.ftn.nc.NCBackend.elastic.repository.CasopisInfoRepository;
 import com.ftn.nc.NCBackend.elastic.repository.IndexUnitRepository;
 import com.ftn.nc.NCBackend.elastic.repository.NaucnaOblastInfoRepository;
 import com.ftn.nc.NCBackend.elastic.repository.RecenzentInfoRepository;
@@ -45,7 +48,6 @@ import com.ftn.nc.NCBackend.web.repository.DrzavaRepository;
 import com.ftn.nc.NCBackend.web.repository.GradRepository;
 import com.ftn.nc.NCBackend.web.repository.IzdanjeRepository;
 import com.ftn.nc.NCBackend.web.repository.KoautorRepository;
-import com.ftn.nc.NCBackend.web.repository.KomentarRepository;
 import com.ftn.nc.NCBackend.web.repository.KorisnikRepository;
 import com.ftn.nc.NCBackend.web.repository.NaucnaOblastRepository;
 import com.ftn.nc.NCBackend.web.repository.NaucniRadRepository;
@@ -60,7 +62,8 @@ import com.ftn.nc.NCBackend.web.repository.UrednikRepository;
 //@Component
 public class StartData {
 	
-	public static final String LIBRARY_DIR_PATH = "D:\\TheMara\\Master PRNiI\\Naucna Centrala\\Biblioteka"; 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@Autowired
 	private AutorRepository autorRepository;
@@ -76,9 +79,6 @@ public class StartData {
 	
 	@Autowired
 	private IzdanjeRepository izdanjeRepository;
-	
-	@Autowired
-	private KomentarRepository komentarRepository;
 	
 	@Autowired
 	private KorisnikRepository korisnikRepository;
@@ -130,7 +130,8 @@ public class StartData {
 	private RecenzentInfoRepository recenzentInfoRepository;
 	
 	@Autowired
-	private PasswordEncoder passwordEncoder;
+	private CasopisInfoRepository casopisInfoRepository;
+	
 	
 	public StartData() {
 		
@@ -456,22 +457,6 @@ public class StartData {
 		rec17 = recenzentRepository.save(rec17);
 		rec18 = recenzentRepository.save(rec18);
 		
-		RecenzentInfo reci1 = new RecenzentInfo(k3);
-		RecenzentInfo reci2 = new RecenzentInfo(k5);
-		RecenzentInfo reci3 = new RecenzentInfo(k6);
-		RecenzentInfo reci4 = new RecenzentInfo(k7);
-		RecenzentInfo reci5 = new RecenzentInfo(k8);
-		RecenzentInfo reci6 = new RecenzentInfo(k9);	
-		RecenzentInfo reci7 = new RecenzentInfo(k10);
-		
-		reci1 = recenzentInfoRepository.save(reci1);
-		reci2 = recenzentInfoRepository.save(reci2);
-		reci3 = recenzentInfoRepository.save(reci3);
-		reci4 = recenzentInfoRepository.save(reci4);
-		reci5 = recenzentInfoRepository.save(reci5);
-		reci6 = recenzentInfoRepository.save(reci6);
-		reci7 = recenzentInfoRepository.save(reci7);
-		
 		k1.setAutor(autor1);
 		k2.setRegistrovaniKorisnik(registrovaniKorisnik);
 		k3.setRecenzent(rec1);
@@ -731,28 +716,6 @@ public class StartData {
 		recenzenti3.add(rec16);
 		recenzenti3.add(rec8);
 		
-		List<RecenzentInfo> recenzentiI1 = new ArrayList<>();
-		recenzentiI1.add(reci1);
-		recenzentiI1.add(reci3);
-		recenzentiI1.add(reci4);
-		recenzentiI1.add(reci5);
-		recenzentiI1.add(reci7);
-		
-		List<RecenzentInfo> recenzentiI2 = new ArrayList<>();
-		recenzentiI2.add(reci2);
-		recenzentiI2.add(reci4);
-		recenzentiI2.add(reci6);
-		recenzentiI2.add(reci1);
-		recenzentiI2.add(reci3);
-		recenzentiI2.add(reci7);
-		
-		List<RecenzentInfo> recenzentiI3 = new ArrayList<>();
-		recenzentiI3.add(reci7);
-		recenzentiI3.add(reci5);
-		recenzentiI3.add(reci4);
-		recenzentiI3.add(reci2);
-		recenzentiI3.add(reci1);
-		
 		// *** Uredjivacki odbori *** //
 		List<Urednik> uredjivackiOdbor1 = new ArrayList<>();
 		uredjivackiOdbor1.add(urednik3);
@@ -830,48 +793,48 @@ public class StartData {
 		koautori3.add(koautor7);
 		
 		RevizijaRada revizija1 = new RevizijaRada(null, "Predikcija ishoda teniskih meceva", koautori1, 
-				"U radu je opisana predkcija ishoda teniskih meceva.", "predikcija, tenis, mec, loptica, Naive Bayes", LIBRARY_DIR_PATH+"\\2015 Predikcija ishoda teniskih meceva.pdf", 
+				"U radu je opisana predkcija ishoda teniskih meceva.", "predikcija, tenis, mec, loptica, Naive Bayes", ProjectConstants.LIBRARY_DIR_PATH+"\\2015 Predikcija ishoda teniskih meceva.pdf", 
 				true, true, true, autor1, c1, no1, null, null, null);
 		
 		RevizijaRada revizija2 = new RevizijaRada(null, "Цене некретнина", koautori2, 
-				"Кретање цена некретнина, опширно и детаљно,", "предикција, некретнине, некретнина, кластернованје, кластер, цена, новац, стан, кућа", LIBRARY_DIR_PATH+"\\2016 Predikcija cene nekretnina.pdf", 
+				"Кретање цена некретнина, опширно и детаљно,", "предикција, некретнине, некретнина, кластернованје, кластер, цена, новац, стан, кућа", ProjectConstants.LIBRARY_DIR_PATH+"\\2016 Predikcija cene nekretnina.pdf", 
 				true, true, true, autor2, c2, no2, null, null, null);
 		
 		RevizijaRada revizija3 = new RevizijaRada(null, "Predikcija musterija koje ce napustiti kompaniju", koautori3, 
-				"Postoji li rizik da vasi zaposleni napuste kompaniju?", "predikcija, kompanija, zaposleni, nezadovoljstvo, klaster, klasterovanje", LIBRARY_DIR_PATH+"\\2016 Predikcija Churn (musterije koje ce napustiti kompaniju).pdf", 
+				"Postoji li rizik da vasi zaposleni napuste kompaniju?", "predikcija, kompanija, zaposleni, nezadovoljstvo, klaster, klasterovanje", ProjectConstants.LIBRARY_DIR_PATH+"\\2016 Predikcija Churn (musterije koje ce napustiti kompaniju).pdf", 
 				true, true, true, autor3, c2, no3, null, null, null);
 		
 		RevizijaRada revizija4 = new RevizijaRada(null, "IMDB, predikcija ranka filmova", koautori1, 
-				"Metode koriscenje kako bi se izvrsila predikcija ranka filma na IMDB sajtu.", "predikcija, film, uspeh, rank, zanr, faktori", LIBRARY_DIR_PATH+"\\2016 Predikcija ranka filmova na IMDB.pdf", 
+				"Metode koriscenje kako bi se izvrsila predikcija ranka filma na IMDB sajtu.", "predikcija, film, uspeh, rank, zanr, faktori", ProjectConstants.LIBRARY_DIR_PATH+"\\2016 Predikcija ranka filmova na IMDB.pdf", 
 				true, true, true, autor4, c3, no4, null, null, null);
 		
 		RevizijaRada revizija5 = new RevizijaRada(null, "Анализа кашњења авионских летова", koautori2, 
-				"Анализа и прикз доминантних разлога кашњења авионских летова на свим рутама.", "анализа, кашњење, касни, авион, лет, писта", LIBRARY_DIR_PATH+"\\2017 Analiza kasnjenja avionskih letova.pdf", 
+				"Анализа и прикз доминантних разлога кашњења авионских летова на свим рутама.", "анализа, кашњење, касни, авион, лет, писта", ProjectConstants.LIBRARY_DIR_PATH+"\\2017 Analiza kasnjenja avionskih letova.pdf", 
 				true, true, true, autor1, c1, no5, null, null, null);
 		
 		RevizijaRada revizija6 = new RevizijaRada(null, "Hronicne bubrezne bolesti", koautori3, 
-				"Predikcija hronicnih bubreznih bolesti iz prethodnih anamneza nekog pacijenta i procena rizika razvijanja.", "predikcija, bubreg, bubrezi, bolest, anamneza, hronicno", LIBRARY_DIR_PATH+"\\2017 Chronic kidney disease.pdf", 
+				"Predikcija hronicnih bubreznih bolesti iz prethodnih anamneza nekog pacijenta i procena rizika razvijanja.", "predikcija, bubreg, bubrezi, bolest, anamneza, hronicno", ProjectConstants.LIBRARY_DIR_PATH+"\\2017 Chronic kidney disease.pdf", 
 				true, true, true, autor2, c1, no6, null, null, null);
 		
 		RevizijaRada revizija7 = new RevizijaRada(null, "СМС спам", koautori1, 
-				"Анализа смс порука и предикција спама на основу претходне анализе.", "предикција, анализа, смс, спам", LIBRARY_DIR_PATH+"\\2017 Predikcija SMS spama.pdf", 
+				"Анализа смс порука и предикција спама на основу претходне анализе.", "предикција, анализа, смс, спам", ProjectConstants.LIBRARY_DIR_PATH+"\\2017 Predikcija SMS spama.pdf", 
 				true, true, true, autor3, c3, no1, null, null, null);
 		
 		RevizijaRada revizija8 = new RevizijaRada(null, "Modul za upravljanje sertifikatima u okviru informacionog sistema za rezervaciju smeštaja", koautori2, 
 				"Tema ovog rada jeste jedna iz skupa prethodno navedenih aplikacija, čija je osnovna namena generisanje, distribucija i povlačenje digitalnih sertifikata. Upotreba digitalnih sertifikata je trenutno najčešći i najpouzdaniji mehanizam za autentifikaciju učesnika u komunikaciji i zaštitu sadržaja poruka koje se šalju od neovlašćenog čitanja ili izmene.", 
-				"sertifikat, digitalni, CSR, SSL, model pretnji", LIBRARY_DIR_PATH+"\\DIPL_Marija_Joksimovic_BSEP-finalno.pdf", 
+				"sertifikat, digitalni, CSR, SSL, model pretnji", ProjectConstants.LIBRARY_DIR_PATH+"\\DIPL_Marija_Joksimovic_BSEP-finalno.pdf", 
 				true, true, true, autor4, c2, no2, null, null, null);
 		
 		RevizijaRada revizija9 = new RevizijaRada(null, "Smernice za pisanje diplomskog rada", koautori3, 
-				"Smernice za pisanje diplomskog rada.", "diplomski, rad, smernica, smernice", LIBRARY_DIR_PATH+"\\Smernice za pisanje diplomskog rada.pdf", 
+				"Smernice za pisanje diplomskog rada.", "diplomski, rad, smernica, smernice", ProjectConstants.LIBRARY_DIR_PATH+"\\Smernice za pisanje diplomskog rada.pdf", 
 				true, true, true, autor1, c1, no3, null, null, null);
 		
 		RevizijaRada revizija10 = new RevizijaRada(null, "Upravljanje digitalnim dokumentima, kontrolna tačka 1", koautori1, 
-				"Upravljanje digitalnim dokumentima.", "digitalni, dokument, kontrolna, tacka", LIBRARY_DIR_PATH+"\\UDD-2018-2019-KT1-Marija-Joksimović-E262-2018.pdf", 
+				"Upravljanje digitalnim dokumentima.", "digitalni, dokument, kontrolna, tacka", ProjectConstants.LIBRARY_DIR_PATH+"\\UDD-2018-2019-KT1-Marija-Joksimović-E262-2018.pdf", 
 				true, true, true, autor2, c3, no4, null, null, null);
 		
 		RevizijaRada revizija11 = new RevizijaRada(null, "Upravljanje digitalnim dokumentima, kontrolna tačka 2", koautori2, 
-				"Upravljanje digitalnim dokumentima.", "digitalni, dokument, kontrolna, tacka", LIBRARY_DIR_PATH+"\\UDD-2018-2019-KT2-Marija-Joksimovic.pdf", 
+				"Upravljanje digitalnim dokumentima.", "digitalni, dokument, kontrolna, tacka", ProjectConstants.LIBRARY_DIR_PATH+"\\UDD-2018-2019-KT2-Marija-Joksimovic.pdf", 
 				true, true, true, autor3, c2, no5, null, null, null);
 		
 		revizija1 = revizijaRadaRepository.save(revizija1);
@@ -1002,6 +965,70 @@ public class StartData {
 		autor3 = autorRepository.save(autor3);
 		autor4 = autorRepository.save(autor4);
 		
+		CasopisInfo ci1 = new CasopisInfo(c1);
+		CasopisInfo ci2 = new CasopisInfo(c2);
+		CasopisInfo ci3 = new CasopisInfo(c3);
+		CasopisInfo ci4 = new CasopisInfo(c4);
+		CasopisInfo ci5 = new CasopisInfo(c5);
+		CasopisInfo ci6 = new CasopisInfo(c6);
+		CasopisInfo ci7 = new CasopisInfo(c7);
+		CasopisInfo ci8 = new CasopisInfo(c8);
+		CasopisInfo ci9 = new CasopisInfo(c9);
+		CasopisInfo ci10 = new CasopisInfo(c10);
+		CasopisInfo ci11 = new CasopisInfo(c11);
+		CasopisInfo ci12 = new CasopisInfo(c12);
+		
+		ci1 = casopisInfoRepository.save(ci1);
+		ci2 = casopisInfoRepository.save(ci2);
+		ci3 = casopisInfoRepository.save(ci3);
+		ci4 = casopisInfoRepository.save(ci4);
+		ci5 = casopisInfoRepository.save(ci5);
+		ci6 = casopisInfoRepository.save(ci6);
+		ci7 = casopisInfoRepository.save(ci7);
+		ci8 = casopisInfoRepository.save(ci8);
+		ci9 = casopisInfoRepository.save(ci9);
+		ci10 = casopisInfoRepository.save(ci10);
+		ci11 = casopisInfoRepository.save(ci11);
+		ci12 = casopisInfoRepository.save(ci12);
+		
+		RecenzentInfo reci1 = new RecenzentInfo(k3, getCasopisInfo(k3));
+		RecenzentInfo reci2 = new RecenzentInfo(k5, getCasopisInfo(k5));
+		RecenzentInfo reci3 = new RecenzentInfo(k6, getCasopisInfo(k6));
+		RecenzentInfo reci4 = new RecenzentInfo(k7, getCasopisInfo(k7));
+		RecenzentInfo reci5 = new RecenzentInfo(k8, getCasopisInfo(k8));
+		RecenzentInfo reci6 = new RecenzentInfo(k9, getCasopisInfo(k9));	
+		RecenzentInfo reci7 = new RecenzentInfo(k10, getCasopisInfo(k10));
+		
+		reci1 = recenzentInfoRepository.save(reci1);
+		reci2 = recenzentInfoRepository.save(reci2);
+		reci3 = recenzentInfoRepository.save(reci3);
+		reci4 = recenzentInfoRepository.save(reci4);
+		reci5 = recenzentInfoRepository.save(reci5);
+		reci6 = recenzentInfoRepository.save(reci6);
+		reci7 = recenzentInfoRepository.save(reci7);
+		
+		List<RecenzentInfo> recenzentiI1 = new ArrayList<>();
+		recenzentiI1.add(reci1);
+		recenzentiI1.add(reci3);
+		recenzentiI1.add(reci4);
+		recenzentiI1.add(reci5);
+		recenzentiI1.add(reci7);
+		
+		List<RecenzentInfo> recenzentiI2 = new ArrayList<>();
+		recenzentiI2.add(reci2);
+		recenzentiI2.add(reci4);
+		recenzentiI2.add(reci6);
+		recenzentiI2.add(reci1);
+		recenzentiI2.add(reci3);
+		recenzentiI2.add(reci7);
+		
+		List<RecenzentInfo> recenzentiI3 = new ArrayList<>();
+		recenzentiI3.add(reci7);
+		recenzentiI3.add(reci5);
+		recenzentiI3.add(reci4);
+		recenzentiI3.add(reci2);
+		recenzentiI3.add(reci1);
+		
 		IndexUnit iu1 = new IndexUnit(rad1, k1.getIme()+" "+k1.getPrezime(), pdfHandler.getText(new File(rad1.getPutanja())), recenzentiI1, noi1);
 		IndexUnit iu2 = new IndexUnit(rad2, k11.getIme()+" "+k11.getPrezime(), pdfHandler.getText(new File(rad2.getPutanja())), recenzentiI2, noi2);
 		IndexUnit iu3 = new IndexUnit(rad3, k12.getIme()+" "+k12.getPrezime(), pdfHandler.getText(new File(rad3.getPutanja())), recenzentiI3, noi3);
@@ -1026,6 +1053,17 @@ public class StartData {
 		iu10 = indexUnitRepository.index(iu10);
 		iu11 = indexUnitRepository.index(iu11);
 	
+	}
+	
+	private List<CasopisInfo> getCasopisInfo(Korisnik korisnik){
+		
+		ArrayList<CasopisInfo> retVal = new ArrayList<>();
+		for(Casopis casopis : korisnik.getRecenzent().getCasopisi()) {
+			CasopisInfo casopisInfo = casopisInfoRepository.findById(casopis.getId().toString()).get();
+			retVal.add(casopisInfo);
+		}
+		
+		return retVal;
 	}
 	
 	private User createCamundaUser(Korisnik k) {

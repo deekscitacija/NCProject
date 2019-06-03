@@ -9,18 +9,10 @@ import org.springframework.stereotype.Service;
 
 import com.ftn.nc.NCBackend.web.model.RevizijaRada;
 import com.ftn.nc.NCBackend.web.model.RevizijaRadaRecenzent;
-import com.ftn.nc.NCBackend.web.repository.RecenzentRepository;
-import com.ftn.nc.NCBackend.web.repository.RevizijaRadaRecenzentRepository;
 import com.ftn.nc.NCBackend.web.repository.RevizijaRadaRepository;
 
 @Service
 public class GetRecenzentiForRecenzija implements JavaDelegate {
-	
-	@Autowired
-	private RecenzentRepository recenzentRepository;
-	
-	@Autowired
-	private RevizijaRadaRecenzentRepository revizijaRadaRecenzentRepository;
 	
 	@Autowired
 	private RevizijaRadaRepository revizijaRadaRepository;

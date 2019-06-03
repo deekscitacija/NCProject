@@ -4,7 +4,7 @@
     <bpmn:startEvent id="StartEvent_1" name="start">
       <bpmn:outgoing>SequenceFlow_0tri35z</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:userTask id="UserTask_1641u7o" name="Unos Podataka" camunda:formKey="registracijaForma" camunda:assignee="${registracijaUser}">
+    <bpmn:userTask id="UserTask_1641u7o" name="Unos Podataka" camunda:formKey="registracijaForma">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="email" label="Korisnicko ime" type="string" />
@@ -38,21 +38,17 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0tri35z_di" bpmnElement="SequenceFlow_0tri35z">
         <di:waypoint x="255" y="292" />
-        <di:waypoint x="295" y="292" />
-        <di:waypoint x="295" y="298" />
-        <di:waypoint x="335" y="298" />
+        <di:waypoint x="335" y="292" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="EndEvent_0ditxhh_di" bpmnElement="EndEvent_0ditxhh">
-        <dc:Bounds x="509" y="274" width="36" height="36" />
+        <dc:Bounds x="513" y="274" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="507" y="317" width="41" height="14" />
+          <dc:Bounds x="511" y="317" width="41" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1kd8a25_di" bpmnElement="SequenceFlow_1kd8a25">
-        <di:waypoint x="435" y="298" />
-        <di:waypoint x="472" y="298" />
-        <di:waypoint x="472" y="292" />
-        <di:waypoint x="509" y="292" />
+        <di:waypoint x="435" y="292" />
+        <di:waypoint x="513" y="292" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

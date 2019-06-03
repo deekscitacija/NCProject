@@ -6,11 +6,11 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.camunda.bpm.engine.rest.dto.task.TaskDto;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,25 +25,22 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ftn.nc.NCBackend.camunda.dto.FileUploadDTO;
 import com.ftn.nc.NCBackend.camunda.dto.RevizijaDTO;
 import com.ftn.nc.NCBackend.camunda.service.CommonCamundaService;
+import com.ftn.nc.NCBackend.constants.ProjectConstants;
 import com.ftn.nc.NCBackend.helpClasses.PDFUtils;
 import com.ftn.nc.NCBackend.security.TokenUtils;
 import com.ftn.nc.NCBackend.web.dto.NaucniRadDTO;
 import com.ftn.nc.NCBackend.web.enums.KomentarVidljivost;
-import com.ftn.nc.NCBackend.web.enums.RecenzijaStatus;
 import com.ftn.nc.NCBackend.web.model.Autor;
 import com.ftn.nc.NCBackend.web.model.Casopis;
 import com.ftn.nc.NCBackend.web.model.Koautor;
 import com.ftn.nc.NCBackend.web.model.Komentar;
 import com.ftn.nc.NCBackend.web.model.Korisnik;
 import com.ftn.nc.NCBackend.web.model.RevizijaRada;
-import com.ftn.nc.NCBackend.web.model.RevizijaRadaRecenzent;
 import com.ftn.nc.NCBackend.web.service.AutorService;
 import com.ftn.nc.NCBackend.web.service.CasopisService;
 import com.ftn.nc.NCBackend.web.service.KoautorService;
 import com.ftn.nc.NCBackend.web.service.KomentarService;
 import com.ftn.nc.NCBackend.web.service.KorisnikService;
-import com.ftn.nc.NCBackend.web.service.RecenzentService;
-import com.ftn.nc.NCBackend.web.service.RevizijaRadaRecenzentService;
 import com.ftn.nc.NCBackend.web.service.RevizijaService;
 
 
@@ -61,9 +58,6 @@ public class NaucniRadCamundaController {
 	private AutorService autorService;
 	
 	@Autowired
-	private RecenzentService recenzentService;
-	
-	@Autowired
 	private TokenUtils tokenUtils;
 	
 	@Autowired
@@ -77,9 +71,6 @@ public class NaucniRadCamundaController {
 	
 	@Autowired
 	private KomentarService komentarService;
-	
-	@Autowired
-	private RevizijaRadaRecenzentService revizijaRadaRecenzentService; 
 	
 	@Autowired
 	private CommonCamundaService commonCamundaService;
@@ -126,9 +117,9 @@ public class NaucniRadCamundaController {
             
             String putanja = "";
 			try {
-				putanja = PDFUtils.saveUploadedFile(file, PDFUtils.REPO_DIR_PATH);
+				putanja = PDFUtils.saveUploadedFile(file, ProjectConstants.REPO_DIR_PATH);
 			} catch (IOException e) {
-				System.out.println("*** Puklo cuvanje fajle! ***");
+				
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			}
             		
@@ -142,21 +133,12 @@ public class NaucniRadCamundaController {
 			} catch (JSONException e) {
 				System.out.println("*** Puklo setovanje REVIZIJA varijable! ***");
 			}
+            
             break;
 		}
 		
-		String taskInfo = commonCamundaService.getTasksByProcessInstanceIdAndAssignee(autor.getId().toString(), newPaper.getProcesId()).getBody();
-		
-		JSONArray taskList = null;
-		String taskId = "";
-		try {
-			taskList = new JSONArray(taskInfo);
-            taskId = (String) taskList.getJSONObject(0).get("id");
-            return commonCamundaService.compliteTaskNoForm(taskId);
-		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		
+		TaskDto taskInfo = commonCamundaService.getTasksByProcessInstanceIdAndAssignee(autor.getId().toString(), newPaper.getProcesId());
+		return commonCamundaService.compliteTaskNoForm(taskInfo.getId());
 	}
 	
 	@RequestMapping(value = "inicijalniOdgovorRevizija", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces =  MediaType.APPLICATION_JSON_VALUE)
@@ -196,7 +178,7 @@ public class NaucniRadCamundaController {
 			commonCamundaService.setProcessVariable(processId, "tematskiPrihvatljiv", revizijaInfo.isTemaOk() ? "true" : "false", "boolean");
 			commonCamundaService.setProcessVariable(processId, "dobroFormatiran", revizijaInfo.isFormatOk() ? "true" : "false", "boolean");
 		} catch (JSONException e) {
-			e.printStackTrace();
+			
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
@@ -220,9 +202,9 @@ public class NaucniRadCamundaController {
             
             String putanja = "";
 			try {
-				putanja = PDFUtils.saveUploadedFile(file, PDFUtils.REPO_DIR_PATH);
+				putanja = PDFUtils.saveUploadedFile(file, ProjectConstants.REPO_DIR_PATH);
 			} catch (IOException e) {
-				System.out.println("*** Puklo cuvanje fajle! ***");
+				
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			}
             		

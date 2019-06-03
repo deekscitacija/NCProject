@@ -13,11 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class PDFUtils {
-
-	public static final String LIBRARY_DIR_PATH = "D:\\TheMara\\Master PRNiI\\Naucna Centrala\\Biblioteka"; 
-	
-	public static final String REPO_DIR_PATH = "D:\\TheMara\\Master PRNiI\\Naucna Centrala\\Recenzije"; 
-	
+		
 	public static String saveUploadedFile(MultipartFile file, String folderPath) throws IOException {
 	   	String retVal = null;
         if (! file.isEmpty()) {

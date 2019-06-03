@@ -1,11 +1,8 @@
 package com.ftn.nc.NCBackend.camunda.dto;
 
 import java.util.List;
-import java.util.Set;
 
 import com.ftn.nc.NCBackend.web.dto.KomentarDTO;
-import com.ftn.nc.NCBackend.web.model.Koautor;
-import com.ftn.nc.NCBackend.web.model.Komentar;
 import com.ftn.nc.NCBackend.web.model.Korisnik;
 import com.ftn.nc.NCBackend.web.model.RevizijaRada;
 

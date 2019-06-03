@@ -22,6 +22,7 @@ import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ftn.nc.NCBackend.constants.ProjectConstants;
 import com.ftn.nc.NCBackend.elastic.dto.IndexUnitDTO;
 import com.ftn.nc.NCBackend.elastic.dto.QueryDTO;
 import com.ftn.nc.NCBackend.elastic.dto.QueryParamDTO;
@@ -135,10 +136,6 @@ public class SearchServiceImpl implements SearchService{
 	@Override
 	public List<IndexUnit> moreLikeThis(String documentId, int pageNum) {
 		
-		String[] fields = new String[1];
-		String[] tekst = new String[1];
-		Item[] items = new Item[1];
-		
 		IndexUnit indexUnit = null;
 		
 		try {
@@ -147,13 +144,7 @@ public class SearchServiceImpl implements SearchService{
 			return null;
 		}
 		
-		fields[0] = "tekst";
-		tekst[0] = indexUnit.getTekst();
-		
-		Item searchIn = new Item("naucnacentrala", "rad", indexUnit.getId());
-		items[0] = searchIn;
-		
-		MoreLikeThisQueryBuilder moreLikeThisQuery = QueryBuilders.moreLikeThisQuery(fields, tekst, items)
+		MoreLikeThisQueryBuilder moreLikeThisQuery = QueryBuilders.moreLikeThisQuery(new String[]{"tekst"}, new String[]{indexUnit.getTekst()}, new Item[] {new Item("naucnacentrala", "rad", indexUnit.getId())})
 				.minDocFreq(5)
 				.maxDocFreq(25)
 				.minTermFreq(5)
@@ -276,7 +267,7 @@ public class SearchServiceImpl implements SearchService{
                 continue;
             }
             
-            String filePath = PDFUtils.saveUploadedFile(file, PDFUtils.LIBRARY_DIR_PATH);
+            String filePath = PDFUtils.saveUploadedFile(file, ProjectConstants.LIBRARY_DIR_PATH);
             if(filePath != null){
             	PDFHandler pdfHandler = new PDFHandler();
             	String tekst = pdfHandler.getText(PDFUtils.getResourceFilePath(filePath));
