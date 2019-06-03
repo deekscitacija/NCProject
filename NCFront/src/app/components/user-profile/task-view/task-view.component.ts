@@ -62,22 +62,22 @@ export class TaskViewComponent implements OnInit {
       queryParams['taskId'] = taskInfo.taskId; 
     }
 
-    if(taskInfo.taskName === 'Unos informacija o radu'){
+    if(taskInfo.name === 'Unos informacija o radu'){
       queryParams['casopis'] = variables.casopisId;
       this.router.navigate(['naucna-centrala.com/novi-rad'], {queryParams : queryParams});
     }
 
-    if(taskInfo.taskName === 'Pregledanje rada'){
+    if(taskInfo.name === 'Pregledanje rada'){
       queryParams['revizijaId'] = variables.revizijaId;
       this.router.navigate(['naucna-centrala.com/pregledaj-rad'], {queryParams : queryParams});
     }
 
-    if(taskInfo.taskName === 'Izmena prijavljenog rada'){
+    if(taskInfo.name === 'Izmena prijavljenog rada'){
       queryParams['revizijaId'] = variables.revizijaId;
       this.router.navigate(['naucna-centrala.com/upload-revizija'], {queryParams : queryParams});
     }
 
-    if(taskInfo.taskName === 'Izbor recenzenata'){
+    if(taskInfo.name === 'Izbor recenzenata'){
       queryParams['revizijaId'] = variables.revizijaId;
       queryParams['casopis'] = variables.casopisId;
       queryParams['mode'] = "BASIC";

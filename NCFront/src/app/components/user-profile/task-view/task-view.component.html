@@ -9,7 +9,7 @@
     <tbody>
       <tr *ngFor="let taskInfo of taskList; let idx = index">
         <th>{{idx+1}}</th>
-        <th>{{taskInfo.taskName}}</th>
+        <th>{{taskInfo.name}}</th>
         <th><button class="btn btn-md btn-link" (click)="idiNaTask(taskInfo)"><b>link</b></button></th>
       </tr>
     </tbody>
